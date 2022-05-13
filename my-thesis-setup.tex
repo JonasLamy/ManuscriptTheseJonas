@@ -1,0 +1,89 @@
+% !TEX root = my-thesis.tex
+
+
+% **************************************************
+% Files' Character Encoding
+% **************************************************
+\PassOptionsToPackage{utf8}{inputenc}
+\usepackage{inputenc}
+
+
+% **************************************************
+% Information and Commands for Reuse
+% **************************************************
+\newcommand{\thesisTitle}{Comparaison du rehaussement de vaisseaux sanguins appliqués aux images médicales 3D}
+\newcommand{\thesisName}{Jonas Lamy}
+\newcommand{\thesisSubject}{Traitement d'images}
+\newcommand{\thesisDate}{\today}
+\newcommand{\thesisVersion}{Draft 0.1}
+
+\newcommand{\thesisFirstReviewer}{Jane Doe}
+\newcommand{\thesisFirstReviewerUniversity}{\protect{Clean Thesis Style University}}
+\newcommand{\thesisFirstReviewerDepartment}{Department of Clean Thesis Style}
+
+\newcommand{\thesisSecondReviewer}{John Doe}
+\newcommand{\thesisSecondReviewerUniversity}{\protect{Clean Thesis Style University}}
+\newcommand{\thesisSecondReviewerDepartment}{Department of Clean Thesis Style}
+
+\newcommand{\thesisFirstSupervisor}{Nicolas Passat}
+\newcommand{\thesisSecondSupervisor}{Bertrand Kerautret}
+\newcommand{\thesisThirdSupervisor}{Odyssée Merveille}
+
+\newcommand{\thesisUniversity}{\protect{Université Lyon 2}}
+\newcommand{\thesisUniversityDepartment}{LIRIS}
+\newcommand{\thesisUniversityInstitute}{LIRIS}
+\newcommand{\thesisUniversityGroup}{Clean Thesis Group (CTG)}
+\newcommand{\thesisUniversityCity}{Lyon}
+\newcommand{\thesisUniversityStreetAddress}{LIRIS, Bât C, 5 avenue Pierre Mendes France, Bron }
+\newcommand{\thesisUniversityPostalCode}{69000}
+
+% ********************************
+% Jonas command
+% ********************************
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{TODO:}#1}}
+
+% **************************************************
+% Debug LaTeX Information
+% **************************************************
+%\listfiles
+
+
+% **************************************************
+% Load and Configure Packages
+% **************************************************
+\usepackage{amsmath}
+
+\usepackage[english]{babel} % babel system, adjust the language of the content
+\PassOptionsToPackage{% setup clean thesis style
+    figuresep=colon,%
+    hangfigurecaption=false,%
+    hangsection=true,%
+    hangsubsection=true,%
+    sansserif=false,%
+    configurelistings=true,%
+    colorize=full,%
+    colortheme=bluemagenta,%
+    configurebiblatex=true,%
+    bibsys=biber,%
+    bibfile=TheseJonas,%
+    bibstyle=alphabetic,%
+    bibsorting=nty,%
+}{cleanthesis}
+\usepackage{cleanthesis}
+
+\hypersetup{% setup the hyperref-package options
+    pdftitle={\thesisTitle},    %   -   title (PDF meta)
+    pdfsubject={\thesisSubject},%   - subject (PDF meta)
+    pdfauthor={\thesisName},    %   - author (PDF meta)
+    plainpages=false,           %   -
+    colorlinks=false,           %   - colorize links?
+    pdfborder={0 0 0},          %   -
+    breaklinks=true,            %   - allow line break inside links
+    bookmarksnumbered=true,     %
+    bookmarksopen=true          %
+}
+
+% **************************************************
+% Other Packages
+% **************************************************
+\usepackage{scrhack}
