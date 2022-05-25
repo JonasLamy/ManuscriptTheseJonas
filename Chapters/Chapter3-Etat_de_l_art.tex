@@ -2,13 +2,68 @@
 %
 \chapter{Etat de l'art}
 
+% TODO : S'assurer que les différentes catégories scientifiques sont là
+% TODO : Vérifier qu'il y a bien une justification vers un choix de progression et des parties dé-corélées sans fil conducteur.
+
 \cleanchapterquote{Un petit chapitre pour le doctorant, un grand chapitre pour l'humanité}{Doctorant anonyme}{(Citation temporaire)}
 
 \section{Segmentation}
 \label{sec:EA:segmentation}
 
-\subsection{Segmentation historique}
+% Porte d'entrée par la visualisation de données
+
+Après l'acquisition des images provenants des systèmes d'IRM et de Tomodensitométrie, se pose la question de la visualisation des données. En effet, les images obtenues sont des matrices 3D et une visualisation 3D naïve, ne permet que de discerner que l'enveloppe extérieure d'un volume.La visualisation la plus simple à mettre en place est la visualisation tranche par tranche qui permet de visualiser tous les tissues d'un volume. Elle oblige cependant les médecins à une gymnastique mentale de manière à reconstituer une vue de l'esprit, en 3D, de l'organe étudié. Une autre méthode consiste à projeter les voxels aux intensités les plus fortes sur un plan. La technique la plus utilisée, la MIP (maximum intensity projection), consiste à lancer, pour chaque pixels d'un plan $p_i$, un rayon traversant le volume de donnée. L'intensité maximale des voxel le long de ce rayon est ensuite assignée à $p_i$. Cette méthode à l'avantage de faire ressortir les éléments les plus saillants de l'image et convient particulièrement à des structures mis en valeur par un agent de contraste. Elle est aussi très simple à implémenter, et convient à une utilisation temps réelle. Cependant, lors du processus de projection, la perception de profondeur est perdue, ce qui peut perturber l'analyse des structures. Ce dernier désavantage peut toutefois être contourné par l'utilisation d'une MIP dans une scène 3D contenant l'image et une camera. La projection qui s'effectue alors sur le plan de la caméra, peut bouger autour du volume, redonnant implicitement grâce à plusieurs angles de vue, cette information de profondeur.
+
+A noter que ces deux méthodes ne sont pas invasives, dans le sens où aucune transformation n'est appliquée à l'image originale.
+
+\begin{figure}
+  \centering
+  \includegraphics[height=3cm]{Images/img_required.jpg}
+  \label{fig:visualisation en coupe}
+  \caption{visualisation en coupe}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[height=3cm]{Images/img_required.jpg}
+  \includegraphics[height=3cm]{Images/img_required.jpg}
+  \label{fig:visualisation MIP}
+  \caption{Maximaly intensity projection (mip). L'intensité maximale est rétroprojeté le long du rayon sur le plan d'origine. La MIP peut s'effectuer en utilisant les bords de l'image, où le plan de la caméra dans une scène 3D}
+\end{figure}
+
+Bien que ces méthodes offrent une visualisation convenable dans de nombreux cas, celles-ci peuvent se révéler insuffisante pour la représentation de structures complexes ou pour des tâches de mesures volumétriques. Dans ce cas, il est nécessaire d'extraire les structures d'intérêts de l'information superflux qui les entourent. C'est ce processus d'extraction que l'on nomme segmentation.  
+
+
+\subsection{Segmentation classique}
 \label{sec:EA:segmentation_historique}
+% Etat de l'art de la segmentation hiérarchisée par problématique
+% contraste
+% formea
+% 
+L'automatisation de la segmentation pour les images médicales est une tâche complexe. Elle doit répondre à des problématiques variées, provenant à la fois des conditions d'acquisition de l'image \ref{sec:contexte:images}, de forme de l'organe et de l'extraction d'éléments sémantiquement haut niveau. Une tumeur peut par exemple prendre des formes diverses et un algorithme de segmentation proposée pour un organe et une modalité ne fonctionnera pas forcément dans une autre modalité. Ces contraintes peuvent mener à l'élaboration de solutions proposant un nombre d'étapes importants. Ainsi, Marcan \cite{Marcan_2014_vessel_seg} propose un pipeline de segmentation en 16 étapes mélangeant, filtrage, seuillage, masques et morphologie pour la segmentation des vaisseaux du foie. Goceri \cite{Goceri2017_vessel} propose une méthode en 14 étapes aliant partitionnement et étirement du contraste afin de différencier vaisseaux hépatiques des tissues du foie.
+
+Une taxonomie précise des méthodes de segmentation est difficile à établir puisque beaucoup de pipelines mélangent les briques algorithmiques. Nous présentons donc ici, les grandes tendances concernants ces briques et leurs rôles dans le pipeline de segmentation.
+
+La première problématique de la segmentation est la gestion du contraste
+
+
+\begin{itemize}
+  \item{Contraste}
+     \begin{itemize}
+        \item{Thresholding, Clustering, intensity models}
+     \end{itemize}
+   \item{Geometrie et hiérarchie}
+     \begin{itemize}
+        \item{models, atlas, vesselness, morphology, max tree}
+     \end{itemize}
+\item{Critère de sélection}
+  \begin{itemize}
+  \item{Graph cut}
+  \item{Fuzzy criteria,}
+  \end{itemize}
+\end{itemize}
+
+
 
 \subsection{Segmentation deep learning 3D}
 \label{sec:EA:segmentation_deep3D}
@@ -29,7 +84,7 @@ Un filtre de rehaussement peut se baser sur plusieurs stratégies pour améliore
 
 En effet, pour la tomodensitométrie comme pour l'IRM, certaines hypothèses physiques sont applicables aux vaisseaux.
 
-Premièrement, pour l'angiographie avec injection d'agent de contraste, on considère que les vaisseaux ont une intensité supérieure aux tissues qui les entournent. Cette hypothèse, bien que souvent vraie, se retrouve limitée en pratique. En effet, cette hypothèse dépend des conditions liées au temps d'acquisition et de la vascularisation de l'organe étudié. Plus l'acquisition est longue et les échanges vasculaires nombreux dans l'organe, plus l'agent de contraste se diffuse dans celui-ci. Ce processus peux aller jusqu'à rendre l'organe totalement uniforme sans possibilité de différencier les tissues qui le compose. Comme discuté dans la section SEC.~\ref{} du chapitre C.~\ref{} l'utilisation d'agent de contrastes ne garanti pas un aspect uniforme des vaisseaux. Cet aspect varie en fonction de la concentration de l'agent de contraste dissous dans le sang. Par conséquent, plus le diamètre des vaisseaux est réduit, plus la concentration, et donc le contraste, est faible. Pour des tronçons de vaisseaux de même taille, la viscosité du sang ou la géométrie des vaisseaux peut aussi faire s'accumuler l'agent de constrate dans des régions spécifiques.
+Premièrement, pour l'angiographie avec injection d'agent de contraste, on considère que les vaisseaux ont une intensité supérieure aux tissues qui les entournent. Cette hypothèse, bien que souvent vraie, se retrouve limitée en pratique. En effet, cette hypothèse dépend des conditions liées au temps d'acquisition et de la vascularisation de l'organe étudié. Plus l'acquisition est longue et les échanges vasculaires nombreux dans l'organe, plus l'agent de contraste se diffuse dans celui-ci. Ce processus peux aller jusqu'à rendre l'organe totalement uniforme sans possibilité de différencier les tissues qui le compose. Comme discuté dans la section SEC. ~\ref{sec:contexte:images} du chapitre C.~\ref{} l'utilisation d'agent de contrastes ne garanti pas un aspect uniforme des vaisseaux. Cet aspect varie en fonction de la concentration de l'agent de contraste dissous dans le sang. Par conséquent, plus le diamètre des vaisseaux est réduit, plus la concentration, et donc le contraste, est faible. Pour des tronçons de vaisseaux de même taille, la viscosité du sang ou la géométrie des vaisseaux peut aussi faire s'accumuler l'agent de constrate dans des régions spécifiques.
 
 Une fois l'hypothèse d'intensité posée, on peut établir de nouvelles hypothèses sur la géométrie des vaisseaux. L'hypothèse la plus courante est d'asimiler les vaisseaux à des cylindres ou des tubes soumis à des contraintes géométriques plus ou moins relachées. Cette hypothèse peut se montrer suffisante lorsque l'on ne considère qu'un seul tronçon de vaisseaux. En réalité, dans un réseau vasculaire, chaque tronçons peut avoir des formes et diamètres variés, et les tranches successives d'un même tronçon ne sont pas forcément homogène. De plus, les vaisseaux sont interconnectés entre eux, formant aux jonctions des objets géométriques qui sortent du cadre des hypothèses initiales.
 
@@ -239,7 +294,7 @@ On peut appliquer le calcul de flux à la surface d'un objet fermé. En particul
 
 La précision du calcul de l'intégrale de flux dépend du nombre d'échantillonages effectués sur $S$. Plus celui-ci est grand, plus le calcul est coûteux. De plus, plus l'échelle sélectionnée est grande, et donc plus la surface de la sphère est grande, plus le nombre d'échantillonage requis est important.
 
-Law propose une formulation élégante du calcul de flux dans le domaine de Fourier afin de réduire drastiquement le temps de calcul par rapport à l'implémentation naïve \cite{law_efficient_implementation}.
+Law propose une formulation élégante du calcul de flux dans le domaine de Fourier afin de réduire drastiquement le temps de calcul par rapport à l'implémentation naïve \cite{law2009_efficient_implementation}.
 
 Pour y parvenir, law propose d'exprimer le calcul de flux sous la forme d'une convolution dans le domaine temporel. L'avantage de la convolution est double, on évite l'étape d'échantillonage sur la surface et la convolution s'exprime comme une multiplication dans le domaine de Fourier. On peut exprimer le calcul de flux en terme de volume et non plus en terme de surface grâce au théorème de la divergence qui établit une égalité entre le flux à la surface d'un objet et le flux à l'intérieur de son volume. Ainsi :
 
@@ -316,15 +371,24 @@ Et dans le domaine de Fourier:
 \subsection{Tensors}
 \label{sec:EA:rehaussement:tensors}
 
+% différents tensors, gradients,  
+
 \subsection{Wavelets}
 \label{sec:EA:rehaussement:wavelets}
+
+% A voir comment articuler wavelets, noyaux gaussiens, etc.
 
 \subsection{Hessienne}
 \label{sec:EA:rehaussement:hessienne}
 
+% Parler de la hessienne <-> co-occurence matrix et de leur explication géométrique. 
+% parler des méthodes dont on ne traite pas par ailleur, Erdt, Li, etc.
+
 \subsection{Diffusion}
 \label{sec:EA:rehaussement:diffusion}
 
+% VED
+% HDCS
 
 \section{Bilan et orientation des travaux}
 \label{sec:EA:bilan}

@@ -1923,6 +1923,10 @@
     <bcf:datasource type="file" datatype="bibtex">TheseJonas.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
+    <bcf:citekey order="1">Marcan_2014_vessel_seg</bcf:citekey>
+    <bcf:citekey order="2">Goceri2017_vessel</bcf:citekey>
+    <bcf:citekey order="3">lindeberg2013_scale</bcf:citekey>
+    <bcf:citekey order="4">law2009_efficient_implementation</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">
