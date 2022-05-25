@@ -20,10 +20,10 @@ function usage {
 
 s=""
 
-sC1="\\input{Chapters/Chapter1-Introduction}\n"
-sC2="\\input{Chapters/Chapter2-Contexte}\n"
-sC3="\\input{Chapters/Chapter3-Etat_de_l_art}\n"
-sC4="\\input{Chapters/Chapter4-Benchmark}\n"
+sC1='\\input{Chapters/Chapter1-Introduction}\n'
+sC2='\\input{Chapters/Chapter2-Contexte}\n'
+sC3='\\input{Chapters/Chapter3-Etat_de_l_art}\n'
+sC4='\\input{Chapters/Chapter4-Benchmark}\n'
 
 sAll+="$sC1$sC2$sC3$sC4"
 
