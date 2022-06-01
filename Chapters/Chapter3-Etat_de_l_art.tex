@@ -12,7 +12,7 @@
 
 % Porte d'entrée par la visualisation de données
 
-Après l'acquisition des images provenants des systèmes d'IRM et de Tomodensitométrie, se pose la question de la visualisation des données. En effet, les images obtenues sont des matrices 3D et une visualisation 3D naïve, ne permet que de discerner que l'enveloppe extérieure d'un volume.La visualisation la plus simple à mettre en place est la visualisation tranche par tranche qui permet de visualiser tous les tissues d'un volume. Elle oblige cependant les médecins à une gymnastique mentale de manière à reconstituer une vue de l'esprit, en 3D, de l'organe étudié. Une autre méthode consiste à projeter les voxels aux intensités les plus fortes sur un plan. La technique la plus utilisée, la MIP (maximum intensity projection), consiste à lancer, pour chaque pixels d'un plan $p_i$, un rayon traversant le volume de donnée. L'intensité maximale des voxel le long de ce rayon est ensuite assignée à $p_i$. Cette méthode à l'avantage de faire ressortir les éléments les plus saillants de l'image et convient particulièrement à des structures mis en valeur par un agent de contraste. Elle est aussi très simple à implémenter, et convient à une utilisation temps réelle. Cependant, lors du processus de projection, la perception de profondeur est perdue, ce qui peut perturber l'analyse des structures. Ce dernier désavantage peut toutefois être contourné par l'utilisation d'une MIP dans une scène 3D contenant l'image et une camera. La projection qui s'effectue alors sur le plan de la caméra, peut bouger autour du volume, redonnant implicitement grâce à plusieurs angles de vue, cette information de profondeur.
+Après l'acquisition des images provenants des systèmes d'IRM et de Tomodensitométrie, se pose la question de la visualisation des données. En effet, les images obtenues sont des matrices 3D et une visualisation 3D naïve ne permet de discerner que l'enveloppe extérieure d'un volume.La visualisation la plus simple à mettre en place est la visualisation 2D tranche par tranche qui permet de visualiser tous les tissues d'un volume. Elle oblige cependant les médecins à une gymnastique mentale de manière à reconstituer une vue de l'esprit, en 3D, de l'organe étudié. Une autre méthode consiste à projeter les voxels aux intensités les plus fortes sur un plan. La technique la plus utilisée, la MIP (maximum intensity projection), consiste à lancer, pour chaque pixels d'un plan $p_i$, un rayon traversant le volume de donnée. L'intensité maximale des voxel le long de ce rayon est ensuite assignée à $p_i$. Cette méthode à l'avantage de faire ressortir les éléments les plus saillants de l'image et convient particulièrement à des structures mis en valeur par un agent de contraste. Elle est aussi très simple à implémenter, et convient à une utilisation temps réelle. Cependant, lors du processus de projection, la perception de profondeur est perdue ce qui peut perturber l'analyse des structures. Ce dernier désavantage peut toutefois être contourné par l'utilisation d'une MIP dans une scène 3D contenant l'image et une camera. La projection, qui s'effectue alors sur le plan de la caméra, peut bouger autour du volume redonnant implicitement grâce au mouvement, cette information de profondeur.
 
 A noter que ces deux méthodes ne sont pas invasives, dans le sens où aucune transformation n'est appliquée à l'image originale.
 
@@ -40,30 +40,69 @@ Bien que ces méthodes offrent une visualisation convenable dans de nombreux cas
 % contraste
 % formea
 % 
-L'automatisation de la segmentation pour les images médicales est une tâche complexe. Elle doit répondre à des problématiques variées, provenant à la fois des conditions d'acquisition de l'image \ref{sec:contexte:images}, de forme de l'organe et de l'extraction d'éléments sémantiquement haut niveau. Une tumeur peut par exemple prendre des formes diverses et un algorithme de segmentation proposée pour un organe et une modalité ne fonctionnera pas forcément dans une autre modalité. Ces contraintes peuvent mener à l'élaboration de solutions proposant un nombre d'étapes importants. Ainsi, Marcan \cite{Marcan_2014_vessel_seg} propose un pipeline de segmentation en 16 étapes mélangeant, filtrage, seuillage, masques et morphologie pour la segmentation des vaisseaux du foie. Goceri \cite{Goceri2017_vessel} propose une méthode en 14 étapes aliant partitionnement et étirement du contraste afin de différencier vaisseaux hépatiques des tissues du foie.
+L'automatisation de la segmentation pour les images médicales est une tâche complexe. Elle doit répondre à des problématiques variées, provenant à la fois des conditions d'acquisition de l'image \ref{sec:contexte:images}, de forme de l'organe et de l'extraction d'éléments sémantiques haut niveau. Une tumeur peut par exemple prendre des formes diverses (blob, tummeur diffuses) et un algorithme de segmentation proposée pour un organe et une modalité ne fonctionnera pas forcément dans une autre modalité. Ces contraintes peuvent mener à l'élaboration de solutions proposant un nombre d'étapes importants. Ainsi, Marcan \cite{Marcan2014_vessel_seg} propose un pipeline de segmentation en 16 étapes mélangeant, filtrage, seuillage, masques et morphologie pour la segmentation des vaisseaux du foie. Goceri \cite{Goceri2017_vessel} propose une méthode en 14 étapes aliant partitionnement et étirement du contraste afin de différencier vaisseaux hépatiques des tissues du foie.
 
-Une taxonomie précise des méthodes de segmentation est difficile à établir puisque beaucoup de pipelines mélangent les briques algorithmiques. Nous présentons donc ici, les grandes tendances concernants ces briques et leurs rôles dans le pipeline de segmentation.
+Une taxonomie précise des méthodes de segmentation est difficile à établir puisque beaucoup de pipelines mélangent les briques algorithmiques. Nous présentons donc ici les grandes tendances concernants ces briques et leurs rôles dans le pipeline de segmentation.
 
-La première problématique de la segmentation est la gestion du contraste
+Lesage \cite{Lesage2009_review} propose une décomposition des étapes de segmentation sous la forme de 3 grands thèmes : Les modèles d'intensités et géométriques, les caractéristiques de l'image et le schéma d'extraction. Les modèles forment l'ensemble des hypothèses que l'on peut former en pour décrire les vaisseaux. Les caractéristiques reposent sur des mesures spécifiques de l'image qui permettent de paramétrer le modèle. Enfin, le schéma d'extraction permet de faire un choix du critère optimal pour la segmentation, basé sur le modèle et guidé par les caractéristiques.
+
+De par l'expérience, cette classification permet de bien comprendre les enjeux de la segmentation.
+
+\subsection{partie par problématique}
+\subsubsection{Modèles}
+
+% intro
+La segmentation recouvre un ensemble de techniques permettant d'extraire une structure à l'intérieur d'une image. Celle-ci, peut faire l'objet d'une chaine complexe de traitements qui répondent à différentes problématiques. Nous proposons ici une review des techniques utilisées pour la segmentation vasculaire et hépatique.
+% isolation d'un seul cas
+Pour l'angiographie, l'axiome de base est que les vaisseaux ont une intensité différente des tissues qui les entourent. Deux cas sont possibles, des vaisseaux clairs sur fond foncé ou des vaisseaux foncés sur fond clairs. Sans perte de généralité, nous n'aborderons que les vaisseaux clairs sur fond foncés, puisque les deux modèles sont interchangeable par simple inversion des niveaux de gris de l'image.
+% Modèle d'intensité - MIP, Seuils, Clustering
+Une des manières les plus naïves d'extraire les vaisseaux d'un volume est l'utilisation d'un seuillage ou d'une méthode similaire. Des méthodes se basant sur l'utilisation des MIP ont été proposées par XX et XX. He \cite{He2013_multi_otsu} propose une segmentation des vaisseaux hépatiques en 2D par une cascade d'étirement de constrate et de seuillages Otsu qui raffine peu à peu la segmentation. Bukenya \cite{Bukenya2016_multi_otsu}, étend cette méthode à la 3D et la renforce avec des modèles géométriques (white top hat + frangi) pour la détection de petits vaisseaux, De la même manière BahadarKhan, utilise une méthode hybride \cite{Bahadarkhan2016_fundus_region_based_otsu}. Zeng \cite{Zeng2018_auto_RG_AC_hepatic_vessels} utilise la méthode des K-plus proche voisins qui sert ensuite de segmentation initiale à une croissance de région de même que Goceri \cite{Goceri2017_vessel}. Ces méthodes montrent leurs limites lorsque le contraste des vaisseaux est faible, où que l'image étudiée ne contient pas d'intensités homogènes pour les mêmes tissues d'un même organe, comme c'est le cas pour l'IRM. Pour répondre à ces problématiques, des méthodes de rehaussement d'image peuvent être utilisées, tel que CLAHE,utilisé par exemple par Sigurosson \cite{Sigurosson2014_retinal_morpho_fuzzy} ou des méthodes plus poussées tel que proposé par Pavan \cite{Pavan2018_HCC_detection} pour l'imagerie du foie.
+% Modèle d'intensité - Tracking, modèles bayesiens
+Pour des méthodes intégrant du tracking, ou une composante de squeletisation, des modèles bayesiens permettent de prédire les changements d'intensités le long d'un vaisseau en fonction des voxels précédents rencontrés. \cite{Radojevic2015_fuzzy_logic}\cite{Radojevic2017_neurons_bayesian_tracing_density}
+% Modèles géométriques
+Les modèles d'intensités ne prennent pas en compte la forme des objets détectés et peuvent ainsi détecter des objets de même intensités d'étant pas des vaisseaux. Par exemple, pour des vaisseaux faiblement contrastés et bruitées, la distribution d'intensité des vaisseaux risque de chevaucher la distribution du bruit.
+
+\begin{figure}
+  \centering
+  \includegraphics[height=5cm]{Images/distribution_vesselsIntensity_mri.pdf}
+  \includegraphics[height=5cm]{Images/Goceri[2016].pdf}
+  \label{fig:overlap_vessels_tissues}
+  \caption{Histogrammes d'intensité des tissues du foie, en bleu l'intensité du fond du foie, en rouge l'intensité des vaisseaux (image placeholder, Goceri[2016] ) }
+\end{figure}
+
+Les modèles géométriques viennent compléter les modèles d'intensités. En effet, l'aspect spécifique des vaisseaux qui forment des structures curvilignes, les rendent le plus souvent très différents des autres organes.
+
+Les modèles les plus basiques sont les modèles en forme de disques, ou sphériques pour leurs équivalents 3D \cite{Law2008_OOF}. Les modèles sphériques sont limités par le fait que les éléments sphériques et tubulaires ne sont pas dissociables. Des variantes cylindriques ont aussi été proposées dans la littérature, Esneault \cite{Esneault2009_moments_graph_cut}, Cetin \cite{Cetin2015_high_order}. Le modèle prédominant est le modèle tubulaire  développé dans la section SEC.\ref{sec:. Celui-ci a l'avantage d'être plus général et flexible que le modèle cylindrique.
+
+La litterature propose aussi un ensemble de modèles déformables, sans à priori de formes. Ceux-ci nécessitent le plus souvent un point d'initialisation donné manuellement ou déterminé de manière automatique. Ces modèles sont contraints par une énergie qui définie les limites de déformation du modèle. La difficulté principale est de trouver un terme de contrainte permettant d'éviter un écoulement du modèle hors des vaisseaux.
+
+Enfin, une famille de modèle provenant de la morphologie mathématique modélise les vaisseaux comme un ensemble de chemins curviliénaires.
+
+\begin{figure}
+i  \centering
+  \includegraphics[height=5cm]{Images/geometricModels.png}
+  \label{fig:geometricModels}
+  \caption{Modèles géométriques basiques, sphère, cylindre, tubulaire et curvilinéaire}
+\end{figure}
 
 
-\begin{itemize}
-  \item{Contraste}
-     \begin{itemize}
-        \item{Thresholding, Clustering, intensity models}
-     \end{itemize}
-   \item{Geometrie et hiérarchie}
-     \begin{itemize}
-        \item{models, atlas, vesselness, morphology, max tree}
-     \end{itemize}
-\item{Critère de sélection}
-  \begin{itemize}
-  \item{Graph cut}
-  \item{Fuzzy criteria,}
-  \end{itemize}
-\end{itemize}
+\subsubsection{Caractéristiques}
 
+Pour mesurer la complémentarité entre les structures d'une image et le modèles choisis, il est nécessaire d'extraire des caractéristiques pertinentes.
 
+% Caractéristiques géométriques
+Les caractéristiques géométriques sont la plupart du temps exprimés grâce à des outils de différentiation. La dérivée première d'une image, appelé gradient, est un champ de vecteur représentant le sens et les variations d'intensités en tous points de l'image. On peut calculer un descripteur, le tenseur de structure, permettant de décrire la forme de la géométrie locale \cite{Wang2020_tensor_cut}. Un autre descripteur est la matrice des dérivées partielles secondes, appellée hessienne, qui encode la courbure de la géométrie locale.
+
+Caractéristiques de quantités, moments, quadrature filters, flux
+Graph construction, connectivity and topology. 
+Plus champs de tenseur, hessienne, steerable filters.
+
+Parmis les caractéristiques, une grande famille rassemble les descripteurs de géométrie locale. Ceux-ci se basent sur l'analyse différentielle de l'image. Les champs de gradients, sont les premières informations
+
+\subsubsection{Schéma d'extraction}
+
+Graph cut, level set, energy minimization
+fuzzy-connectivity
 
 \subsection{Segmentation deep learning 3D}
 \label{sec:EA:segmentation_deep3D}
