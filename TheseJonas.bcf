@@ -1923,19 +1923,36 @@
     <bcf:datasource type="file" datatype="bibtex">TheseJonas.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">Marcan_2014_vessel_seg</bcf:citekey>
+    <bcf:citekey order="1">Marcan2014_vessel_seg</bcf:citekey>
     <bcf:citekey order="2">Goceri2017_vessel</bcf:citekey>
-    <bcf:citekey order="3">lesage2009_review</bcf:citekey>
-    <bcf:citekey order="4">He2013_multi_otsu</bcf:citekey>
-    <bcf:citekey order="5">Bukenya2016_multi_otsu</bcf:citekey>
-    <bcf:citekey order="6">bahadarkhan2016_fundus_region_based_otsu</bcf:citekey>
-    <bcf:citekey order="7">zeng2018_auto_RG_AC_hepatic_vessels</bcf:citekey>
-    <bcf:citekey order="8">Sigurosson2014_retinal_morpho_fuzzy</bcf:citekey>
-    <bcf:citekey order="9">Pavan</bcf:citekey>
-    <bcf:citekey order="10">Radojevie2015_fuzzy_logic</bcf:citekey>
-    <bcf:citekey order="11">Radojevic_neurons_bayesian_tracing_density</bcf:citekey>
-    <bcf:citekey order="12">lindeberg2013_scale</bcf:citekey>
-    <bcf:citekey order="13">law2009_efficient_implementation</bcf:citekey>
+    <bcf:citekey order="3">Lesage2009_review</bcf:citekey>
+    <bcf:citekey order="4">Li2011_mri_level_set</bcf:citekey>
+    <bcf:citekey order="5">Zeng2018_liver_hybrid_active_contour_region_growing</bcf:citekey>
+    <bcf:citekey order="6">Zeng2017_liver_oof_graph_cut</bcf:citekey>
+    <bcf:citekey order="7">Zhang2018_liver_fuzzy_connectedness</bcf:citekey>
+    <bcf:citekey order="8">Caponetti2014_fuzzy_morphology</bcf:citekey>
+    <bcf:citekey order="9">Radojevic2015_fuzzy_logic</bcf:citekey>
+    <bcf:citekey order="10">Sigurosson2014_retinal_morpho_fuzzy</bcf:citekey>
+    <bcf:citekey order="11">Wang2020_tensor_cut</bcf:citekey>
+    <bcf:citekey order="12">He2013_multi_otsu</bcf:citekey>
+    <bcf:citekey order="13">bukenya2016_heart_otsu_top_hat_hessian</bcf:citekey>
+    <bcf:citekey order="14">Bahadarkhan2016_fundus_region_based_otsu</bcf:citekey>
+    <bcf:citekey order="15">Zeng2018_auto_RG_AC_hepatic_vessels</bcf:citekey>
+    <bcf:citekey order="16">Goceri2017_vessel</bcf:citekey>
+    <bcf:citekey order="17">Sigurosson2014_retinal_morpho_fuzzy</bcf:citekey>
+    <bcf:citekey order="18">Pavan2018_HCC_detection</bcf:citekey>
+    <bcf:citekey order="19">Li2011_mri_level_set</bcf:citekey>
+    <bcf:citekey order="20">Radojevic2015_fuzzy_logic</bcf:citekey>
+    <bcf:citekey order="21">Radojevic2017_neurons_bayesian_tracing_density</bcf:citekey>
+    <bcf:citekey order="22">Law2008_OOF</bcf:citekey>
+    <bcf:citekey order="23">Esneault2009_moments_graph_cut</bcf:citekey>
+    <bcf:citekey order="24">Cetin2015_high_order</bcf:citekey>
+    <bcf:citekey order="25">Heijmans2005_path_opening</bcf:citekey>
+    <bcf:citekey order="26">lindeberg2013_scale</bcf:citekey>
+    <bcf:citekey order="27">law2009_efficient_implementation</bcf:citekey>
+    <bcf:citekey order="28">sazak_2D</bcf:citekey>
+    <bcf:citekey order="29">sazak_3D</bcf:citekey>
+    <bcf:citekey order="30">Heijmans2005_path_opening</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">
