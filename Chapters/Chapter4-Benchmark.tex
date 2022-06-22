@@ -8,19 +8,43 @@
 
 \section{Propriétés}
 \label{sec:Benchmark}
+
+Dans cette section, nous abordons la conception d'un banc de test pour évaluer la qualité du rehaussement de vaisseaux proposé par différents filtres. Celui-ci est disponible dans un dépôt dont la philosophie dépasse la seule comparaison de filtres pour proposer un ensemble réutilisable et adaptable aux besoins de futurs utilisateurs.
+
+% Objectif 1 - rassembler les méthodes
+L'un des objectifs principal de ce dépôt est de proposer un endroit avec une série de filtres de rehaussement utilisables immédiatement sans nécessité de  recoder ou d'installer de multiples outils. En effet, tout comme pour les publications, les disponibilités des filtres varient grandement. Certains filtres ne sont tout simplement pas disponibles publiquement et doivent être implémentés à partir de la publication originale. D'autres sont disponibles sur les sites des auteurs (Merveille, Law), dans des librairies diverses (ITK,scipy) ou nécessitent des logiciels tiers (ImageJ) avec des licences parfois payantes (Matlab). Cette multiplicité des sources complique la tâche des utilisateurs et demande un investissement conséquent pour rassembler les travaux. Cet investissement est particulièrement décuplé avec la dette technologique tel que de nouvelles versions de logiciels ou des librairies implémentant de nouveaux paradigmes.
+% Objectif 2 - proposer un benchmark qui s'adapte aux données
+Le second objectif dans la conception de ce banc de test a été l'adaptation du banc aux données. Ainsi, par contraste avec des implémentations comme NN-Unet \cite{Isensee2021_NN-Unet}, qui nécessite un formatage du jeux de données pour que la chaine de traitement fonctionne, nous avons philosophie inverse pour que le banc de test s'adapte à la structure du jeu de donnée.
+% Objectif 3 - proposer un benchmark léger
+Le troisième objectif est de proposer un banc de test assez léger en ressources, aussi bien en temps d'exécution de manière à ce que le temps d'exécution des filtres soit le principal goulot d'étranglement et de manière à pouvoir s'exécuter sur des machines avec de faibles ressources en mémoire physiques.
+% Objectif 4 - pipeline proposé
+
+\paragraphe{Module d'évaluation}
+
+Le module d'évaluation a été écrit en C++ de manière à profiter des performances accrues des languages compilés qui est particulièrement nécessaire pour le traitement de données 3D. Le C++ nous permet aussi de profiter d'une librairie de traitement d'images particulièrement efficace, ITK développé par Kitware Inc. qui propose le support de nombreux types d'images médicales (2D,3D ou plus) et un nombre important de filtres de traitements.
+
+Le module prend en paramètre plusieurs listes de données 
+
 \section{Expériences}
 \label{sec:Benchmark:experiences}
+
 \subsection{Filtres}
 \label{sec:Filtres}
+
 \subsection{Pré-traitements des bases de donnée}
 \label{sec:Benchmark:traitement_des_données}
+
 \subsection{Stratégie d'optimisation}
 \label{sec:Benchmark:optimisation}
+
 \subsubsection{Optimisation globale}
 \label{sec:Benchmark:optimisation_globale}
+
 \subsubsection{Optimisation globale améliorée}
 \label{sec:Benchmark:optimisation_globale_ameliorée}
+
 \subsection{Résultats}
 \label{sec:Benchmark:résultats}
+
 \subsection{Reproductibilité}
 \label{sec:Benchmark:reproductibilité}
