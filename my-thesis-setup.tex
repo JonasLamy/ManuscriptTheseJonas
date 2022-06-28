@@ -41,7 +41,7 @@
 % Jonas command
 % ********************************
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{TODO:}#1}}
-
+\newcommand{\etal}{{\it et~al.}\xspace}
 % **************************************************
 % Debug LaTeX Information
 % **************************************************
@@ -51,8 +51,6 @@
 % **************************************************
 % Load and Configure Packages
 % **************************************************
-\usepackage{amsmath}
-
 \usepackage[english]{babel} % babel system, adjust the language of the content
 \PassOptionsToPackage{% setup clean thesis style
     figuresep=colon,%
@@ -87,3 +85,6 @@
 % Other Packages
 % **************************************************
 \usepackage{scrhack}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
