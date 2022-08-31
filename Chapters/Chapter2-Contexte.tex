@@ -9,11 +9,277 @@
 \section{Contexte clinique}
 \label{sec:contexte:clinique}
 
+Le foie est un organe vital dans le fonctionnement du corps humain. Il est impliqué dans de nombreux systèmes vitaux, contrôle de la glycémie, élimination des toxines du sang, participation à la digestion et au système immunitaire. Le suivi des dysfonctionnements de cet organe est donc crucial pour les médecins.
+
+Le foie est situé au niveau de l'abdomen, au-dessous des poumons. Il est adjacent à l'estomac et au cœur comme illustré dans la figure \ref{fig:liver}.
+
+Dans un système vasculaire classique, le sang oxygéné est apporté par les artères dans les organes, puis passe par un réseau de capillaires dans l'organe avant que le sang appauvri ne soit renvoyé au cœur par le système veineux. Pour le foie, l'artère hépatique et la veine cave joue ce rôle. Le foie est alimenté par un second système veineux qui connecte le foie à l'estomac, le pancréas et la rate et alimente le foie en nutriments. C'est la veine porte qui joue ce rôle pour le foie.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=5cm]{Images/Liver.png}
+    \caption{Foie humain}
+    \label{fig:liver}
+\end{figure}
+
+La veine cave alimente le foie au niveau de sa partie supérieure. La veine porte alimente le foie par son centre via le tronc porte. Celui-ci se subdivise une première fois à l'entrée du foie puis les deux branches se subdivisent en son sein plusieurs fois. Cette veine a un intérêt particulier puisqu'elle continue sa subdivision dans 6 régions indépendantes du foie. Cette subdivision illustrée en figure \ref{fig:liver veins} est largement adoptée par les médecins sous le nom de schéma de Couinaud. Ce schéma permet en effet de planifier les opérations d'extractions de tumeurs en définissant les frontières des zones à extraire.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/Liver_vasculature.png}
+    \includegraphics[height=4cm]{Images/Couinaud.png}
+    \caption{À gauche, système vasculaire hépatique. À droite, la segmentation de Couinaud}
+    \label{fig:liver veins}
+\end{figure}
+
+
+La hiérarchie des systèmes veineux et artériels sont relativement stable dans la population, mais des variations entre les individus peuvent survenir de manière assez fréquente. Une étude, réalisée par Fang et al. \cite{Fang2012_Liver_vein_variations} effectuée sur 200 patients, montre que le schéma "classique" ne représente que 61\% des cas. Les 39\% restants se divisent en cas particuliers. Le réseau lymphatique est aussi présent au niveau du foie, mais le diamètre réduit des canaux lymphatiques rend ce système invisible sur la plupart des imageries hépatiques. Le reste du foie présente un tissu relativement homogène lorsque celui-ci est sain.
+Lorsque le foie est malade, l'apparence des systèmes veineux et artériel peut-être extrêmement altérée. Dans le cas de tumeurs, des zones de densités différentes peuvent venir altérer les tissus aux alentours. Lors de maladies comme la cirrhose (voir Fig. \ref{fig:unhealthy liver}), le foie peut changer drastiquement d'aspect et se contracter, réduisant ainsi sa taille et écrasant les vaisseaux. Ceux-ci peuvent ainsi ne plus être détectés lors de l'acquisition d'images. 
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/Liver_cirrhosis_stages.jpg}
+    \caption{Différents stades de maladie du foie}
+    \label{fig:unhealthy liver}
+\end{figure}
+
+La plupart des images de foie disponibles sont des foies de patients malades dans la mesure où les actes médicaux ne sont pas réalisés sans suspicion de maladie.
+
 \section{Contexte d'acquisition d'images}
 \label{sec:contexte:images}
 
-\subsection{IRM}
+Les avancées technologiques dans l'imagerie médicale sont motivées par le besoin de connaitre le patient en limitant les opérations intrusives pour le patient. Des techniques permettant d'obtenir une image d'une partie interne du corps ou d'un organe ont donc vu le jour. On peut par exemple citer l'imagerie à ultrason qui permet d'obtenir une image en envoyant des ondes sonores à travers un médium. Le calcul du temps de propagation permet ensuite de générer une image en fonction de la densité des tissus traversés. On peut aussi citer la plaque radiographique, qui permet de créer une image en deux dimensions en exposant une plaque sensible aux rayonnements à une source de photons. En plaçant le corps entre la plaque et la source, les tissus filtrent une partie des faisceaux qui atteignent la plaque, permettant de voir à travers les tissus de faible densité. Un exemple des deux techniques est montré en Fig. \ref{fig:2D imaging}.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/first_CT.png}
+    \includegraphics[height=4cm]{Images/Liver_ultrasound.jpg}
+    \caption{Exemples d'acquisitions 2D : À gauche, la première image obtenue par rayons X (Roentgen, 1895). À Droite, Image par ultrason du foie. La veine porte est visible en noir.}
+    \label{fig:2D imaging}
+\end{figure}
+
+Ces méthodes, à l'origine limitées à la 2D, ne permettaient pas d'avoir un rendu des organes en trois dimensions. Deux techniques, communément employées, aujourd'hui ont donc été développées pour acquérir des images volumiques.
+
+\subsection{Tomodensitométrie}
+\label{sec:contexte:images:CT}
+
+La tomodensitométrie (TM) est un système reposant sur l'émission de rayons X développée en 1979 par Houndsfield et al. \cite{Houndfield1995_CT_machine}.
+
+Le patient est allongé sur une table autour duquel est positionné un anneau. La table du patient est déplacé dans l'axe des pieds à la tête (axe longitudinal). L'anneau de la machine tomodensitométrique contient un tube émetteur de rayons X ainsi qu'une rangée de détecteurs sur la partie opposée de l'anneau. L'anneau tourne autour du patient afin d'acquérir le plan XY, ou plan axial. Les acquisitions lorsque la table est immobile, on parle de mode axial ou séquentiel. Lorsque la table est en mouvement pendant l'acquisition, on parle de mode spiralé ou hélicoïdal. Cette technologie est irradiante puisque que l'image est obtenue grâce à l'atténuation du rayonnement par le patient. Une exposition à un rayonnement important peut être à l'origine de cancers, c'est pourquoi les doses auxquelles sont exposés les patients sont très contrôlés par les radiologues.
+
+Les images produites par un système CT sont des sinogrammes, un type d'images qui contient la projection du profil détecté pour un certain angle du capteur. On peut ensuite reconstituer une image 2D grâce à la transformée de Radon, qui permet de reconstituer un point dans l'espace à partir de la totalité de ses projections. L'ensemble du processus est illustré en Fig. \ref{fig:tomography}.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=6cm]{Images/Tomo_projection.png}
+    \caption{Acquisition par projection et reconstruction du signal. La reconstruction étant finie, des artefacts de flou peuvent être présent.}
+    \label{fig:tomography}
+\end{figure}
+
+Les artefacts liés à la tomodensitométrie sont multiples. Premièrement, la qualité de l'image dépend du nombre de projections disponibles. Les structures peuvent être floues dues à la reconstruction. En effet, en théorie une image nette est obtenue par la reconstruction d'un nombre infini de projections. En pratiques le nombre de projections est défini comme un compromis entre rapidité d'acquisition et qualité de l'image. Le flou peut provenir d'autres sources tel que les mouvements du patient, la distance à la source, où être causé par l'absorption des tissus. 
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/blury_vessels.png}
+    \caption{Tranche d'une tomographie du foie. Les taches floues et claires  correspondent aux vaisseaux hépatiques}
+    \label{fig:CT_blur}
+\end{figure}
+
+Deuxièmement, les images tomodensitométriques montrent toutes un profil bruité. Ce bruit est issu de la source de photon qui les émet de manière aléatoire. En théorie ce phénomène suit une loi de probabilité de Poisson. Cependant, le bruit affectant les images à la fin du processus est un bruit additif blanc gaussien \cite{Lei1992_gaussianNoiseCT}. Ce bruit est défini par la densité de probabilité suivante :
+
+\begin{equation}
+\frac{1}{\pi \sqrt{2\pi} } exp\big( \frac{ (x-\mu)^2}{2\sigma^2} )    
+\end{equation}
+
+Elle est paramétrée par l'intensité moyenne du bruit $\mu$ et son écart-type $\sigma$. $\sigma$ correspond à la dispersion des valeurs d'intensité du bruit autour de sa moyenne.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/noise_CT.png}
+    \caption{Tranche d'une tomographie du foie. Les taches floues et claires correspondent aux vaisseaux hépatiques.}
+    \label{fig:CT_noise}
+\end{figure}
+
+Troisièmement ce type d'imagerie est sensible aux objets métalliques tels que les broches. Ces objets provoquent des phénomènes de saturation sous formes de rayons concentriques visibles en Fig. \ref{fig:metallic artefacts}.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/broaches_CT.png}
+    \includegraphics[height=4cm]{Images/broaches_CT_slice.png}
+    \caption{Les broches métalliques visibles dans la vue 3D, provoquent des artefacts de saturation et de rayonnement visibles sur les vues en tranches.}
+    \label{fig:metallic artefacts}
+\end{figure}
+
+Les intensités des images tomodensitométriques sont encodé dans une unité particulière, l'unité Houndsfield (Hu). Cette unité mesure le coefficient d'atténuation du rayonnement. Elle fixe à 0 l'atténuation de l'eau distillée et -1000 l'atténuation de l'air. La limite haute dépend du nombre de bits utilisé pour l'encodage des pixels de l'image ($~3071$ Hu pour l'acier en 12 bits vs $~13588$ Hu en 16 bits) \cite{Glide2013_metal_saturation}. Cette game élevée de niveau de gris n'est pas détectable dans son ensemble par l'oeil humain et nécessite des écrans spécifiques ou l'utilisation de fenêtres d'intensités ajustables dynamiquement.
+
+L'acquisition des images se fait couche par couche. Pour obtenir une image en trois dimensions, il suffit d'empiler les tranches 2D.
+
+\subsection{Imagerie par résonance magnétique}
 \label{sec:contexte:images:irm}
 
-\subsection{CT}
-\label{sec:contexte:images:CT}
+Les premières images du corps humain obtenus par résonances magnétiques (IRM) ont été réalisées par Damadian et al. en 1977 \cite{Damadian1977_NMRI}. Les machines utilisées pour l'imagerie par résonance magnétiques sont similaires en apparence à la tomodensitométrie, cependant leur fonctionnement est entièrement différent. L'IRM repose sur la mesure du retour à l'équilibre du moment magnétique de particules chargées. Lorsque certains atomes sont soumis à un champ magnétique, ceux-ci s'orientent dans la direction du champ magnétique. Dans un système IRM, un champ magnétique constant permet d'aligner les atomes d'hydrogènes constitutifs des tissus dans une certaine direction appelé axe longitudinal. Ces particules sont en préhension, c'est-à-dire qu'elles tournent sur elles même autour de l'axe longitudinal comme une toupie qui se stabilise le long de son axe de rotation. Lors de l'acquisition, un deuxième champ magnétique orthogonal au premier champ magnétique provoque une résonance avec les atomes d'hydrogènes qui sont contraints d'augmenter leur angle de précession. Ce champ magnétique est ensuite arrêté ce qui provoque un retour à la normale de la précession des atomes d'hydrogène. C'est le temps que prend la précession pour se réaligner avec l'axe longitudinal, appelé temps de relaxation, qui est mesuré par un IRM afin de produire une image.
+
+Le temps de relaxation est dépendant de l'agitation moléculaire. Si l'agitation est très faible comme dans les tissus durs (os), ou très forte, la relaxe est lente. Au contraire, une agitation modérée, caractéristique des tissus mous produit une relaxe rapide.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/T1_in_phase.png}
+    \includegraphics[height=4cm]{Images/T1_out_phase.png}
+    \caption{Volumes de la base Chaos en phase T1-in (gauche) et T1-out (droite). La différence du temps d'écho entre l'émission et la réception du signal produit contrastes différents.}
+    \label{fig:T1 MRI}
+\end{figure}
+
+Dans une machine IRM, le patient est allongé sur une table et  est positionné à l'intérieur d'un anneau. C'est cet anneau qui contient les aimants produisant les champs magnétiques.
+
+\subsection{Artefacts des images IRM}
+
+Les images IRM sont affectés par de nombreux artefacts. Nous présentons ici les trois principaux.
+
+Premièrement, l'acquisition IRM dure environ 20 à 30 min. Il est demandé au patient de ne pas bouger et de retenir sa respiration, ce qui peut-être difficile et/ou douloureux pour les patients. Il est donc courant d'observer des artefacts liés au mouvement dans les images IRM (Fig. \ref{MRI_movement}). Ceux-ci sont visibles de deux manières, la présence d'un organe fantôme légèrement décalé par rapport à l'organe lui-même ou la fusion des tissus d'organes adjacents. Deux organes peuvent aussi se superposer et une fusion des tissues peuvent être visibles sur les images.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/MRI_movements.png}
+    \caption{Artefacts de mouvement visibles sur les bordures du foie.}
+    \label{fig:MRI_movement}
+\end{figure}
+
+Le bruit est aussi présent dans les images IRM, ce bruit est particulier puisqu'il s'agit d'un bruit multiplicatif Ricien. Il s'exprime par la densité de probabilité suivante : 
+
+\begin{equation}
+    f(x | \mu, \sigma) = \frac{x}{\sigma^2} exp ( (-x^2 + \mu^2)/(2\sigma^2) ) I_0 (\frac{x\mu}{\sigma^2})
+    \end{equation}
+
+Avec $I_0(z)$ la fonction de Bessel de première espèce et d'ordre 0. 
+
+Lorsque le SNR est faible, la densité de probabilité de ce type de bruit ne suit pas du tout une densité de probabilité de bruit gaussien. Lorsque celui-ci augmente, la densité de probabilité approxime une distribution Gaussienne. Un exemple est donné en Fig. \ref{fig:MRI_Rice}.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/rice_PDF.png}
+    \caption{Distributions de Rice. Lorsque $\mu$ est faible, la partie gauche de la courbe présente une forte pente.}
+    \label{fig:MRI_Rice}
+\end{figure}
+
+Le positionnement de l'antenne par rapport au corps du patient peut aussi entrainer des variations dans le champ magnétique global qui résulte par des variations d'intensités locales. Ainsi, des tissus de même nature peuvent montrer des profils d'intensités variés comme sur la Fig. \ref{fig:MRI_variations}.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/MRI_field_variations.png}
+    \caption{IRM du foie, T1-in. On observe une variation d'intensités pour des tissues de mêmes natures}
+    \label{fig:MRI_variations}
+\end{figure}
+
+\section{données}
+
+L'annotation des données est de plus une tâche complexe. Elle nécessite la supervision d'un médecin expert car les organes à annoter sont complexes à identifier. Plusieurs types d'annotations sont possibles. Pour les vaisseaux sanguins par exemple, on peut choisir d'annoter la ligne centrale. On peut alors définir cette ligne comme une courbe passant par une série de points de contrôles. Cette méthode est économe en temps d'annotations, mais ne fournit généralement pas des informations précises sur l'aspect des vaisseaux et leurs diamètres. Une autre méthode consiste à créer un masque de segmentation en annotant les voxels appartenant aux vaisseaux. Cette méthode est la plus complète, mais nécessite bien plus de temps à l'annotateur. De plus la notion de frontière entre les structures est subjective et varie d'un avis d'expert à l'autre. Une solution optimale est de moyenner le résultat parmi plusieurs annotateurs. Cette méthode demande cependant une mobilisation d'un nombre important de médecins. Il faut garder à l'esprit que dans un hôpital, un médecin peut rarement consacrer du temps pour annoter des données ce qui rend ce type d'initiatives rare.
+De plus, l'accès aux données CT et IRM peut-être difficile. La législation sur la protection des données personnelles puis la directive européenne complexifient l'accès aux données personnelles. En effet, la collecte de donnée dans un hôpital est soumise à un accord préalable d'un comité éthique puis de l'accord d'un patient. Pour la recherche, les données qui sont transmises doivent être anonymisées, c'est-à-dire que les informations contenues dans les images telles que le nom du patient, le nom de la série ainsi que la date de l'acquisition doivent être effacé. Cependant, depuis la RGPD, le patient à la possibilité de rétracter son avis à tout moment ce qui nécessite une forme d'anonymisation qui permet un suivi des données. On peut citer par exemple la tokenisation, qui permet d'attribuer une signature chiffrée à un volume.
+
+Face à ces difficultés, une grande partie des bases des données utilisées dans les résultats de publications sont privées. L'auteur cite en général les conditions d'acquisition et le nombre de volumes disponibles, mais ne donne pas un accès aux données. Certains jeux de données sont tout de même disponibles publiquement. Nous passons ici en revue les jeux de données publiques pour l'organe du foie et discutons des alternatives disponibles.
+
+\subsection{Ircad}
+
+La base de donnée 3DIrcadb1 est proposée par l'Institut de recherche contre les cancers de l'appareil digestif (Ircad) de Strasbourg. Cette base contient des images de tomodensitométrie de l'abdomen (Fig. \ref{fig:Ircad_examples}). Elle contient les images de 20 patients répartis en 50\% homme/femme et 75\% de foies lésés. Pour chaque patient une image tomographique inclue le foie et mesure entre 512x512x74 et 512x512x260 voxels pour une résolution des coupes axiales variant entre 0.56 mm et 0.87 et une épaisseur des coupes variant entre 1.00 mm et 4.00 mm. Elle fournit aussi un masque voxélique des organes de l'abdomen. Pour le foie, les masques des deux systèmes veineux porte et cave sont fournis dans des volumes différents. Un masque des tumeurs du foie sont aussi disponibles.
+
+Cette base datant de 2010 est la base la plus complète pour la segmentation des vaisseaux du foie. Cependant, elle n'est pas exempte d'anomalies. Premièrement, le nom des vérités terrain n'est pas consistant : le masque des veines porte est appelé "portal vein" quand celui de la veine cave est appelé soit "Venous system" ou "vena cava". Cette différence de nom indique que sans doutes deux médecins différents ont participé à l'annotation des données. Deuxièmement, des voxels parasites sont présents dans le volume du masque du foie produisant des petites composantes connexes qui interfèrent avec les traitements sur les masques comme la sélection de la boite englobante du foie. Enfin, certains vaisseaux à l'intérieur du foie ne sont pas annotés. Cela concerne des petites structures tubulaires mesurant quelques voxels de large, mais aussi de gros vaisseaux. Ces oublis perturbent forcément l'évaluation des méthodes de segmentation puisque des vaisseaux non annotés seront tout de même détectés et comptés comme des segmentations erronées. Ce biais est cependant appliqué à toutes les méthodes utilisant ces données ce qui en limite la portée.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=5cm]{Images/Ircad_examples.png}
+    \caption{À gauche, coupe du foie issue d'un volume de l'Ircad. À droite, vérité terrain des vaisseaux}
+    \label{fig:Ircad_examples}
+\end{figure}
+
+\subsection{CHAOS}
+
+Le jeu de donnée CHAOS est issue du challenge du même nom (CHAOS challenge - combined (CT-MR) Healthy Abdominal Organ Segmentation). Celui-ci propose deux jeux de données avec deux modalités différentes. Un premier jeu contient 40 images CT obtenue après injection d'agent de contraste dans la veine porte. L'acquisition est prise 70-80 secondes après l'injection et elle permet de mettre en valeur le système veineux porte et une partie de la veine hépatique. Ce jeu de donné possède des images de résolution 512x512 avec une résolution entre 0.7 mm et 0.8 mm dans le plan x-y et 3 mm à 3.2 mm dans l'axe Z.
+
+Un second jeu, IRM inclu 120 volumes acquis selon des méthodes différentes : 40 volumes acquis en phase T1-in (Fig. \ref{fig:T1 MRI}), 40 volumes  en phase T1-out (Fig. \cite{fig:T1 MRI}) et 40 séquences en phase T2 spiralé (Fig.\ref{fig:T2 MRI}). La pondération de contraste T2 rend les vaisseaux du foie hyper intense et l'acquisition spiralé permet de mieux séparer les tissus tout en limitant les artefacts de mouvement.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/T1_in_phase.png}
+    \includegraphics[height=4cm]{Images/T1_out_phase.png}
+    \caption{Volumes de la base Chaos en phase T1-in (gauche) et T1-out (droite). La différence du temps d'écho entre l'émission et la réception du signal produit contrastes différents.}
+    \label{fig:T1 MRI}
+\end{figure}
+
+Cette Base de donnée est complète dans le sens où elle propose deux modalités avec plusieurs modes d'acquisitions. Contrairement à l'Ircad, la résolution dans l'axe Z est plus élevé ce qui pousse à une analyse des structures tranche par tranche. La page d'information du Grand Challenge pousse d'ailleurs en ce sens en précisant le nombre de tranches totales et leur répartition en jeu d'entrainement et de test. De plus l'objectif de cette base étant la segmentation des organes abdominaux, elle ne propose que le masque du foie comme annotation.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/T2_SPIR.png}
+    \caption{Volumes de la base Chaos acquise en phase T2 spiralé. Le contraste des vaisseaux est plus important en pondération T2}
+    \label{fig:T2 MRI}
+\end{figure}
+
+\subsection{Medical Decathlon}
+
+Le Challenge Medical Decathlon propose de mesurer les performances d'algorithmes de segmentations sur 10 tâches qui regroupent différents organes (Cerveau, cœur, Hippocampe, Foie, Pancréas, Prostate, Colon, Rate). Le Challenge regroupe un nombre significatif de volumes par tâches, de 30 volumes pour le cœur jusqu'à 750 volumes pour le cerveau. Une modalité par organe est proposé : IRM pour le cerveau, le cœur, l'hippocampe, la prostate et la tomodensitométrie pour le reste. Deux tâches concernent le foie, toutes deux acquises en phase veineuse porte. La première tâche concernant la segmentation du foie et des tumeurs hépatiques contient 210 volumes. La seconde tâche concernant la segmentation des vaisseaux et des tumeurs hépatiques regroupe 443 volumes.
+
+Les données hépatiques pour la première tâche ont été sélectionnés pour leur variabilité en termes de taille de labels avec de fortes variations de tailles de foie, de nombre de tumeurs, etc. Ces données ont été acquises au centre de l'Ircad de Strasbourg. La résolution des images pour cette tâche est de 0.5 mm à 1.0 mm dans l'axe x-y et 0.45 mm à 6.0 mm dans l'axe z. Les annotations sont faites par un expert radiologue.
+
+Les données hépatiques pour la seconde tâche sont issues de patients avec des tumeurs hépatiques parfois métastasés. Les vaisseaux sanguins présentent parfois des connexions au niveau des tumeurs. Ces données ont été acquises par le centre contre le cancer Memorial Sloan à New York. Pour cette tâche, la résolution des images dans l'axe z varie de 2.5 mm à 5 mm. Les masques de segmentation ont été annotés de manière semi-automatique par une approche par croissance de région. Les contours ont ensuite été ajustés par des radiologues.
+
+Cette base de donnée à l'avantage de proposer un grand nombre de volumes dans plusieurs modalités. Cependant, l'annotation semi-automatique produit une vérité terrain moins précise, en particulier pour les petits vaisseaux. On peut aussi noter un nombre conséquent de vaisseaux déconnectés du réseau vasculaire dans les annotations. De plus, pour le foie, les pas supérieurs à 3 mm dégradent fortement la géométrie des vaisseaux lorsque l'on considère une approche de segmentation/détection 3D.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/MD_examples.png}
+    \caption{Challenge Médical Décathlon. Volumes TM hépatique (gauche) et la vérité terrain associée.}
+    \label{fig:MD_examples}
+\end{figure}
+
+\subsection{VascuSynth, données synthétiques}
+
+Lorsque des données cliniques avec des annotations sont difficiles à obtenir une autre solution est de générer un volume synthétique contenant un réseau vasculaire synthétique. VascuSynth est un programme permettant de créer un réseau vasculaire en fonction d'une carte d'oxygénation et des paramètres de pressions sanguines à l'entrée de celui-ci. Le réseau vasculaire est construit de manière itérative de sa racine jusqu'aux extrémités. L'utilisateur peut de plus paramétrer la complexité du réseau en spécifiant le nombre de bifurcations attendues. Il est aussi possible d'ajouter du bruit additif gaussien au volume.
+
+La résolution des volumes est  normalisée à 1 mm pour l'ensemble des axes. Les vaisseaux de vascuSynth présentent des profils d'intensité quasi homogènes, avec une intensité des voxels moindres près des bordures. Les volumes ont un fond nul. La vérité terrain des vaisseaux, précise au pixel près, peut donc être obtenue par simple seuillage.
+
+Une base de donnée pré-générée est disponible sur le site de vascuSynth. Celle-ci propose 120 volumes répartis en 10 groupes de 12 volumes. Chaque groupe contient des volumes de réseaux vasculaires dont le nombre de bifurcations varie entre 1 et 56 avec un pas de 5 (1,6,11,...,56) comme illustré en Fig. \ref{fig:VascuSynth}. Le jeu de données est aussi fourni avec un fichier Matlab décrivant les coordonnées des bifurcations.
+
+Les bases de données synthétiques possèdent les vérités terrains les plus complètes. Cependant, le contexte de ces jeux de données est beaucoup plus simple que les images réelles. Les vaisseaux générés sont aussi plus simples, dans le cas de VascuSynth, les vaisseaux sont des tubes pleins droits discrétisés.
+
+\begin{figure}
+    \centering
+    \includegraphics[height=4cm]{Images/snapVascu.png}
+    \caption{Exemples de volumes issues de la base VascuSynth\_2013.}
+    \label{fig:VascuSynth}
+\end{figure}
+
+\subsection{Bullitt}
+
+Plus généralement, trouver des bases de données publiques d'images réelles vasculaires avec leur vérité terrain n'est pas simple. La base de donnée Bullitt est un jeu de donnée d'acquisitions IRM du cerveau. Sur une partie des données (une trentaine de volumes), la ligne centrale et le rayon des vaisseaux est fourni. Une segmentation des vaisseaux peut être reconstruite grâce à l'outil tubeTK, cependant la reconstruction est faite à partir d'un tube circulaire et a tendance à sous-estimer / manquer des voxels appartenant aux vaisseaux.
+
+Les travaux de Sanchez et al. \cite{} améliorent ces vérités terrains de manière et augmente de 200\% le nombre de voxels appartenant à la segmentation initial, permettant ainsi l'utilisation d'annotations plus précises.
+
+Cette base de donnée est particulièrement bien acquise et présente très peu d'artefacts comparés à une image IRM classique. Le seul artefact notable est un faible bruit constant sur l'ensemble de l'image.
+
+\subsection{Bases de données relatives au projet R-Vessel-X}
+
+Il était prévu pour le projet ANR une campagne de collecte de données TM et IRM durant la durée du projet et commençant en même temps que la thèse. Cette collecte devait être réalisée sur des patients en cours de traitement. Cependant, la nécessité d'obtenir un accord d'une commission éthique puis le besoin d'obtenir un espace de stockage dédié avec une société accréditée a retardé la collecte des données d'au moins un an. Celle-ci a finalement aboutie sur une collecte de données rétrospective (patients ayant quitté l'hôpital) en même temps que le développement d'un logiciel d'annotations de données (voir Chap. 5). Ces données n'ont pas été exploité dans nos travaux, puisque des annotations utilisables dans le contexte de notre étude n'étaient pas prêtes.
+
+\section{Bilan}
+
+Dans un premier temps, nous avons choisi d'utiliser deux jeux de données : La base de l'Ircad et le jeu de donnée de VascuSynth\_2013. La base de l'Ircad contient des artefacts variés de TM (bruit, artefacts métalliques, etc.) et des masques de segmentation pour tous les volumes. Cela nous permet d'évaluer plus aisément les performances des algorithmes employés dans nos travaux. De plus la résolution spatiale des volumes est une des meilleures parmi les bases disponibles. On peut ainsi utiliser des traitements 3D plutôt que de considérer un volume comme une séquence de coupes 2D. VascuSynth\_2013 offre une précision des vérités terrains qui n'est pas possible sur les bases réelles. C'est donc une base que nous avons jugé nécessaire de pour notre travail. Celle-ci nécessite tout de fois un traitement complémentaire afin de rendre les volumes proches d'une acquisition réelle. Ce traitement est décrit dans le Chap. 4 où nous avons choisi d'ajouter des artefacts IRM aux données.
+
+Afin de compléter nos jeux de données et diversifié nos expériences, nous avons ajouté la base de Bullitt afin d'ajouter des données réelles avec la modalité IRM. Les images de Bullitt étant de trop bonne qualité, nous avons dégradé ces images.
+
+Les qualités des trois bases de données sont récapitulées dans la Tab. \ref{tab:db_for_exp}.
+
+\begin{table}
+    \centering
+    \begin{tabular}{ c|c|c }
+        \hline
+        Jeux de données & Modalités & Organe \\
+        \hline
+        Ircad           & TM & Foie \\
+        VascuSynth      & Synthétique / IRM simulé & Aucun \\
+        Bullitt         & IRM + artefacts ajoutés & Cerveau \\
+        \hline
+    \end{tabular}
+    \caption{Bases de données retenues pour la suite de nos travaux.}
+    \label{tab:db_for_exp}
+  \end{table}
+
+

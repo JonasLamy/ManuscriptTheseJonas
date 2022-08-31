@@ -24,8 +24,9 @@ sC1='\\input{Chapters/Chapter1-Introduction}\n'
 sC2='\\input{Chapters/Chapter2-Contexte}\n'
 sC3='\\input{Chapters/Chapter3-Etat_de_l_art}\n'
 sC4='\\input{Chapters/Chapter4-Benchmark}\n'
+sC5='\\input{Chapters/Chapter5-Analyse-du-rehaussement}\n'
 
-sAll+="$sC1$sC2$sC3$sC4"
+sAll+="$sC1$sC2$sC3$sC4$sC5"
 
 
 for i in $@
@@ -46,6 +47,10 @@ do
 
     if [[ $i == "Chap4" ]]; then
 	s+=$sC4
+    fi
+
+    if [[ $i == "Chap5" ]]; then
+	s+=$sC5
     fi
 
     if [[ $i == "All" ]]; then

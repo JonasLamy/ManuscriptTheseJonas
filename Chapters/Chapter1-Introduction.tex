@@ -6,7 +6,72 @@
 
 \cleanchapterquote{Un petit chapitre pour le doctorant, un grand chapitre pour l'humanité}{Doctorant anonyme}{(Citation temporaire)}
 
-\section{résumé de la thèse et apports}
-\label{sec:introduction:résumé}
+Cette thèse s'inscrit dans le cadre du traitement d'images médicales. Celle-ci est avant tout une thèse d'analyse d'images avec une teinte de biologie puisque les problématiques rencontrées durant cette thèse découlent directement de considérations anatomiques.
+
+Le sujet de cette thèse est l'analyse de filtres de rehaussements de vaisseaux sanguins pour l'imagerie médicale 3D. L'objectif initial était la comparaison de ces filtres afin de concevoir des outils de segmentation pour l'imagerie 3D du foie. Cet objectif a ensuite évolué pour se concentrer sur le développement d'outils d'analyses et d'évaluations de filtres de rehaussement de vaisseaux dans un cadre reproductible. En effet, ces filtres constituent une brique essentielle de la segmentation, mais peu de travaux portent sur leur évaluation de manière isolée.
+
+Dans cette introduction, nous décrivons le contexte global de la thèse ainsi que ses principaux apports.
+
+\section{Contexte global}
+% quelques chiffres pour saisir l'importance du foie
+
+Le foie est un des organes les plus importants du corps humain. Celui-ci participe à de nombreuses fonctions vitales comme la digestion, l'élimination des déchets ou la gestion de la glycémie. Les maladies liées au foie sont responsables de deux millions de morts par ans \cite{Asrani2019_liver_deseases}. En effet, on estime à un million le nombre de morts par complication lié à la cirrhose et un million liés à l'hépatite et au cancer du foie (carcinome). Cela fait de la cirrhose et du cancer du foie la 11ème et 16ème cause de morts à travers le monde.
+% introduction sur l'imagerie médicale
+Dans ce contexte, le diagnostic et le suivi des maladies du foie est un objectif crucial pour les médecins. Les techniques d'imageries ont considérablement révolutionné ces deux tâches en permettant d'observer l'intérieur des patients sans utiliser de techniques invasives. Pour le foie, deux types d'imageries sont particulièrement utilisées, la tomodensitométrie et l'imagerie par résonance magnétique (IRM). La tomodensitométrie, inventée par Hounsfield en 1972 permet de mesurer l'absorption de rayons X par les tissus du patient. Cette acquisition se fait par coupe successive et permet de reconstituer, suite à un traitement numérique, une représentation 3D des organes. L'IRM se sert d'un principe similaire, mais repose sur l'utilisation d'un champ magnétique. Lors d'une IRM, on mesure le temps de précession des tissus, c'est-à-dire le temps de changement de leur orientation magnétique après une exposition brève et intense à un champ magnétique. Cette mesure permet ensuite de reconstituer un volume 3D des organes. La première machine IRM permettant l'acquisition d'un corps humain est développée en 1977 par Damasian. Pour les deux modalités, il est nécessaire dans certains cas d'utiliser un agent de contraste afin de différencier les tissus. C'est typiquement le cas pour les vaisseaux sanguins. 
+% Update
+Les agents de contraste peuvent être utilisés pour les deux modalités (la pratique est cependant bien plus courante en IRM). Pour la tomodensitométrie, on utilise des agents à base d'iode et des agents à base de gadolinium pour l'IRM. L'agent est injecté par intraveineuse ce qui ajoute une difficulté supplémentaire lors de l'acquisition des images. En effet, le radiologue doit estimer correctement le temps de propagation du produit de contraste. Si l'image est acquise trop tôt, l'agent de contraste n'a pas le temps de se répandre dans le réseau vasculaire. Si l'image est acquise trop tard, l'agent de contraste se répand dans la totalité de l'organe rendant toute visualisation impossible. En IRM, on prend en général plusieurs acquisitions avant, pendant et après de manière à fournir un maximum d'informations au radiologue.
+% ouverture vers le projet ANR
+Les deux techniques d'imagerie sont complémentaires. La tomodensitométrie offre une grande résolution spatiale, mais souffre d'un contraste plus faible. L'IRM permet une plus grande résolution de contraste, mais avec une résolution spatiale limitée. C'est le médecin radiologue qui a la charge de choisir la méthode la plus appropriée. Pour les vaisseaux du foie, les deux systèmes sont utilisés. Cependant, la doctrine médicale est d'exposer le moins possible un patient à un examen à risque tel que le rayonnement émis par la tomodensitométrie. Il y a donc une utilisation croissante de la tomodensitométrie à faible dose de rayon X et  de l'IRM moins agressive que la tomodensitométrie. En contrepartie, l'extraction automatique des vaisseaux pour visualiser les réseaux vasculaires nécessitent des algorithmes de plus en plus performants.
+
 \section{Objectifs initiaux et projet ANR}
 \label{sec:introduction:objectifs}
+% Présentation du projet ANR
+
+Ma thèse a été proposée dans le cadre du projet R-Vessel-X lancé en Janvier 2019. Elle est portée par Antoine Vacavant de l'institut Pascal en Auvergne Rhône-Alpe. R-Vessel-X a pour objectif l'extraction de vaisseaux sanguins du foie dans les images biomédicales. Le projet est principalement axé sur la robustesse des algorithmes proposés. Cette notion de robustesse est à prendre au sens large et regroupe :
+
+\begin{itemize}
+\item La solidité des modèles utilisés pour représenter les vaisseaux face à des changements de tailles, de formes ou d'intensités.
+\item La fidélité des segmentations par rapports aux données originales et la possibilité de corriger celles-ci par les médecins.
+\item La validation des solutions développées grâce à des mesures effectuées sur des données synthétiques, cliniques et un retour de médecins.
+\item La dissémination des algorithmes et des données du projet, afin d'assurer une pérennité de ces travaux et une réutilisation par la communauté.
+\end{itemize}
+
+Pour mener à bien ces objectifs le projet R-Vessel-X est composé d'une équipe interdisciplinaire.
+
+Quatre laboratoires de traitement d'images apportent leur expertise au projet : Le LIRIS de l'université de Lyon et le LORIA de l'université de Lorraine pour l'aspect analyse d'image par géométrie discrète et la reproductibilité des algorithmes, Le CReSTIC de Reims pour l'aspect analyse d'images médicales, la simulation et la visualisation 3D et l'institut Pascal pour leur expertise sur l'analyse et la segmentation des vaisseaux du foie.
+
+La qualité des résultats des algorithmes de segmentation est jugée par des radiologues du CHU de Clermont-Ferrand. Ceux-ci sont aussi en charge de la collecte des données nécessaire au projet.
+
+Enfin, l'entreprise Kitware Inc. spécialisée dans le développement d'outils open source à destination du médical a alloué au projet un ingénieur afin de faciliter la dissémination des algorithmes du projet. Cette dissémination passe par l'utilisation de la librairie de traitement d'images médicales ITK et l'intégration des algorithmes développés durant le projet au logiciel de visualisation 3DSlicer. L'intégration de ces outils permet d'apporter une visibilité au  niveau international des algorithmes du projet.
+
+\newV{
+    Une dizaine de chercheurs du projet sont regroupé autour de quatre laboratoires de recherche : Le LIRIS de l'université de Lyon, le LORIA de l'université de Lorraine, le CReSTIC de Reims et L'institue Pascale de l'université d'auvergne. Les sujets de recherches abordés par ses chercheurs regroupent l'analyse d'image par géométrie discrète, l'analyse d'images médicale, la simulation et la visualisation 3D et la segmentation des vaisseaux sanguins.
+
+    La qualité des résultats des algorithmes de segmentation est jugée par des radiologues du CHU de Clermont-Ferrand. Ils permettent ainsi de faire le lien entre résultats algorithmiques et besoins applicatifs. Ceux-ci sont aussi en charge de la collecte des données nécessaire au projet.
+
+    Le dernier acteur du projet est l'entreprise Kitware Inc. Elle est spécialisée dans le développement d'outils algorithmiques et de visualisation pour l'imagerie médicale. L'entreprise propose ainsi plusieurs outils open sources tel que l'aide à la compilation CMAKE, la librairie de traitement d'image ITK ou encore la plateforme de visualisation Girder. Kitware intervient en mettant à disposition des ingénieurs pour intégrer les algorithmes du projet dans leurs outils. Cette intégration passe en particulier grâce à l'intégration d'un plug-in d'annotation et d'extraction des vaisseaux au logiciel de visualisation 3DSlicer, qui permet d'apporter une visibilité supplémentaire au niveau international.
+}
+
+% Apports de la thèse
+\section{Résumé de la thèse et apports}
+\label{sec:introduction:résumé}
+
+Cette thèse est encadrée par Bertrand Kerautret, professeur au LIRIS et Nicolas Passat du CReSTIC et Odyssée Merveille du laboratoire d'imagerie médicale CREATIS de l'université de Lyon/INSA. L'objectif initial de cette thèse était la segmentation des vaisseaux du foie dans des images 3D. La segmentation des vaisseaux sanguins dans cet organe est un problème ouvert que ce soit en IRM ou avec la tomodensitométrie. En effet, les vaisseaux hépatiques sont des structures éparses qui apparaissent bruités, faiblement contrastés et qui possède une taille proche de la résolution des capteurs pour les plus fins.
+
+Un premier objectif a donc été de trouver un ensemble de méthodes d'extraction efficaces malgré ce contexte difficile. Les filtres de rehaussement de vaisseaux forment une famille très présente dans la littérature et sont utilisés en amont de la segmentation. Ils permettent notamment de faire ressortir les structures tubulaires, et donc les vaisseaux, et s'adaptent à des organes et des modalités variées. Pourtant, une analyse plus fine de la littérature montre qu'il existe une constance dans l'utilisation de ces filtres malgré l'émergence de nouvelles méthodes. En particulier, les chaines de segmentation utilisent le plus souvent l'un des premiers filtres présents dans la littérature, le filtre de Frangi \cite{Frangi1998_vesselness}. De plus, ce filtre est souvent utilisé avec ses paramètres par défaut suggéré par Frangi en 1998 et aucune mesure n'est effectuée quant à l'impact du filtre sur la suite de la chaine de segmentation.
+
+Plusieurs questions légitimes se posent alors. Le filtre de Frangi est-il adapté aux vaisseaux du foie ? Pour quelle modalité ? Des filtres plus récents proposent ils un rehaussement de meilleure qualité ? Quel est l'impact réel de la paramétrisation des filtres sur le rehaussement final ?
+
+Malheureusement, les bancs de tests considérants la qualité du rehaussement de vaisseaux seul sont peu nombreux et non extensibles. Leurs travaux ne peuvent donc pas être repris, soit parce que le code original n'est pas disponible, soit parce que les données ne sont pas publiques, soit les deux en même temps. Dans l'esprit de robustesse du projet R-Vessel-X nous avons proposé les contributions suivantes :
+
+\begin{itemize}
+\item La collecte, l'implémentation et la mise à jour en C++ d'une sélection de filtres de rehaussement parmi les méthodes développées ces 20 dernières années. Chaque filtre illustre une réponse à une problématique distincte du rehaussement de vaisseau.
+\item Un outil de comparaison de méthodes de rehaussement modulable permettant de comparer le rehaussement dans des zones spécifiques définies par l'utilisateur.
+\item Une analyse quantitative poussée de ces filtres en fonction de la hiérarchie des vaisseaux définie par leurs tailles et leurs jonctions.
+\item Une analyse qualitative liant le choix des paramètres des méthodes à la réponse théorique des filtres et leur impact sur le rehaussement.
+\item Un outil d'annotation spécialisé pour la segmentation du foie, ainsi qu'une série de bases de données publiques retravaillées pour répondre à un manque de données annotées. 
+\end{itemize}
+
+Ce travail a été réalisé dans un esprit de partage pour la communauté. C'est pourquoi une attention particulière a été apportée pour que ces travaux puissent être réutilisés et étendus par d'autres chercheurs, afin que ceux-ci n'ai pas à commencer leurs expériences à partir de zéro.
+
+Ce manuscrit est organisé en 4 Chapitres : Le chapitre 1 présente le contexte médical de cette thèse. Celui-ci détaille l'anatomie du foie et présente les méthodes d'acquisitions ainsi que les principaux artefacts liés à ces modalités. Le chapitre 2 présente le contexte scientifique avec un état de l'art des méthodes de rehaussement et leur positionnement en rapport avec la segmentation. Le chapitre 3 précise les choix effectués pour l'élaboration d'un banc de test pour filtres de rehaussement. Le chapitre 4 illustre l'utilisation de ce banc de test avec une analyse multi-échelles du rehaussement de vaisseaux dans diverses modalités et organes. Cette analyse porte sur le rehaussement pris au niveau de l'organe, du voisinage des vaisseaux de différentes tailles et de leurs bifurcations. Enfin le chapitre 5 propose des perspectives pour la segmentation de vaisseaux avec un nombre d'annotations minimal.

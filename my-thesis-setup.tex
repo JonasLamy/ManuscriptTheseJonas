@@ -8,22 +8,23 @@
 \usepackage{inputenc}
 
 
+
 % **************************************************
 % Information and Commands for Reuse
 % **************************************************
-\newcommand{\thesisTitle}{Comparaison du rehaussement de vaisseaux sanguins appliqués aux images médicales 3D}
+\newcommand{\thesisTitle}{Rehaussement de vaisseaux sanguins appliqué aux images médicales 3D}
 \newcommand{\thesisName}{Jonas Lamy}
 \newcommand{\thesisSubject}{Traitement d'images}
 \newcommand{\thesisDate}{\today}
 \newcommand{\thesisVersion}{Draft 0.1}
 
-\newcommand{\thesisFirstReviewer}{Jane Doe}
-\newcommand{\thesisFirstReviewerUniversity}{\protect{Clean Thesis Style University}}
-\newcommand{\thesisFirstReviewerDepartment}{Department of Clean Thesis Style}
+\newcommand{\thesisFirstReviewer}{XXX}
+\newcommand{\thesisFirstReviewerUniversity}{\protect{XXX University}}
+\newcommand{\thesisFirstReviewerDepartment}{Department of XXX}
 
-\newcommand{\thesisSecondReviewer}{John Doe}
-\newcommand{\thesisSecondReviewerUniversity}{\protect{Clean Thesis Style University}}
-\newcommand{\thesisSecondReviewerDepartment}{Department of Clean Thesis Style}
+\newcommand{\thesisSecondReviewer}{XXX}
+\newcommand{\thesisSecondReviewerUniversity}{\protect{XXX University}}
+\newcommand{\thesisSecondReviewerDepartment}{Department of XXX}
 
 \newcommand{\thesisFirstSupervisor}{Nicolas Passat}
 \newcommand{\thesisSecondSupervisor}{Bertrand Kerautret}
@@ -41,7 +42,26 @@
 % Jonas command
 % ********************************
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{TODO:}#1}}
+\newcommand{\newV}[1]{\textcolor{blue}{#1}}
+\newcommand{\etal}{ \emph{et~al.} \xspace}
 
+% partial
+\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
+
+% Masks bifurcation
+\newcommand{\maskbif}{{\ensuremath{M_{\textrm{bif}}}}\xspace}
+% Masks global
+\newcommand{\maskglobal}{{\ensuremath{M_{\textrm{glo}}}}\xspace}
+% Masks vascular
+\newcommand{\maskvascular}{{\ensuremath{M_{\textrm{vasc}}}}\xspace}
+% Masks vessell
+\newcommand{\maskvessel}{{\ensuremath{M_{\textrm{vess}}}}\xspace}
+% Masks vessell medium
+\newcommand{\maskvesselMedium}{{\ensuremath{M_{\textrm{vess}}^{\textrm{medium}}}}\xspace}
+% Masks vessell large
+\newcommand{\maskvesselLarge}{{\ensuremath{M_{\textrm{vess}}^{\textrm{large}}}}\xspace}
+% Masks vessell small
+\newcommand{\maskvesselSmall}{{\ensuremath{M_{\textrm{vess}}^{\textrm{small}}}}\xspace}
 % **************************************************
 % Debug LaTeX Information
 % **************************************************
@@ -51,8 +71,6 @@
 % **************************************************
 % Load and Configure Packages
 % **************************************************
-\usepackage{amsmath}
-
 \usepackage[english]{babel} % babel system, adjust the language of the content
 \PassOptionsToPackage{% setup clean thesis style
     figuresep=colon,%
@@ -87,3 +105,8 @@
 % Other Packages
 % **************************************************
 \usepackage{scrhack}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{graphics}
+\usetikzlibrary{shapes.geometric, arrows}
