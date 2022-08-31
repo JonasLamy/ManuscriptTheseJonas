@@ -1923,12 +1923,15 @@
     <bcf:datasource type="file" datatype="bibtex">TheseJonas.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
+<<<<<<< HEAD
     <bcf:citekey order="1">Fang2012_Liver_vein_variations</bcf:citekey>
     <bcf:citekey order="2">Houndfield1995_CT_machine</bcf:citekey>
     <bcf:citekey order="3">Lei1992_gaussianNoiseCT</bcf:citekey>
     <bcf:citekey order="4">Glide2013_metal_saturation</bcf:citekey>
     <bcf:citekey order="5">Damadian1977_NMRI</bcf:citekey>
     <bcf:citekey order="6">fig:T1 MRI</bcf:citekey>
+=======
+>>>>>>> e9f5b33f9ff99ab583b017146466e55e201f9c0e
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">
