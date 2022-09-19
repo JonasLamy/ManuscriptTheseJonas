@@ -38,30 +38,6 @@
 \newcommand{\thesisUniversityStreetAddress}{LIRIS, Bât C, 5 avenue Pierre Mendes France, Bron }
 \newcommand{\thesisUniversityPostalCode}{69000}
 
-% ********************************
-% Jonas command
-% ********************************
-\newcommand{\todo}[1]{\textcolor{red}{\textbf{TODO:}#1}}
-\newcommand{\newV}[1]{\textcolor{blue}{#1}}
-\newcommand{\etal}{ \emph{et~al.} \xspace}
-
-% partial
-\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
-
-% Masks bifurcation
-\newcommand{\maskbif}{{\ensuremath{M_{\textrm{bif}}}}\xspace}
-% Masks global
-\newcommand{\maskglobal}{{\ensuremath{M_{\textrm{glo}}}}\xspace}
-% Masks vascular
-\newcommand{\maskvascular}{{\ensuremath{M_{\textrm{vasc}}}}\xspace}
-% Masks vessell
-\newcommand{\maskvessel}{{\ensuremath{M_{\textrm{vess}}}}\xspace}
-% Masks vessell medium
-\newcommand{\maskvesselMedium}{{\ensuremath{M_{\textrm{vess}}^{\textrm{medium}}}}\xspace}
-% Masks vessell large
-\newcommand{\maskvesselLarge}{{\ensuremath{M_{\textrm{vess}}^{\textrm{large}}}}\xspace}
-% Masks vessell small
-\newcommand{\maskvesselSmall}{{\ensuremath{M_{\textrm{vess}}^{\textrm{small}}}}\xspace}
 
 % **************************************************
 % Debug LaTeX Information
@@ -109,5 +85,59 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{tikz}
+\usepackage{subcaption}
 \usepackage{graphics}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+%\usepackage[active,tightpage,floats]{preview}
 \usetikzlibrary{shapes.geometric, arrows}
+
+% ********************************
+% Jonas command
+% ********************************
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{TODO:}#1}}
+\newcommand{\newV}[1]{\textcolor{blue}{#1}}
+\newcommand{\oldV}[1]{\textcolor{lightgray}{#1}}
+\newcommand{\etal}{ \emph{et~al.} \xspace}
+
+% partial
+\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
+
+% Masks bifurcation
+\newcommand{\maskbif}{{\ensuremath{M_{\textrm{bif}}}}\xspace}
+% Masks global
+\newcommand{\maskglobal}{{\ensuremath{M_{\textrm{glo}}}}\xspace}
+% Masks vascular
+\newcommand{\maskvascular}{{\ensuremath{M_{\textrm{vasc}}}}\xspace}
+% Masks vessell
+\newcommand{\maskvessel}{{\ensuremath{M_{\textrm{vess}}}}\xspace}
+% Masks vessell medium
+\newcommand{\maskvesselMedium}{{\ensuremath{M_{\textrm{vess}}^{\textrm{medium}}}}\xspace}
+% Masks vessell large
+\newcommand{\maskvesselLarge}{{\ensuremath{M_{\textrm{vess}}^{\textrm{large}}}}\xspace}
+% Masks vessell small
+\newcommand{\maskvesselSmall}{{\ensuremath{M_{\textrm{vess}}^{\textrm{small}}}}\xspace}
+
+% French algorithm
+
+\renewcommand{\listalgorithmname}{Liste des algorithmes}
+\floatname{algorithm}{Algorithme}
+\renewcommand{\algorithmicreturn}{\textbf{retourne}}
+\renewcommand{\algorithmicprocedure}{\textbf{procédure}}
+%\renewcommand{\Not}{\textbf{non}\ }
+%\renewcommand{\And}{\textbf{et}\ }
+%\renewcommand{\Or}{\textbf{ou}\ }
+\renewcommand{\algorithmicrequire}{\textbf{Entrée:}}
+\renewcommand{\algorithmicensure}{\textbf{Sortie:}}
+%\renewcommand{\algorithmiccomment}[1]{\{#1\}}
+\renewcommand{\algorithmicend}{\textbf{fin}}
+\renewcommand{\algorithmicif}{\textbf{si}}
+\renewcommand{\algorithmicthen}{\textbf{alors}}
+\renewcommand{\algorithmicelse}{\textbf{sinon}}
+\renewcommand{\algorithmicfor}{\textbf{pour}}
+\renewcommand{\algorithmicforall}{\textbf{pour tout}}
+\renewcommand{\algorithmicdo}{\textbf{faire}}
+\renewcommand{\algorithmicwhile}{\textbf{tant que}}
+\newcommand{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
+\newcommand{\algorithmicendif}{\algorithmicend\ \algorithmicif}
+\newcommand{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}

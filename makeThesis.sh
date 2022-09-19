@@ -63,13 +63,13 @@ echo $s
 cat my-thesis_template.tex | awk -v srch="#Magic" -v repl="$s" '{sub(srch,repl,$0);print $0}' > TheseJonas.tex
 
 pdflatex TheseJonas.tex
-biber TheseJonas.bcf
+biber TheseJonas
 pdflatex TheseJonas.tex
 
-rm *.lot
-rm *.lol
-rm *.out
-rm *.aux
-rm *.lof
-rm *.toc
-rm *.bbl
+#rm *.lot
+#rm *.lol
+#rm *.out
+#rm *.aux
+#rm *.lof
+#rm *.toc
+#rm *.bbl

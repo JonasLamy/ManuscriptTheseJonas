@@ -1,7 +1,59 @@
 % !TEX root = ../my-thesis.tex
 %
-\chapter{Example Appendix}
+\chapter{Annexes}
 \label{sec:appendix}
+
+\section{Preuve de l'allongement maximale de Meijering dans le cas 3D}
+\label{APP:Proof of Meijering's maximal flatness for 3D case}
+
+\fontsize{8pt}{12pt}\selectfont
+
+Nous étendons à la 3D, l'analyse 2D réalisée dans l'annexe de \cite{Meijering2004_neurite_vesselness}.
+À translation et rotation prêt et sans perte de généralité, on assume que la structure tubulaire est orienté dans l'axe $x$ de l'espace 3D $\mathbb R^3$. Le point d'intérêt est localisé à $\textbf{x} = \textbf{0}$.
+En suivant \cite{Meijering2004_neurite_vesselness}, on cherche à obtenir  
+
+\begin{equation}
+    \lim_{\textbf{x}\to \textbf{0}} (\textbf{e}_x.\nabla)^2 h'(\textbf{x})=0
+    \label{EQ:TOSOLVE}
+\end{equation}
+avec 
+\begin{align}
+h'(\textbf{x}) & = (\alpha(\textbf{e}_x.\nabla)^2 + (\textbf{e}_y.\nabla)^2 + (\textbf{e}_z.\nabla)^2)G(\textbf{x}) \nonumber \\
+G(\textbf{x})& = \frac{1}{2 \pi \sigma^2}e^{-\frac{x^2 + y^2 + z^2}{2\sigma^2}} \nonumber
+\end{align}
+où $\{\textbf{e}_x, \textbf{e}_y, \textbf{e}_z\}$ est une base canonique de  $\mathbb  R^3$.
+On a
+\begin{align}
+h'(\textbf{x}) & =   \alpha  \pdv{^{2}G(\textbf{x})}{x^2} + \pdv{^{2}G(\textbf{x})}{y^2} + \pdv{^{2}G(\textbf{x})}{z^2} \nonumber \\ 
+& = \frac{\alpha x^2 + y^2 + z^2 - (\alpha+2) \sigma^2}{\sigma^4} G(\textbf{x}) = p(\textbf{x}).G(\textbf{x})
+\nonumber
+\end{align}
+et
+\begin{align}
+    (\textbf{e}_x.\nabla)^2 h'(\textbf{x}) &= \pdv{^{2}h'(\textbf{x})}{x^2} = \pdv{^{2}p(\textbf{x}).G(\textbf{x})}{x^2} \nonumber\\
+    & = \pdv{^{2}p(\textbf{x})}{x^2} .G(\textbf{x}) + 2 \pdv{p(\textbf{x})}{x} . \pdv{G(\textbf{x})}{x} + p(\textbf{x}). \pdv{^{2}G(\textbf{x})}{x^2} \nonumber
+\end{align}
+Comme
+\begin{align}
+    &\lim_{\textbf{x}\to \textbf{0}} G(\textbf{x}) = \frac{1}{2 \pi \sigma^2}~; 
+    \lim_{\textbf{x}\to \textbf{0}} \pdv{G(\textbf{x})}{x}  = 0~; 
+    \lim_{\textbf{x}\to \textbf{0}} \pdv{^{2}G(\textbf{x})}{x^{2}}  = -\frac{1}{2 \pi \sigma^4} \nonumber\\
+    &\lim_{\textbf{x}\to \textbf{0}} p(\textbf{x}) = - \frac{\alpha + 2}{\sigma^2}~; 
+    \lim_{\textbf{x}\to \textbf{0}} \pdv{p(\textbf{x})}{x}  = 0~; 
+    \lim_{\textbf{x}\to \textbf{0}} \pdv{^{2}p(\textbf{x})}{x^{2}} = \frac{2 \alpha}{\sigma^4} \nonumber
+\end{align}
+On en déduit
+\begin{equation}
+\lim_{\textbf{x}\to \textbf{0}} (\textbf{e}_x.\nabla)^2 h'(\textbf{x}) = 
+\frac{3\alpha + 2}{2 \pi \sigma^6} \nonumber
+\end{equation}
+et Eq.~\eqref{EQ:TOSOLVE} est résolue ssi $\alpha = -\frac{2}{3}$.
+
+
+\normalfont
+
+
+
 
 \Blindtext[1][1]
 

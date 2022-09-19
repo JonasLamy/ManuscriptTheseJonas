@@ -7,6 +7,7 @@
   year={1977}
 }
 
+
 @article{Oppenheim1981_phase_importance,
   title={The importance of phase in signals},
   author={Oppenheim, Alan V and Lim, Jae S},
@@ -41,6 +42,20 @@
   doi={10.1109/42.126910}
 }
 
+@article{Lee1994_3D_skeleton,
+title = {Building Skeleton Models via 3-D Medial Surface Axis Thinning Algorithms},
+journal = {CVGIP: Graphical Models and Image Processing},
+volume = {56},
+number = {6},
+pages = {462-478},
+year = {1994},
+issn = {1049-9652},
+doi = {https://doi.org/10.1006/cgip.1994.1042},
+url = {https://www.sciencedirect.com/science/article/pii/S104996528471042X},
+author = {T.C. Lee and R.L. Kashyap and C.N. Chu},
+abstract = {In this paper, we present an efficient three-dimensional (3-D) parallel thinning algorithm for extracting both the medial surfaces and the medial axes of a 3-D object (given as a 3-D binary image). A new Euler table is derived to ensure the invariance of the Euler characteristic of the object, during thinning. An octree data structure of 3 × 3 × 3 lattice points is built to examine the local connectivity. The sets of "simple" points found by different researchers are compared with the constructed set. Different definitions of "surface" points including ours are given. By preserving the topological and the geometrical conditions, our algorithm produces desirable skeletons and performs better than others in terms of noise sensitivity and speed. Pre- and postprocessors can be used to remove additional noise spurs. Its use in defect analysis of objects produced by casting and forging is discussed.}
+}
+
 @article{Houndfield1995_CT_machine,
   title={COMPUTERIZED TRANSVERSE AXIAL SCANNING (TOMOGRAPHY). 1. DESCRIPTION OF SYSTEM (REPRINTED FROM BRITISH-JOURNAL-OF-RADIOLOGY, VOL 46, PG 1016-1022, 1973)},
   author={HOUNDFIELD, GN},
@@ -51,6 +66,28 @@
   year={1995},
   publisher={BRITISH INST RADIOLOGY 36 PORTLAND PLACE, LONDON W1N 4AT, ENGLAND}
 }
+
+@article{Gudbjartsson1995r_Rician_noise_MRI,
+  title={The Rician distribution of noisy MRI data},
+  author={Gudbjartsson, H{\'a}kon and Patz, Samuel},
+  journal={Magnetic resonance in medicine},
+  volume={34},
+  number={6},
+  pages={910--914},
+  year={1995},
+  publisher={Wiley Online Library}
+}
+
+@inproceedings{Lorenz1997_multi,
+  title={Multi-scale line segmentation with automatic estimation of width, contrast and tangential direction in 2D and 3D medical images},
+  author={Lorenz, Cristian and Carlsen, I-C and Buzug, Thorsten M and Fassnacht, Carola and Weese, J{\"u}rgen},
+  booktitle={CVRMed-MRCAS'97},
+  pages={233--242},
+  year={1997},
+  organization={Springer}
+}
+
+
 
 @article{Sato1998_vesselness,
   title={Three-dimensional multi-scale line filter for segmentation and visualization of curvilinear structures in medical images},
@@ -105,6 +142,18 @@
   year={2004},
   publisher={Wiley Online Library}
 }
+
+@article{Gravel_2004_estimate_noise_medical_img,
+  title={A method for modeling noise in medical images},
+  author={Gravel, Pierre and Beaudoin, Gilles and De Guise, Jacques A},
+  journal={IEEE Transactions on medical imaging},
+  volume={23},
+  number={10},
+  pages={1221--1232},
+  year={2004},
+  publisher={IEEE}
+}
+
 
 @article{Heijmans2005_path_opening,
   title={Path openings and closings},
@@ -184,6 +233,32 @@
   publisher={Elsevier}
 }
 
+@article{Dietrich2007_measurement_MR_noise,
+  title={Measurement of signal-to-noise ratios in MR images: influence of multichannel coils, parallel imaging, and reconstruction filters},
+  author={Dietrich, Olaf and Raya, Jos{\'e} G and Reeder, Scott B and Reiser, Maximilian F and Schoenberg, Stefan O},
+  journal={Journal of Magnetic Resonance Imaging: An Official Journal of the International Society for Magnetic Resonance in Medicine},
+  volume={26},
+  number={2},
+  pages={375--385},
+  year={2007},
+  publisher={Wiley Online Library}
+}
+
+
+@article{Homann2007_implementation_thinning,
+author = "H. Homann",
+title = "Implementation of a 3D thinning algorithm",
+howpublished = "\url{http://hdl.handle.net/1926/1292}",
+year = 2007,
+month = 10,
+abstract = "ITK currently comes with a 2D binary thinning (skeletonisation) method, but does not support 3D or higher. This paper documents a new itkBinaryThinningImageFilter3D and recommends to rename the current filter as itkBinaryThinningImageFilter2D.
+
+The 3D method suggested here is a direct implementation of the work of Lee et al. [2] who have demonstrated that their algorithm can find all deletable surface points at every iteration and is thus very fast. The code was tested on six clinical datasets.",
+institution = "Oxford University",
+publisher = "The Insight Journal",
+doi = "10.54294/xjdr5f",
+}
+
 @article{Tyrrell2007_superEllipoid,
   title={Robust 3-D modeling of vasculature imagery using superellipsoids},
   author={Tyrrell, James Alexander and di Tomaso, Emmanuelle and Fuja, Daniel and Tong, Ricky and Kozak, Kevin and Jain, Rakesh K and Roysam, Badrinath},
@@ -213,17 +288,6 @@
   organization={Springer}
 }
 
-
-@inproceedings{Mille2009_deformable,
-  title={A local normal-based region term for active contours},
-  author={Mille, Julien and Cohen, Laurent D},
-  booktitle={International Workshop on Energy Minimization Methods in Computer Vision and Pattern Recognition},
-  pages={168--181},
-  year={2009},
-  organization={Springer}
-}
-
-
 @article{Esneault2009_moments_graph_cut,
   title={Liver vessels segmentation using a hybrid geometrical moments/graph cuts method},
   author={Esneault, Simon and Lafon, Cyril and Dillenseger, Jean-Louis},
@@ -234,16 +298,19 @@
   year={2009},
   publisher={IEEE}
 }
-@article{Mendrik2009_HDCS,
-  title={Noise reduction in computed tomography scans using 3-D anisotropic hybrid diffusion with continuous switch},
-  author={Mendrik, Adri{\"e}nne M and Vonken, Evert-Jan and Rutten, Annemarieke and Viergever, Max A and van Ginneken, Bram},
-  journal={IEEE transactions on medical imaging},
-  volume={28},
-  number={10},
-  pages={1585--1594},
+
+@ARTICLE{Krissian_2009_diffusion_MRI,
+
+  author={Krissian, Karl and Aja-Fernandez, Santiago},
+  journal={IEEE Transactions on Image Processing}, 
+  title={Noise-Driven Anisotropic Diffusion Filtering of MRI}, 
   year={2009},
-  publisher={IEEE}
+  volume={18},
+  number={10},
+  pages={2265-2274},
+  doi={10.1109/TIP.2009.2025553}
 }
+
 
 
 @article{Law2009_efficient_implementation,
@@ -268,6 +335,26 @@
   publisher={Elsevier}
 }
 
+@article{Mendrik2009_HDCS,
+  title={Noise reduction in computed tomography scans using 3-D anisotropic hybrid diffusion with continuous switch},
+  author={Mendrik, Adri{\"e}nne M and Vonken, Evert-Jan and Rutten, Annemarieke and Viergever, Max A and van Ginneken, Bram},
+  journal={IEEE transactions on medical imaging},
+  volume={28},
+  number={10},
+  pages={1585--1594},
+  year={2009},
+  publisher={IEEE}
+}
+
+@inproceedings{Mille2009_deformable,
+  title={A local normal-based region term for active contours},
+  author={Mille, Julien and Cohen, Laurent D},
+  booktitle={International Workshop on Energy Minimization Methods in Computer Vision and Pattern Recognition},
+  pages={168--181},
+  year={2009},
+  organization={Springer}
+}
+
 @article{Hamarneh2010_vascuSynth,
   title={VascuSynth: Simulating vascular trees for generating volumetric image data with ground-truth segmentation and tree analysis},
   author={Hamarneh, Ghassan and Jassi, Preet},
@@ -289,6 +376,17 @@
   year={2011},
   publisher={IEEE}
 }
+
+@incollection{Tankyevych2011_angiographic,
+  title={Angiographic image analysis},
+  author={Tankyevych, Olena and Talbot, Hugues and Passat, Nicolas and Musacchio, Mariano and Lagneau, Michel},
+  booktitle={Medical Image Processing},
+  pages={115--144},
+  year={2011},
+  publisher={Springer}
+}
+
+
 @article{Fang2012_Liver_vein_variations,
   title={Anatomical variations of hepatic veins: three-dimensional computed tomography scans of 200 subjects},
   author={Fang, Chi-Hua and You, Jin-Hua and Lau, Wan Yee and Lai, Eric CH and Fan, Ying-Fang and Zhong, Shi-Zhen and Li, Ke-Xiao and Chen, Zhi-Xiang and Su, Zhong-He and Bao, Su-Su},
@@ -325,6 +423,18 @@
   year={2012},
   publisher={IEEE}
 }
+
+@article{Cokelaer2012_efficient_path_opening,
+  title={Efficient robust d-dimensional path operators},
+  author={Cokelaer, Fran{\c{c}}ois and Talbot, Hugues and Chanussot, Jocelyn},
+  journal={IEEE Journal of Selected Topics in Signal Processing},
+  volume={6},
+  number={7},
+  pages={830--839},
+  year={2012},
+  publisher={IEEE}
+}
+
 
 @article{Glide2013_metal_saturation,
   title={Changes realized from extended bit-depth and metal artifact reduction in CT},
@@ -437,6 +547,17 @@ pages = {267--281}
   year={2015},
   organization={SPIE}
 }
+
+
+@inproceedings{Gronde2015_fast_path_opening,
+  title={Fast computation of greyscale path openings},
+  author={Gronde, Jasper J and Schubert, Herman R and Roerdink, Jos BTM},
+  booktitle={International Symposium on Mathematical Morphology and Its Applications to Signal and Image Processing},
+  pages={621--632},
+  year={2015},
+  organization={Springer}
+}
+
 
 @article{Luu2015_liver_vesselness_comparison,
   title={Quantitative evaluation of noise reduction and vesselness filters for liver vessel segmentation on abdominal CTA images},
@@ -589,6 +710,18 @@ pages = {267--281}
   organization={IEEE}
 }
 
+@inproceedings{Bertrand2006_critical_kernel,
+author = {Bertrand, Gilles and Couprie, Michel},
+year = {2006},
+month = {10},
+pages = {580-591},
+title = {A New 3D Parallel Thinning Scheme Based on Critical Kernels},
+volume = {4245},
+isbn = {978-3-540-47651-1},
+journal = {Discrete Geometry for Computer Imagery in Lect. Notes Comput. Sci.},
+doi = {10.1007/11907350_49}
+}
+
 @inproceedings{Huo2018_adversarial,
   title={Adversarial synthesis learning enables segmentation without target modality ground truth},
   author={Huo, Yuankai and Xu, Zhoubing and Bao, Shunxing and Assad, Albert and Abramson, Richard G and Landman, Bennett A},
@@ -630,6 +763,27 @@ pages = {267--281}
   publisher={Hindawi}
 }
 
+
+@article{Merveille2018_curvilinear,
+	title = {Curvilinear {structure} {analysis} by {ranking} the {orientation} {responses} of {path} {operators}},
+	volume = {40},
+	journal = {IEEE T Pattern Anal},
+	author = {Merveille, O. and Talbot, H. and Najman, L. and Passat, N.},
+	year = {2018},
+	pages = {304--317},
+}
+
+
+@article{Moccia2018_survey,
+  title={Blood vessel segmentation algorithms—review of methods, datasets and evaluation metrics},
+  author={Moccia, Sara and De Momi, Elena and El Hadji, Sara and Mattos, Leonardo S},
+  journal={Computer methods and programs in biomedicine},
+  volume={158},
+  pages={71--91},
+  year={2018},
+  publisher={Elsevier}
+}
+
 @inproceedings{Pavan2018_HCC_detection,
   title={A parallel framework for HCC detection in DCE-MRI sequences with wavelet-based description and SVM classification},
   author={Pavan, Ana LM and Benabdallah, Marwa and Lebre, Marie-Ange and de Pina, Diana Rodrigues and Jaziri, Faouzi and Vacavant, Antoine and Mtibaa, Achraf and Ali, Hawa Mohamed and Grand-Brochier, Manuel and Rositi, Hugo and others},
@@ -650,6 +804,8 @@ url = {https://www.sciencedirect.com/science/article/pii/S0010482518300957},
 author = {Ye-zhan Zeng and Sheng-hui Liao and Ping Tang and Yu-qian Zhao and Miao Liao and Yan Chen and Yi-xiong Liang},
 keywords = {Bi-Gaussian filter, 3D region growing, Hybrid active contour model, Liver vessel segmentation},
 }
+
+
 
 @article{Asrani2019_liver_deseases,
   title={Burden of liver diseases in the world},
@@ -688,21 +844,24 @@ keywords = {Bi-Gaussian filter, 3D region growing, Hybrid active contour model, 
   year={2019}
 }
 
+@article{Higaki2019_deep_MRI_CT_quality,
+  title={Improvement of image quality at CT and MRI using deep learning},
+  author={Higaki, Toru and Nakamura, Yuko and Tatsugami, Fuminari and Nakaura, Takeshi and Awai, Kazuo},
+  journal={Japanese journal of radiology},
+  volume={37},
+  number={1},
+  pages={73--80},
+  year={2019},
+  publisher={Springer}
+}
+
+
+
 @article{Sazak2018_bowler_hat_3D,
   title={The multiscale bowler-hat transform for vessel enhancement in 3D biomedical images},
   author={Sazak, Cigdem and Nelson, Carl J and Obara, Boguslaw},
   journal={arXiv preprint arXiv:1802.05097},
   year={2018}
-}
-
-@article{Moccia2018_survey,
-  title={Blood vessel segmentation algorithms—review of methods, datasets and evaluation metrics},
-  author={Moccia, Sara and De Momi, Elena and El Hadji, Sara and Mattos, Leonardo S},
-  journal={Computer methods and programs in biomedicine},
-  volume={158},
-  pages={71--91},
-  year={2018},
-  publisher={Elsevier}
 }
 
 @article{Sazak2019_bowler_hat_2D,

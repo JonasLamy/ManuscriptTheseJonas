@@ -144,7 +144,7 @@ Premièrement, l'acquisition IRM dure environ 20 à 30 min. Il est demandé au p
     \label{fig:MRI_movement}
 \end{figure}
 
-Le bruit est aussi présent dans les images IRM, ce bruit est particulier puisqu'il s'agit d'un bruit multiplicatif Ricien. Il s'exprime par la densité de probabilité suivante : 
+Le bruit est aussi présent dans les images IRM, ce bruit est particulier puisqu'il s'agit d'un bruit Ricien. Ce bruit n'est pas additif comme le bruit gaussien, mais est dépendant du signal. Il s'exprime par la densité de probabilité suivante : 
 
 \begin{equation}
     f(x | \mu, \sigma) = \frac{x}{\sigma^2} exp ( (-x^2 + \mu^2)/(2\sigma^2) ) I_0 (\frac{x\mu}{\sigma^2})
