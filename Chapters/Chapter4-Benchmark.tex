@@ -274,8 +274,9 @@ Pour compléter les images réelles, nous avons utilisé la base synthétique Va
 \begin{figure}[h]
   \centering
   \includegraphics[height=5cm]{Images/snapVascu.png}
-  \label{fig:snap_vascu}
+  
   \caption{Images d'illustration des vaisseaux de la base VascuSynth disponible avec le jeu de données. Le jeu de données présente différents nombres de bifurcations.}
+  \label{fig:snap_vascu}
 \end{figure}
 
 Nous avons utilisé dans nos expériences la base de donnée VascuSynth\_2013 disponible sur le site de VascuSynth. VascuSynth produit des images en niveau de gris de 0 à 255. L'intensité des vaisseaux est relativement forte, 223 pour les vaisseaux d'origines avant de décroitre après chaque bifurcation. L'intensité des vaisseaux décroit légèrement sur les bords de ceux-ci. On peut obtenir une vérité terrain au pixel prêt en binarisant ce volume initial.
@@ -298,8 +299,9 @@ Premièrement, nous avons redéfini la game d'intensité des vaisseaux. En effet
   \centering
   \includegraphics[height=4cm]{Images/2D_VB.png}
   \includegraphics[height=4cm]{Images/3D_VB.png}
-  \label{fig:VB}
+  
   \caption{Vaisseaux et fond. Le fond est d'intensité égale à l'intensité minimale des vaisseaux.}
+  \label{fig:VB}
 \end{figure}
 
 Pour cette première version, nous n'avons pas réalisé de changement d'intensité le long des vaisseaux autre que celle déjà présente dans le jeu de donnée d'origines. Cette variation dépend des propriétés de mécaniques des fluides de l'agent de contraste dans le sang ainsi que de la géométrie des vaisseaux ce qui est difficile à modéliser précisément.
@@ -311,8 +313,9 @@ Nous avons ensuite voulu émuler les différences d'intensité entre les tissus 
   \centering
   \includegraphics[height=4cm]{Images/2D_VBI.png}
   \includegraphics[height=4cm]{Images/3D_VBI.png}
-  \label{fig:VBI}
+  
   \caption{Vaisseaux avec illumination. Certains vaisseaux disparaissent dans les tissus.}
+  \label{fig:VBI}
 \end{figure}
 
 \paragraph{Étape 4}
@@ -322,8 +325,9 @@ Puis, nous avons ajouté du bruit Ricien spécifique à l'IRM dont pour lequel n
   \centering
   \includegraphics[height=4cm]{Images/2D_VBIR10.png}
   \includegraphics[height=4cm]{Images/3D_VBIR10.png}
-  \label{fig:VBIR}
+  
   \caption{Ajout du bruit Ricien à l'étape précédente (\ref{fig:VBI}).}
+  \label{fig:VBIR}
 \end{figure}
 
 Cette itération était une première approximation. Elle souffre cependant de plusieurs limitations. Premièrement la dynamique d'intensité est établie de manière visuelle. De même que pour l'intensité du bruit Ricien. Deuxièmement, le max effectué entre les images et les vaisseaux fait disparaitre le signal des vaisseaux qui sont tout de même présents dans la vérité terrain. On introduit ainsi une baisse artificielle des performances puisque qu'aucun filtre n'est en réalité capable de rehausser ces structures invisibles. En réalité, la plupart des vaisseaux peuvent être récupérés par un seuillage simple lorsque le niveau de bruit ne recouvre pas le signal. Ce problème est notamment visible à travers les MIP puisque l'intégralité des vaisseaux sont visibles quand ils ne sont pas recouverts par des blobs gaussiens (voir Fig. \ref{fig:vascu_v1_problems}).
@@ -341,7 +345,7 @@ Dans une deuxième itération, nous avons revu le processus de création de ces 
 
 Les vaisseaux sont toujours mis à l'échelle et le fond toujours définit comme l'intensité minimale des vaisseaux. Cependant, la plage d'intensité des vaisseaux est cette fois ci définit par rapport à des mesures faites sur des bases de données réelles. Pour cela nous avons réalisé des mesures manuelles sur des images d'IRM. Sur 5 volumes IRM issus du projet R-Vessel-X, nous avons annoté 3 tranches relativement espacées à l'intérieur du foie. Pour chaque tranche, nous avons annoté manuellement le fond et les vaisseaux afin d'obtenir un histogramme par volume de la répartition des intensités pour les tissus et les vaisseaux. Pour chaque volume, nous avons adapté une distribution gaussienne aux données, puis nous avons moyenné les courbes de manière à obtenir une distribution moyenne (Fig. \ref{fig:Distributions_mri_intensities}).
 
-\begin{figure}[h]
+\begin{figure}[!ht]
   \centering
   \begin{subfigure}{\textwidth}
     \centering
@@ -351,7 +355,7 @@ Les vaisseaux sont toujours mis à l'échelle et le fond toujours définit comme
     \includegraphics[height=4cm]{Images/gen_12194.pdf}
     \includegraphics[height=4cm]{Images/gen_12195.pdf}
 
-  \caption{Distributions des échantillons de voxels par volumes. Les voxels appartenant aux vaisseaux apparaissent en rouge et les autres en bleu.}
+    \caption{Distributions des échantillons de voxels par volumes. Les voxels appartenant aux vaisseaux apparaissent en rouge et les autres en bleu.}
   \end{subfigure}
 
   \begin{subfigure}{\textwidth}
@@ -359,7 +363,6 @@ Les vaisseaux sont toujours mis à l'échelle et le fond toujours définit comme
     \includegraphics[height=4cm]{Images/gen_mri_liver_mean_intensity.pdf}
     \includegraphics[height=4cm]{Images/gen_mri_vessels_mean_intensity.pdf}
     \caption{Distribution moyenne pour les tissues du foie (gauche) et les vaisseaux (droite). La distribution moyenne des autres distributions est affichée en traits pleins.}
-  
   \end{subfigure}
   \caption{Distribution des intensités IRM}
   \label{fig:Distributions_mri_intensities}
@@ -512,6 +515,8 @@ Une fois les branches labellisées, celles-ci doivent être relabellisées par l
 \end{figure}
 
 Le masque du voisinage des vaisseaux est construit en fonction du diamètre des vaisseaux minimum, moyen et maximum de chaque jeu de données : $[0,3]$, $]3,6[$ et $]6,\inf[$ mm pour l'ircad et $[0,1]$, $]1,2[$ et $]2,\inf[$ mm pour VascuSynth. Le diamètre des vaisseaux dans le jeu de données Bullitt varie peu, nous avons donc utilisé deux masques seulement : $[0,0.513]$ mm (\maskvesselSmall) et $]0.513,\inf[$ mm (\maskvesselMedium). Le masque du voisinage des vaisseaux (\maskvessel) et ses partitions (\maskvesselLarge,\maskvesselMedium,\maskvesselSmall) sont obtenus par dilatation de la vérité terrain des vaisseaux en fonction de leur diamètre. Ces valeurs ont été déterminées empiriquement, 9, 7, 5 voxels pour le jeu de l'Ircad, 5, 3 pour le jeu Bullitt et 7, 5, 3 pour VascuSynth. Lorsque deux masques de voisinages se chevauchent, la région conflictuelle est attribuée au masque des vaisseaux les plus larges. On garanti ainsi que les trois masques constituent bien une partition de $\maskvascular$ tout en préservant la cohérence des subdivisions créées (Fig. \ref{fig:vs_masks}).
+
+En particulier, nous avons $\maskbif \in \maskvascular \in \maskglobal$ et $\maskvascular = \maskvesselLarge \cup \maskvesselMedium \cup \maskvesselSmall$.
 
 \begin{figure}[h]
   \centering

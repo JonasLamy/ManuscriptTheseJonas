@@ -9,8 +9,10 @@ function usage {
     echo "Chap2 : Contexte"
     echo "Chap3 : Etat de l'art"
     echo "Chap4 : Benchmark"
+    echo "Chap5 : Analyse du rehaussement"
+    echo "Chap6 : Diffusion et reproductibilité"
     echo "--- All chapters compilation ---"
-    echo "All equal to : ./makeThesis Chap1 Chap2 Chap3 Chap4"
+    echo "All equal to : ./makeThesis Chap1 Chap2 Chap3 Chap4 Chap5 Chap6"
 
     exit 0
 }
@@ -25,8 +27,9 @@ sC2='\\input{Chapters/Chapter2-Contexte}\n'
 sC3='\\input{Chapters/Chapter3-Etat_de_l_art}\n'
 sC4='\\input{Chapters/Chapter4-Benchmark}\n'
 sC5='\\input{Chapters/Chapter5-Analyse-du-rehaussement}\n'
+sC6='\\input{Chapters/Chapter6-Reproductibilite_diffusion}\n'
 
-sAll+="$sC1$sC2$sC3$sC4$sC5"
+sAll+="$sC1$sC2$sC3$sC4$sC5$sC6"
 
 
 for i in $@
@@ -51,6 +54,10 @@ do
 
     if [[ $i == "Chap5" ]]; then
 	s+=$sC5
+    fi
+    
+    if [[ $i == "Chap6" ]]; then
+	s+=$sC6
     fi
 
     if [[ $i == "All" ]]; then

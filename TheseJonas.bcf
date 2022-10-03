@@ -1993,8 +1993,23 @@
     <bcf:citekey order="69">Lee1004_3D_skeleton</bcf:citekey>
     <bcf:citekey order="70">Homann2007_implementation_thinning</bcf:citekey>
     <bcf:citekey order="71">Bertrand2006_critical_kernel</bcf:citekey>
-    <bcf:citekey order="74">Meijering2004_neurite_vesselness</bcf:citekey>
-    <bcf:citekey order="75">Meijering2004_neurite_vesselness</bcf:citekey>
+    <bcf:citekey order="72">fig:areas_of_interest</bcf:citekey>
+    <bcf:citekey order="73">Chicco2020_advantages_MCC_Dice</bcf:citekey>
+    <bcf:citekey order="74">Marcan2014_vessel_seg</bcf:citekey>
+    <bcf:citekey order="75">exemple_geometry_jerman</bcf:citekey>
+    <bcf:citekey order="76">Law2009_efficient_implementation</bcf:citekey>
+    <bcf:citekey order="77">ACMReproDef2016</bcf:citekey>
+    <bcf:citekey order="78">Lamy2020_VPH_bench</bcf:citekey>
+    <bcf:citekey order="79">Lamy2020_ICPR</bcf:citekey>
+    <bcf:citekey order="80">Lamy2021_RRPR</bcf:citekey>
+    <bcf:citekey order="81">Lamy2021_ORASIS</bcf:citekey>
+    <bcf:citekey order="82">Lamy2022_TMI</bcf:citekey>
+    <bcf:citekey order="83">Mccormick2020_Visu3DDemo</bcf:citekey>
+    <bcf:citekey order="84">Lamy2022_JOSS</bcf:citekey>
+    <bcf:citekey order="85">Lamy2020_VPH_plugin</bcf:citekey>
+    <bcf:citekey order="86">Lamy2022_EASL</bcf:citekey>
+    <bcf:citekey order="89">Meijering2004_neurite_vesselness</bcf:citekey>
+    <bcf:citekey order="90">Meijering2004_neurite_vesselness</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

@@ -1,0 +1,102 @@
+\chapter{Bilan et Perspectives}
+
+\section{Bilan du rehaussement}
+
+% Ce que nous avons fait
+% Notre ressenti
+% Y a t'il une place pour d'autres filtres de rehaussement ?
+% Le rehaussement a t'il un futur ?
+
+\subsection{ Bilan des travaux}
+
+Nous avons articulé l'ensemble de nos travaux de manière à ce qu'ils constituent un socle de connaissances et d'outils pour une personne souhaitant approfondir ses connaissances sur les filtres de rehaussement de vaisseaux. 
+
+Nous avons dans un premier temps établi un état de l'art des filtres de rehaussement recouvrant les 20 dernières années. Nous avons ensuite identifié 7 filtres se démarquant de la littérature par la solution proposée pour répondre à des problèmes différents et complémentaires levés par le rehaussement de vaisseaux. Nous avons aussi explicité les différents cadres d'échelles qui permettent au rehaussement d'être efficace sur l'ensemble du réseau vasculaire malgré des variations de tailles importantes des vaisseaux.
+
+Nous avons ensuite décidé d'améliorer l'accessibilité des filtres de rehaussement en proposant de rassembler, adapter et réimplémenter les 7 filtres dans un cadre commun en C++. La personne souhaitant utiliser des filtres de rehaussement, peut ainsi éviter de passer par cette étape très chronophage de recherche et d'adaptation de filtres provenant de sources multiples. 
+
+Nous avons ensuite proposé un banc de test, permettant de comparer les performances de ces filtres de manière quantitative dans différents contextes. Assez tôt dans sa conception, nous avons fait en sorte que celui-ci soit modulable et extensible par d'autres utilisateurs. Il permet ainsi d'ajouter un nouveau filtre à la base de travail existante qui devient ainsi évolutive, plutôt que de repartir de zéro.
+
+Les expériences que nous avons menées avec ce banc de test ont mis en valeur les différences significatives entre les filtres de rehaussement. Les filtres Hessiens ou de flux proposant des rehaussements lisses, mais parfois surestimés ou rehaussant des bordures d'organes. En opposition, RORPO est plus précis dans les structures rehaussées, mais leur aspect est beaucoup plus irrégulier. Les filtres se distinguent aussi par leur résistance au bruit avec des filtres plutôt performants pour de faibles niveaux de bruits, comme Jerman et Sato, mais dont les performances chutent lorsque le bruit augmente. À l'inverse le filtre de Frangi propose un mécanisme intéressant pour le contrôle du bruit.
+
+Nous avons aussi fait en sorte que l'implémentation des filtres et du banc de test soient à la fois complémentaires et indépendants. De cette manière chaque partie peut être réutilisée chacune de son côté. Nous avons d'ailleurs tiré parti de cette propriété en proposant une démonstration en ligne des filtres qui permet de tester, sans installation, les filtres de rehaussement sur des données de l'utilisateur. L'intégration des filtres de rehaussement a aussi été intégré dans un logiciel de visualisation d'images médicales : 3DSlicer. Les filtres peuvent ainsi être directement utilisés de manière interactive dans celui-ci.
+
+Enfin, pour compenser le manque d'annotations, nous avons participé à l'élaboration d'un Plug-In de segmentation, afin que les bases de données hépatiques avec annotations des vaisseaux se démocratisent. 
+
+Nous avons donc élaboré un travail couvrant tous les aspects nécessaires l'étude du rehaussement : Le développement des bases de données, la théorie du rehaussement, la mise en pratique des filtres ainsi que leur évaluation.
+
+\subsection{Bilan du rehaussement}
+
+Nous n'avons pas encore abordé la question de la place du rehaussement dans les méthodes de segmentation populaires actuellement. En effet, le deep learning a pris une place très importante dans la littérature d'aujourd'hui, en particulier les réseaux end-to-end qui comprennent l'intégralité des traitements menant à la segmentation. Ces réseaux apprenent leur propre modèle interne et extraient leurs propres caractéristiques pour définir leur propre critère de segmentation. On peut donc se demander quelle est la nécessité d'incorporer des filtres de rehaussement aux réseaux de neurones.
+
+Comme nous l'avons présenté dans le chapitre 3, les filtres de rehaussement de vaisseaux viennent en amont de la segmentation. On peut donc les utiliser en amont d'un réseau de neurone. Ce qui est d'autant plus pertinent que les performances du deep learning sont largement influencées par le type de données qui lui sont montré. On cherche notamment à ce qu'une base de donnée soit la plus représentative du problème que l'on cherche à traiter. On peut imaginer plusieurs méthodologies, la première est de filtrer la base de donnée initiale et de donner au réseau les données filtrées. On aide ainsi à simplifier le problème en mettant en valeur les structures d'intérêts et en éliminant les structures non tubulaires. 
+
+\todo{Question : Comment cite-t-on des articles en cours de publication ?}
+
+Affane et al. \ref{Article Abir} a ainsi testé plusieurs combinaisons de filtres de rehaussements (Jerman, Sato, RORPO, Zhang) et d'architectures de réseaux de neurones (Unet,Dense Unet, MultiRes Unet). Dans cette publication, ils montrent que le rehaussement, en particulier le rehaussement homogène de Jerman peut aider le réseau mieux segmenter les vaisseaux. Les expériences montrent aussi que les filtres aident particulièrement les réseaux à converger lorsqu'ils sont entrainés sur des parties de volumes (slabs) putôt que sur des volumes entiers.
+
+L'autre avantage d'utiliser les filtres de rehaussement est que l'on peut potentiellement unifier les modalités TM et IRM dans une seule application, plutôt que de spécialiser un réseau pour une modalité particulière. On peut imaginer compenser un manque de données IRM annotées par une base filtrée composée à la fois de volumes issu de l'IRM et de la tomodensitométrie.
+
+Une autre manière d'utiliser le rehaussement avec le deep learning est non pas de remplacer le volume initial par un volume filtré mais d'associer les deux dans un volume multi-spectral. On peut ainsi combiner différents types de rehaussement avec les données originales et laisser le réseau choisir la combinaison d'informations qui lui permet de segmenter au mieux les vaisseaux.
+
+Les filtres de rehaussement ont donc encore un intérêt notable pour la segmentation. De plus, pour les méthodes Hessiennes et de flux, une implémentation GPU est tout à fait possible. 
+
+Une autre question est la place de nouveaux filtres de rehaussement dans la littérature. Les filtres existants couvrent déjà une bonne partie des problèmes rencontrés par le rehaussement. cependant, on peut imaginer fusionner les propriétés de certains filtres. Par exemple, la gestion du bruit par le terme $C$ du filtre de Frangi est très efficace, il pourrait être combiné avec le filtre de Jerman dont le rehaussement est intéressant, mais dont les performances chutent en présence de bruit. Le cadre proposé par OOF n'a aussi pas été exploité avec les autres filtres de rehaussement. Par exemple, peut-être que OOF avec la mesure de Frangi produit des résultats supérieurs à Frangi seul.
+
+Il reste donc des possiblités d'amélioration des filtres, notamment en regroupant les propriétés efficaces de certains filtres dans un algorithme commun.
+
+\todo{Segmentation à annotations réduites}
+
+Le manque de données annotées est un problème qui contraint fortement le développement d'algorithmes de segmentation pour certaines modalités comme l'IRM. Cependant, il est relativement illusoire de demander à des médecins de prendre un temps conséquent pour annoter de manière précise des données dans un contexte où la demande de médecins pour des activités directement liées à la santé des patients est de plus en plus difficile à maintenir.
+
+Nous avons donc exploré une hypothèse inverse. Quelle est l'annotation la moins chronophage pour les médecins ? La réponse est l'annotation des bifurcations. Ce sont des zones présentes dans tous les réseaux vasculaires, qui sont importantes d'un point de vue géométrie et qui sont facilement identifiables. De plus apposer un point au centre des bifurcations est bien moins chronophage que de segmenter manuellement l'ensemble du réseau vasculaire.
+
+Une fois que l'on a des annotations des bifurcations, il faut imaginer un système de segmentation des vaisseaux. On peut proposer les étapes suivantes : 
+
+Proposer.
+
+
+\section{ Yolo }
+
+\subsection{Futur du rehaussement}
+On va faire un chapitre de perspective plutôt fun pour cette dernière partie.
+
+Nous allons répondre à deux questions : Est-ce que les filtres de rehaussement ont encore une place dans les méthodes actuellement populaires ? Est-ce qu'il y a encore de la place pour de nouvelles méthodes de rehaussement ?
+
+Ces dernières années, le deep learning est la technologie la plus explorée pour résoudre des tâches complexes de segmentation. En particulier,  on privilégie les méthodes de bout en bout. Ces méthodes concentrent toute la chaine traitement dans un réseau de neurone. Celui-ci apprend de lui-même à élaborer un modèle, à extraire des caractéristiques et à segmenter un organe. Comme on a pu le voir précédemment, le rehaussement s'applique en amont des chaines de traitement de la segmentation et il peut donc aussi s'appliquer en amont des réseaux de neurones. Le traitement des jeux de données en deep learning est particulièrement important, puisque dans ces systèmes, c'est le jeu de données qui va contrôler la capacité du réseau à se spécialiser ou au contraire à généraliser un problème. Un jeu de données se doit donc d'être le plus représentatif du problème que l'on cherche à traiter.
+
+Les filtres de rehaussement de vaisseaux peuvent faciliter cette représentativité, puisqu'ils permettent de mettre en valeur les vaisseaux tout en éliminant une partie des autres structures. On peut de plus utiliser différents filtres ou différentes paramétrisations pour augmenter artificiellement nos données ou renforcer l'apprentissage de vaisseaux spécifiques.
+
+Affane et al. \ref{Article Abir} a ainsi testé plusieurs combinaisons de filtres avec plusieurs architectures de réseaux de neurones. Elle applique ainsi plusieurs filtres de rehaussement(Jerman, Sato, RORPO et Zhang) issues de l'optimisation de notre banc de test pour évaluer l'influence des filtres selon les architectures (Unet, Dense Unet, MultiRes Unet). Dans cette publication, nous montrons que les filtres peuvent effectivement guider les réseaux à mieux segmenter les vaisseaux. Les expériences montrent aussi que les filtres sont particulièrement utiles pour aider les réseaux à converger lorsqu'ils sont entrainés sur des parties de volumes (slabs) qui présentent moins de contextes que les volumes entiers.
+
+Les réseaux de neurones sont aussi connu pour avoir du mal à généraliser d'une modalité à une autre. En effet, l'apparence des vaisseaux peut changer d'une modalité à l'autre ainsi que le contexte alentour. Les sorties des filtres de rehaussement ont aussi l'avantage d'être défini dans un domaine relativement homogène. On peut donc imaginer se servir des filtres de rehaussement comme passerelle d'unification des modalités. On pourrait ainsi créer des jeux de données mixtes contenant des filtres issues de modalités différentes et ainsi améliorer la généralisation des réseaux.
+
+Une autre possibilité est d'utiliser différents filtrages d'une même images comme informations complémentaires. On peut ainsi créer des données multi-spectrales composées de l'image originale et de ses différents filtrages que l'on va ensuite donner au réseau. Celui-ci peut ensuite tirer partie des informations complémentaires apportées par les différents filtres pour différencier des cas difficiles.
+
+On vient donc de voir que les filtres de rehaussement peuvent encore trouver des applications utiles. La question suivante est de savoir si de nouvelles versions de filtres de rehaussement sont encore possibles. Notre réponse est que les filtres actuels proposent déjà un large pannel de méthodes pour traiter les différentes problématiques liées aux vaisseaux. On peut se poser la question, étant donné que des filtres comme Frangi et Sato restent encore compétitifs malgré la proposition de filtres plus récents. D'un point de vue de la mesure de tubularité proposé par les filtres Hessiens et équivalent, la grande flexibilité de Frangi couvre une grande partie des besoins par rapport à la prise en compte de la géométrie des vaisseaux en plus de proposer une prise en compte du bruit efficace. Le filtre de Jerman est particulièrement intéressant, non pas par sa formulation d'une autre mesure de rehaussement, mais par sa manière d'homogénéiser la réponse du filtre grâce à son paramètre $\tau$. Une des voies d'amélioration possible est donc de fusionner les points positifs de certains filtres, comme, le filtre de Jerman et la gestion du bruit proposé par Frangi. Le cadre de OOF mériterait aussi de plus amples investigations avec l'incorporation des mesures de tubularité plus complexes que celle utilisée dans nos travaux.
+
+\subsection{Tentative de réduction des annotation}
+
+Nous l'avons répété plusieurs fois au cours de ce manuscrit, produire des annotations est une tâche critique pour le développement de nouveaux algorithmes de segmentation des vaisseaux. Cependant, on ne peut pas demander à des médecins de bloquer des heures consacrées à l'annotation de volumes alors quelles pourraient être consacrées à s'occuper de malades. Le manque de personnel dans les hôpitaux ne semble pas indiquer une amélioration, tout comme une gestion de plus en plus strictes des données médicales. Ces observations prennent à contre-pied la tendance du deep learning à exploiter toujours plus de données.
+
+Nous avons tenté une approche qui cherche à réduire au minimum le temps passé à annoter un volume. En effet, on est plus à même d'obtenir des bases de données annotées si le temps d'annotation passe de 30 à 60 min à une dizaine de minutes. Dans un réseau vasculaire, il n'y a vraiment qu'un seul type de points remarquables : les bifurcations. Celles-ci correspondent par définition au commencement d'au moins deux vaisseaux en aval et à la terminaison d'un vaisseau en amont, et peuvent donc servir de point de départ pour des algorithmes de suivis de vaisseaux. De plus, si l'on considère que le médecin ne doit positionner qu'un seul point au centre de chaque bifurcation, le temps d'annotations est drastiquement réduit par rapport à une segmentation complète des vaisseaux qui nécessite d'annoter l'ensemble des pixels des vaisseaux.
+ 
+Une segmentation des vaisseaux à partir des bifurcations revient donc à :
+
+\begin{itemize}
+\item Localiser les bifurcations
+\item Construire une hiérarchie entre les bifurcations
+\item extraire le réseau vasculaire (ligne centrale ou segmentation)
+\end{itemize}
+
+Une fois les bifurcations identifiées, il est possible de les relier deux à deux par un parcours de chemin type Djiksra en fournissant une carte de coût qui peut être le résultat d'un filtre de rehaussement de vaisseaux. En prenant un filtre de rehaussement dont le rehaussement est dégressif sur les bords (Frangi, Sato, Jerman $\tau > 0.5$) on peut favoriser les chemins passant par le centre des vaisseaux. Si l'on veut aller plus loin, on peut même en partie reconstruire les vaisseaux en estimant le rayon des vaisseaux à partir de la ligne centrale.
+
+Le challenge ici est donc la détection et la localisation des bifurcations. En terme de modélisation, les bifurcations sont difficiles à définir. On considère d'habitude les bifurcations comme des zones en forme de blob, c'est-à-dire où le gradient s'éloigne du centre dans toutes les directions. Cette théorie est plus fragile lorsqu'elle est confrontée à la réalité des cas pratiques. Par exemple, si les vaisseaux composant la bifurcation ne font pas la même taille, les gradients se trouvent déportés sur les bords et la géométrie se trouve plus aplatie que circulaire. Par conséquent, la variabilité des bifurcations les rend difficile à modéliser par un filtre de rehaussement. Jerman et al. a proposé un filtre de rehaussement pour les anévrismes (blobs) mais il a dû compléter la méthode par un système de visualisation particulier, car les blobs étant rehaussés de manière non homogène. Ce filtre appliqué aux bifurcations ne donne pas de résultats très pertinents.
+
+Nous avons aussi testé une combinaison de filtres. Nous avons en effet constaté que le filtre de Sato, lorsque que $\alpha_1$ était bas, provoquant des trous biens visibles dans la réponse des bifurcations. Nous avons essayé de différencier le manque de signal des bifurcations du manque de signal dans les régions homogènes (vides) en faisant une différence entre le filtre de Sato et le filtre de Jerman. Deux problèmes apparaissent. Un reste de signal est présent aux bifurcations mais la délimitation de celui-ci est très variable, formant parfois des structures plates plutôt que sphériques, confirmant nos observations précédentes. De plus le filtre de Jerman estime le rayon des vaisseaux de manière plus large que le filtre de Sato. En faisant la différence $Jerman-Sato$ on se retrouve avec un résultat qui ressemble à l'intérieur d'un bambou avec une seule composante connexe qui entoure les vaisseaux (chambres d'air) et séparées en compartiment par des jonctions mal délimités correspondant aux bifurcations.
+
+Face à la variabilité des bifurcations, nous nous sommes tourné vers le deep learning afin d'apprendre un modèle de bifurcations. 
+
+Dans un premier temps, nous avons tenter de faire converger un modèle de segmentation, Unet, vers la segmentation des bifurcations. Nous avons utilisé comme vérité terrain les masques des bifurcations que nous avons créé pour le banc de test. Unet fonctionne bien pour la segmentation des vaisseaux et produit des vaisseaux bien dessinés. Pour la segmentation des bifurcations cependant, le réseau a du mal à converger vers un résultat satisfaisant. En observant les sorties du réseau à différentes étapes de l'apprentissage, nous avons constaté que le réseau converge d'abord vers l'apprentissage de la segmentation des vaisseaux avant de tenter sans succès de converger vers les bifurcations. Cette convergence ratée, provoque simplement une dégradation des vaisseaux sans cohérence. 
+
+Puisqu'une approche globale ne semblait pas fonctionner, nous avons tenté une approche locale de classification des bifurcations. L'objectif pour cette approche locale était de présenter des patchs présentant ou non une bifurcation, à un réseau qui devait la classifier. Pour les patches à bifurcations, nous avons considéré qu'un patch ne devait contenir qu'une seule bifurcation. nous avons donc choisis des patchs de taille 16x16x16, car des patches plus gros 

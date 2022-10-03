@@ -6,9 +6,7 @@
 
 \cleanchapterquote{Un petit chapitre pour le doctorant, un grand chapitre pour l'humanité}{Doctorant anonyme}{(Citation temporaire)}
 
-\todo{Ajouter les corrections de Nicolas.}
-
-Cette thèse s'inscrit dans le cadre du traitement d'images médicales. Celle-ci est avant tout une thèse d'analyse d'images avec une teinte de biologie puisque les problématiques rencontrées durant cette thèse découlent directement de considérations anatomiques.
+Cette thèse s'inscrit dans le cadre du traitement d'images médicales. Celle-ci est avant tout une thèse d'analyse d'images avec une teinte de biologie puisque les problématiques rencontrées durant celle-ci découlent directement de considérations anatomiques.
 
 Le sujet de cette thèse est l'analyse de filtres de rehaussements de vaisseaux sanguins pour l'imagerie médicale 3D. L'objectif initial était la comparaison de ces filtres afin de concevoir des outils de segmentation pour l'imagerie 3D du foie. Cet objectif a ensuite évolué pour se concentrer sur le développement d'outils d'analyses et d'évaluations de filtres de rehaussement de vaisseaux dans un cadre reproductible. En effet, ces filtres constituent une brique essentielle de la segmentation, mais peu de travaux portent sur leur évaluation de manière isolée.
 
@@ -17,7 +15,10 @@ Dans cette introduction, nous décrivons le contexte global de la thèse ainsi q
 \section{Contexte global}
 % quelques chiffres pour saisir l'importance du foie
 
-Le foie est un des organes les plus importants du corps humain. Celui-ci participe à de nombreuses fonctions vitales comme la digestion, l'élimination des déchets ou la gestion de la glycémie. Les maladies liées au foie sont responsables de deux millions de morts par ans \cite{Asrani2019_liver_deseases}. En effet, on estime à un million le nombre de morts par complication lié à la cirrhose et un million liés à l'hépatite et au cancer du foie (carcinome). Cela fait de la cirrhose et du cancer du foie la 11ème et 16ème cause de morts à travers le monde.
+Le foie est un des organes les plus importants du corps humain. Celui-ci participe à de nombreuses fonctions vitales comme la digestion, l'élimination des déchets ou la gestion de la glycémie. Les maladies liées au foie sont responsables d'environ deux millions de morts par ans \cite{Asrani2019_liver_deseases}. 
+
+
+Le foie est un des organes les plus importants du corps humain. Celui-ci participe à de nombreuses fonctions vitales comme la digestion, l'élimination des déchets ou la gestion de la glycémie. Les maladies liées au foie sont responsables de deux millions de morts par ans \cite{Asrani2019_liver_deseases}. On estime en effet à un million le nombre de morts par complications liées à la cirrhose dont la cause la plus courante et la consommation chronique d'alcool. Le reste est liés à l'hépatite et au cancer du foie (carcinome). Cela fait de la cirrhose et du cancer du foie la 11ème et 16ème cause de morts à travers le monde.
 % introduction sur l'imagerie médicale
 Dans ce contexte, le diagnostic et le suivi des maladies du foie est un objectif crucial pour les médecins. Les techniques d'imageries ont considérablement révolutionné ces deux tâches en permettant d'observer l'intérieur des patients sans utiliser de techniques invasives. Pour le foie, deux types d'imageries sont particulièrement utilisées, la tomodensitométrie et l'imagerie par résonance magnétique (IRM). La tomodensitométrie, inventée par Hounsfield en 1972 permet de mesurer l'absorption de rayons X par les tissus du patient. Cette acquisition se fait par coupe successive et permet de reconstituer, suite à un traitement numérique, une représentation 3D des organes. L'IRM se sert d'un principe similaire, mais repose sur l'utilisation d'un champ magnétique. Lors d'une IRM, on mesure le temps de précession des tissus, c'est-à-dire le temps de changement de leur orientation magnétique après une exposition brève et intense à un champ magnétique. Cette mesure permet ensuite de reconstituer un volume 3D des organes. La première machine IRM permettant l'acquisition d'un corps humain est développée en 1977 par Damasian. Pour les deux modalités, il est nécessaire dans certains cas d'utiliser un agent de contraste afin de différencier les tissus. C'est typiquement le cas pour les vaisseaux sanguins. 
 % Update
