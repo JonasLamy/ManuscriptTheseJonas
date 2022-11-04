@@ -26,9 +26,11 @@
 \newcommand{\thesisSecondReviewerUniversity}{\protect{XXX University}}
 \newcommand{\thesisSecondReviewerDepartment}{Department of XXX}
 
-\newcommand{\thesisFirstSupervisor}{Nicolas Passat}
-\newcommand{\thesisSecondSupervisor}{Bertrand Kerautret}
-\newcommand{\thesisThirdSupervisor}{Odyssée Merveille}
+\newcommand{\thesisThirdReviewer}{XXX}
+
+\newcommand{\thesisFirstSupervisor}{Bertrand KERAUTRET}
+\newcommand{\thesisSecondSupervisor}{Nicolas PASSAT}
+\newcommand{\thesisThirdSupervisor}{Odyssée MERVEILLE}
 
 \newcommand{\thesisUniversity}{\protect{Université Lyon 2}}
 \newcommand{\thesisUniversityDepartment}{LIRIS}
@@ -38,6 +40,27 @@
 \newcommand{\thesisUniversityStreetAddress}{LIRIS, Bât C, 5 avenue Pierre Mendes France, Bron }
 \newcommand{\thesisUniversityPostalCode}{69000}
 
+
+\newcommand{\chapIntroN}{1}
+\newcommand{\chapContextN}{2}
+\newcommand{\chapSOTAN}{3}
+\newcommand{\chapBenchN}{4}
+\newcommand{\chapAnalysisN}{5}
+\newcommand{\chapReproN}{6}
+\newcommand{\chapEndN}{7}
+\newcommand{\chapTotalN}{7}
+
+\newcommand{\chapIntro}{un}
+\newcommand{\chapContext}{deux}
+\newcommand{\chapSOTA}{trois}
+\newcommand{\chapBench}{quatre}
+\newcommand{\chapAnalysis}{cinq}
+\newcommand{\chapRepro}{six}
+\newcommand{\chapEnd}{sept}
+\newcommand{\chapTotal}{sept}
+
+\newcommand{\plugIns}{plugins}
+\newcommand{\plugIn}{plugin}
 
 % **************************************************
 % Debug LaTeX Information
@@ -88,9 +111,13 @@
 %\usepackage{subfigure}
 \usepackage{subcaption}
 \usepackage{graphics}
+\usepackage{url}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage{comment}
 %\usepackage[active,tightpage,floats]{preview}
 \usetikzlibrary{shapes.geometric, arrows}
 
@@ -102,6 +129,7 @@
 \newcommand{\newV}[1]{\textcolor{blue}{#1}}
 \newcommand{\oldV}[1]{\textcolor{lightgray}{#1}}
 \newcommand{\etal}{ \emph{et~al.} \xspace}
+\newcommand{\tbf}[1]{\textbf{#1}}
 
 \newcommand{\percent}{\% }
 
@@ -122,7 +150,6 @@
 \newcommand{\maskvesselLarge}{{\ensuremath{M_{\textrm{vess}}^{\textrm{large}}}}\xspace}
 % Masks vessell small
 \newcommand{\maskvesselSmall}{{\ensuremath{M_{\textrm{vess}}^{\textrm{small}}}}\xspace}
-
 % French algorithm
 
 \renewcommand{\listalgorithmname}{Liste des algorithmes}

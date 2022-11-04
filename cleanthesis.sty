@@ -361,22 +361,22 @@
 % **************************************************
 \newenvironment{my_list}%
 	{\begin{enumerate}%
-		\setlength{\itemsep}{1pt}%
+		\setlength{\itemsep}{0.5pt}%
 		\setlength{\parskip}{0pt}%
 		\setlength{\parsep}{0pt}%
 	}%
 	{\end{enumerate}}
 %
 \newenvironment{my_list_num}
-	{\begin{enumerate}[topsep=-5pt,partopsep=0pt,parsep=2pt,itemsep=3pt]}
+	{\begin{enumerate}[topsep=-5pt,partopsep=0pt,parsep=2pt,itemsep=2pt]}
 	{\end{enumerate}}%
 
 \newenvironment{my_list_item}
-	{\begin{itemize}[topsep=-5pt,partopsep=0pt,parsep=2pt,itemsep=3pt]}
+	{\begin{itemize}[topsep=-5pt,partopsep=0pt,parsep=2pt,itemsep=2pt]}
 	{\end{itemize}}%
 
 \newenvironment{ct_version_list}
-	{\begin{itemize}[topsep=-5pt,partopsep=0pt,parsep=2pt,itemsep=3pt]}
+	{\begin{itemize}[topsep=-5pt,partopsep=0pt,parsep=2pt,itemsep=2pt]}
 	{\end{itemize}}%
 
 	\newenvironment{ct_version_list_sub}
@@ -395,7 +395,7 @@
 		leftmargin=3cm,%
 		partopsep=0pt,%
 		parsep=2pt,%
-		itemsep=3pt%
+		itemsep=2pt%
 	]}
 	{\end{description}}%
 
@@ -599,7 +599,7 @@
 % ---------------------------
 \renewcommand*{\partpagestyle}{empty}
 \renewcommand*{\raggedpart}{\raggedleft}
-\renewcommand*\partheadmidvskip{\par\vspace*{3em}}
+\renewcommand*\partheadmidvskip{\par\vspace*{1em}} %\renewcommand*\partheadmidvskip{\par\vspace*{3em}}
 \renewcommand*{\partformat}{%
     \usekomafont{part}%
     \thesispartlabelfont%
@@ -610,8 +610,8 @@
 % ---------------------------
 % > formats: \chapter
 % ---------------------------
-\renewcommand*\chapterheadstartvskip{\vspace*{-8.75em}}
-\renewcommand*\chapterheadendvskip{\vspace*{2.5\baselineskip}}
+\renewcommand*\chapterheadstartvskip{\vspace*{-6.75em}} % \renewcommand*\chapterheadstartvskip{\vspace*{-8.75em}}
+\renewcommand*\chapterheadendvskip{\vspace*{\baselineskip}}%\renewcommand*\chapterheadendvskip{\vspace*{2.5\baselineskip}}
 \renewcommand*{\chapterformat}{%
     \ctchapternumber{\thechapter}%
 }

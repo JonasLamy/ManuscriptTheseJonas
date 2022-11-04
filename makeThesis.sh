@@ -30,6 +30,7 @@ sC4='\\input{Chapters/Chapter4-Benchmark}\n'
 sC5='\\input{Chapters/Chapter5-Analyse-du-rehaussement}\n'
 sC6='\\input{Chapters/Chapter6-Reproductibilite_diffusion}\n'
 sC7='\\input{Chapters/Chapter7-Bilan-et-perspectives}\n'
+sCFig='\\input{Chapters/ChapterFig}\n'
 
 sAll+="$sC1$sC2$sC3$sC4$sC5$sC6$sC7"
 
@@ -64,6 +65,10 @@ do
 
     if [[ $i == "Chap7" ]]; then
 	s+=$sC7
+    fi
+
+    if [[ $i == "ChapFig" ]]; then
+	s+=$sCFig
     fi
 
     if [[ $i == "All" ]]; then
