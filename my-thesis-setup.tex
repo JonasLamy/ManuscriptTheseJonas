@@ -16,7 +16,7 @@
 \newcommand{\thesisName}{Jonas Lamy}
 \newcommand{\thesisSubject}{Traitement d'images}
 \newcommand{\thesisDate}{\today}
-\newcommand{\thesisVersion}{Draft 0.1}
+\newcommand{\thesisVersion}{V3}
 
 \newcommand{\thesisFirstReviewer}{XXX}
 \newcommand{\thesisFirstReviewerUniversity}{\protect{XXX University}}
@@ -41,13 +41,13 @@
 \newcommand{\thesisUniversityPostalCode}{69000}
 
 
-\newcommand{\chapIntroN}{1}
-\newcommand{\chapContextN}{2}
-\newcommand{\chapSOTAN}{3}
-\newcommand{\chapBenchN}{4}
-\newcommand{\chapAnalysisN}{5}
-\newcommand{\chapReproN}{6}
-\newcommand{\chapEndN}{7}
+\newcommand{\chapIntroN}{\ref{sec:introduction}}
+\newcommand{\chapContextN}{\ref{sec:contexte}}
+\newcommand{\chapSOTAN}{\ref{sec:SOTA}}
+\newcommand{\chapBenchN}{\ref{sec:Benchmark}}
+\newcommand{\chapAnalysisN}{\ref{sec:Analysis}}
+\newcommand{\chapReproN}{\ref{sec:reproductibility}}
+\newcommand{\chapEndN}{\ref{sec:Ending}}
 \newcommand{\chapTotalN}{7}
 
 \newcommand{\chapIntro}{un}
@@ -71,7 +71,7 @@
 % **************************************************
 % Load and Configure Packages
 % **************************************************
-\usepackage[english]{babel} % babel system, adjust the language of the content
+\usepackage[english,french]{babel} % babel system, adjust the language of the content
 \PassOptionsToPackage{% setup clean thesis style
     figuresep=colon,%
     hangfigurecaption=false,%
@@ -108,6 +108,7 @@
 \usepackage{scrhack}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{amsfonts}
 \usepackage{tikz}
 %\usepackage{subfigure}
 \usepackage{subcaption}
@@ -174,3 +175,58 @@
 \newcommand{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
 \newcommand{\algorithmicendif}{\algorithmicend\ \algorithmicif}
 \newcommand{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
+
+
+% adding subsubsubsection for Chap3.
+\usepackage{titlesec}
+
+\titleclass{\subsubsubsection}{straight}[\subsection]
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+\renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}} % optional; useful if paragraphs are to be numbered
+
+\titleformat{\subsubsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{5}{\z@}%
+  {3.25ex \@plus1ex \@minus.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{6}{\parindent}%
+  {3.25ex \@plus1ex \@minus .2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\def\toclevel@subsubsubsection{4}
+\def\toclevel@paragraph{5}
+\def\toclevel@paragraph{6}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\def\l@paragraph{\@dottedtocline{5}{10em}{5em}}
+\def\l@subparagraph{\@dottedtocline{6}{14em}{6em}}
+\makeatother
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+%\makeatletter
+%\setcounter{secnumdepth}{4}
+%\titlespacing{\subsubsubsection}{0em}{.5em}{0em}%[0pt]
+%\ifct@cthesis@hangsubsection
+%        \titleformat{\subsubsubsection}[hang]%
+%            {\usekomafont{subsubsection}}%
+%            {\color{ctcolorblack}\thesubsubsubsection\hspace*{10pt}}%
+%            {0pt}%
+%            {\raggedright}%
+%            [\phantomsection]
+%\else
+%        \titleformat{\subsubsubsection}[block]%
+%            {\usekomafont{subsubsection}}%
+%            {\color{ctcolorblack}\thesubsubsubsection\hspace*{10pt}}%
+%            {0pt}%
+%            {\raggedright}%
+%            [\phantomsection]
+%\fi
+%\makeatother

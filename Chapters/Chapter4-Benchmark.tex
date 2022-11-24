@@ -4,10 +4,10 @@
 \chapter{Banc de test}
 \label{sec:Benchmark}
 
-\cleanchapterquote{Un petit chapitre pour le doctorant, un grand chapitre pour l'humanité}{Doctorant anonyme}{(Citation temporaire)}
+%\cleanchapterquote{Un petit chapitre pour le doctorant, un grand chapitre pour l'humanité}{Doctorant anonyme}{(Citation temporaire)}
 
 \section{Motivations}
-\label{sec:Benchmark}
+\label{sec:Benchmark:Motivations}
 
 
 Comme nous l'avons conclu dans le chapitre précédent, se baser sur la littérature dans le but de choisir un filtre de rehaussement pour une application spécifique n'est pas une tâche simple. La littérature permet de se faire une vision globale sur les filtres de rehaussement de vaisseaux sanguins et présente de nombreux exemples d'applications. Cependant, leur incorporation dans une chaîne de traitements dilue l'évaluation de leur impact réel sur la segmentation. Elle rend aussi plus difficile le choix d'un filtre et ses paramètres optimaux pour une modalité et un organe spécifiques. De plus, les métriques de références varient aussi entre deux publications ajoutant à la difficulté d'établir une comparaison. Il est donc nécessaire de proposer une base de
@@ -25,7 +25,8 @@ Comme nous l'avons conclu dans le chapitre précédent, se baser sur la littéra
   \adjincludegraphics[width=0.32\textwidth,trim={{0.12\width} {0.1\height} {0\width} {0.1\height}},clip]{Images/jerman_04.png}
   \adjincludegraphics[width=0.32\textwidth,trim={{0.12\width} {0.1\height} {0\width} {0.1\height}},clip]{Images/jerman_01.png}
   \\
-  \adjincludegraphics[width=0.32\textwidth,trim={{0.12\width} {0.1\height} {0\width} {0.1\height}},clip]{Images/RORPO_50_15_4.png}
+  %missing RORPO_50_15_4.png....
+  \adjincludegraphics[width=0.32\textwidth,trim={{0.12\width} {0.1\height} {0\width} {0.1\height}},clip]{Images/img_required.jpg}
   \adjincludegraphics[width=0.32\textwidth,trim={{0.12\width} {0.1\height} {0\width} {0.1\height}},clip]{Images/RORPO_51_25_3.png}
   \adjincludegraphics[width=0.32\textwidth,trim={{0.12\width} {0.1\height} {0\width} {0.1\height}},clip]{Images/RORPO_100_15_3.png}
   \caption{Illustration de l'application de différents filtres et jeux de paramètres. La première ligne montre la vérité terrain. Les lignes suivantes montrent ligne par ligne les filtres de Frangi, Jerman et RORPO. Il est difficile de choisir laquelle de ces paramétrisations est la plus apte pour une segmentation sans évaluation quantitative.}
@@ -532,7 +533,7 @@ Ces problèmes ont ensuite été réglés en partie dans une seconde itération.
 
 Dans un second temps, nous avons utilisé un parcours de graphe pour la localisation des bifurcations. Celui-ci est plus rapide et permet aussi de traiter la séparation de la vérité terrain en sous-branches en fonction de leur taille.
 
-\subsection{Masque par taille}
+\subsection{Masques par taille}
 
 Nous avons voulu créer des partitions des masques des vaisseaux afin de corriger le biais statistique causé par les vaisseaux de différentes tailles. En effet, si l'on considère les gros vaisseaux (une dizaine de voxels de diamètres, et une centaine de longs) et les petits (quelques voxels de diamètre, une dizaine de longs), ces deux classes peuvent avoir un nombre de voxels inégaux. Par exemple, un volume peut présenter un nombre plus élevé de voxels pour les gros vaisseaux et un nombre plus faible pour les petits vaisseaux. La part de chaque région dans le calcul des métriques d'évaluation dans le voisinage global des vaisseaux est donc biaisée favorablement pour les vaisseaux les plus gros.
 
@@ -596,7 +597,7 @@ Le masque \maskbif est construit à partir des positions des bifurcations extrai
 \end{table}
 
 \section{Description du banc de test}
-\subsection{Fonctionnement globale}
+\subsection{Fonctionnement global}
 Notre banc de test est implémenté en deux blocs. Il est composé d'un premier bloc de calcul des métriques et d'un second bloc d'analyse des métriques récoltées.
 
 Le premier bloc nécessite une base de données d'images et de leur vérité terrain, une liste de filtres, une liste de jeux de paramètres par filtres, un ensemble de zones d'intérêts et d'une série de métriques. L'algorithme est détaillé en Fig. \ref{alg:BenchmarkStep}.
