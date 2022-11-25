@@ -6,7 +6,7 @@
 % TODO : Vérifier qu'il y a bien une justification vers un choix de progression et des parties dé-corélées sans fil conducteur.
 
 %\cleanchapterquote{Un petit chapitre pour le doctorant, un grand chapitre pour l'humanité}{Doctorant anonyme}{(Citation temporaire)}
-\newV{Dans ce chapitre, nous présentons les différents filtres de rehaussement de vaisseaux proposés dans la littérature. Afin de remettre dans le bon contexte les problématiques abordées par ces filtres, il est nécessaire de décrire les chaînes de traitement pour l'extraction de vaisseaux sanguins. Pour ce faire, nous introduisons les objectifs de cette extraction sous l'angle de la visualisation des vaisseaux. Nous décrivons ensuite les grandes familles de méthodes de segmentation entrant dans la composition de ces chaînes de traitements. Puis, nous montrons l'intérêt des filtres de rehaussement de vaisseaux avant de décrire la manière de les modéliser. Nous démarrons cette présentation en posant les hypothèses sur l'apparance des vaisseaux dans les images. Nous présentons ensuite deux familles distinctes de filtres : Les filtres à bases de descripteurs de géométrie matriciels et les filtres à descripteurs morphologiques. Dans chacun des cas, nous présentons les espaces d'échelles permettant de capturer les vaisseaux d'une taille donnée, les descripteurs de géométries associés à l'espace d'échelles et enfin les mesures de tubularités applicables.}
+\newV{Dans ce chapitre, nous présentons les différents filtres de rehaussement de vaisseaux proposés dans la littérature. Afin de remettre dans le bon contexte les problématiques abordées par ces filtres, il est nécessaire de décrire les chaînes de traitement pour l'extraction de vaisseaux sanguins. Pour ce faire, nous introduisons les objectifs de cette extraction sous l'angle de la visualisation des vaisseaux. Nous décrivons ensuite les grandes familles de méthodes de segmentation entrant dans la composition de ces chaînes de traitement. Puis, nous montrons l'intérêt des filtres de rehaussement de vaisseaux avant de décrire la manière de les modéliser. Nous démarrons cette présentation en posant les hypothèses sur l'apparence des vaisseaux dans les images. Nous présentons ensuite deux familles distinctes de filtres : les filtres à base de descripteurs matriciels de géométrie et les filtres à descripteurs morphologiques. Dans chacun des cas, nous présentons les espaces d'échelles permettant de capturer les vaisseaux d'une taille donnée, les descripteurs de géométrie associés à l'espace d'échelles et enfin les mesures de tubularité applicables.}
 
 \section{Problématiques de la visualisation}
 
@@ -20,17 +20,17 @@
     \begin{figure}[!ht]
       \centering
       \includegraphics[height=5cm]{Images/2D_view.png}
-      \caption{La visualisation en coupe est la méthode la plus utilisée par les médecins. Celle-ci nécessite toutefois de se représenter mentalement la structure 3D de l'organe. À gauche IRM, à droite tomodensitométrie.}
+      \caption{La visualisation en coupes est la méthode la plus utilisée par les médecins. Celle-ci nécessite toutefois de se représenter mentalement la structure 3D de l'organe. À gauche IRM, à droite tomodensitométrie.}
       \label{fig:slice_visualization}
     \end{figure}
 
-    \newV{La visualisation 3D, où l'on travaille avec le volume 3D, facilite cet exercice. Elle permet en effet de visualiser directement les structures dans leur entièreté. Cependant, elle nécessite d'une manière ou d'une autre de hiérarchiser l'information brute de l'image.} Dans le cas contraire, l'information nécessaire au diagnostique reste cachée (\ref{fig:hierachy_3D}). On peut distinguer deux méthodes pour résoudre ce problème : La première consiste à hiérarchiser les données par projection alors que la seconde identifie et extrait les structures d'intérêt.
+    \newV{La visualisation 3D, où l'on travaille avec le volume 3D, facilite cet exercice. Elle permet en effet de visualiser directement les structures dans leur entièreté. Cependant, elle nécessite d'une manière ou d'une autre de hiérarchiser l'information brute de l'image.} Dans le cas contraire, l'information nécessaire au diagnostic reste cachée (Fig. \ref{fig:hierachy_3D}). On peut distinguer deux méthodes pour résoudre ce problème : la première consiste à hiérarchiser les données par projection alors que la seconde identifie et extrait les structures d'intérêt.
     
     \begin{figure}[!ht]
       \centering
       \includegraphics[height=5cm]{Images/hierarchy_3D.png}
       \includegraphics[height=5cm]{Images/hierarchy_3D_bis.png}
-      \caption{Rendu surfacique d'un volume 3D. Sans hiérarchisation de l'information, les structures d'intérêt restent cachées. En hiérarchisant l'information (ici un seuil d'opacité et de couleurs en fonction de l'intensité des voxels), on peut observer les structures anatomiques d'intérêts. Un traitement naïf ne suffit toutefois pas à différencier toutes les structures.}
+      \caption{Rendu surfacique d'un volume 3D. Sans hiérarchisation de l'information, les structures d'intérêt restent cachées. En hiérarchisant l'information (ici un seuil d'opacité et de couleurs en fonction de l'intensité des voxels), on peut observer les structures anatomiques d'intérêt. Un traitement naïf ne suffit toutefois pas à différencier toutes les structures.}
       \label{fig:hierachy_3D}
     \end{figure}
 
@@ -47,12 +47,12 @@
         \label{fig:MIP_visualisation}
       \end{figure}
 
-      Cette méthode permet de faire ressortir les éléments les plus intenses de l'image et convient particulièrement à des structures mises en valeur par agent de contraste. Elle est simple à implémenter et peu coûteuse en calcul. Elle fait cependant perdre toute perception de profondeur par la projection des maxima sur le plan image. \newV{On obtient par exemple la même MIP si l'on place le plan de projection avant l'image ou après celle-ci le long de l'axe de projection (à effet mirroir prêt)}.
+      Cette méthode permet de faire ressortir les éléments les plus intenses de l'image et convient particulièrement à des structures mises en valeur par agent de contraste. Elle est simple à implémenter et peu coûteuse en calcul. Elle fait cependant perdre toute perception de profondeur par la projection des maxima sur le plan image. \newV{On obtient par exemple la même MIP si l'on place le plan de projection avant l'image ou après celle-ci le long de l'axe de projection (à effet miroir près)}.
 
       La perte de profondeur se compense lorsque dans une scène 3D, le plan de projection devient le plan de la caméra. Le mouvement de la caméra permet alors de résoudre les ambiguïtés provoquées par un seul plan de projection en simulant, dans une certaine mesure, la stéréoscopie de la vision humaine.
-      La MIP a aussi le désavantage d'être parasitée par toutes structures plus intenses que l'organe observé. L'observation du foie et de ses vaisseaux en MIP est notamment perturbée par les os de la cage thoracique. Ce problème peut cependant être contourné en appliquant un masque pour ne conserver que le foie, ce qui demande un coût supplémentaire d'annotation.
+      La MIP a aussi le désavantage d'être parasitée par toute structure plus intense que l'organe observé. L'observation du foie et de ses vaisseaux en MIP est notamment perturbée par les os de la cage thoracique. Ce problème peut cependant être contourné en appliquant un masque pour ne conserver que le foie, ce qui demande un coût supplémentaire d'annotation.
 
-      \subsection{Visualisation par isolation des organes}
+      \subsection{Visualisation par isolement des organes}
       
       D'autres moyens de visualisation sont possibles, par exemple en représentant un modèle 3D des structures observées. On peut ainsi visualiser des organes seuls, sans éléments adjacents perturbateurs (Fig. \ref{fig:segmentation_3D}). La création de ce modèle nécessite un traitement plus complexe des données afin d'identifier, de classer, de filtrer puis d'extraire les structures d'intérêt. C'est cette dernière opération d'extraction que l'on nomme segmentation. La segmentation automatique reste un domaine de recherche ouvert, car les nombreux artefacts de la TDM et de l'IRM complexifient fortement la problématique.
       
@@ -75,7 +75,7 @@
       
     Historiquement, le besoin d'améliorer la qualité des images provient des limitations des premières machines d'imagerie. Il était alors nécessaire de développer des méthodes efficaces pour limiter les artefacts tels que le bruit et ainsi faire ressortir les organes d'intérêt. 
     
-    De nombreuses méthodes ont cherché à caractériser, estimer puis corriger le bruit. Par exemple, Gudbjartsson et al. \cite{Gudbjartsson1995r_Rician_noise_MRI} ont explicité le caractère ricien du bruit en IRM. Dietrich et al. \cite{Dietrich2007_measurement_MR_noise} ont proposé une validation des approches pour calculer le rapport signal sur bruit (SNR) en fonction des différentes méthodes d'acquisition et de la reconstruction des images IRM. Gravel et al. \cite{Gravel_2004_estimate_noise_medical_img} proposent une méthode capable d'estimer la nature du bruit en fonction de sa variance et de l'intensité de l'image. Enfin, Krissian et al. \cite{Krissian_2009_diffusion_MRI} et Mendrik et al. \cite{Mendrik2009_HDCS} cherchent à lisser le bruit par un mécanisme de diffusion. Les premiers, proposent d'estimer automatiquement le bruit grâce à sa variance pour paramétrer le lissage. Les seconds proposent un lissage adaptatif continu permettant de prendre en compte la géométrie locale.    
+    De nombreuses méthodes ont cherché à caractériser, estimer puis corriger le bruit. Par exemple, Gudbjartsson et al. \cite{Gudbjartsson1995r_Rician_noise_MRI} ont explicité le caractère ricien du bruit en IRM. Dietrich et al. \cite{Dietrich2007_measurement_MR_noise} ont proposé une validation des approches pour calculer le rapport signal sur bruit (SNR) en fonction des différentes méthodes d'acquisition et de la reconstruction des images IRM. Gravel et al. \cite{Gravel_2004_estimate_noise_medical_img} proposent une méthode capable d'estimer la nature du bruit en fonction de sa variance et de l'intensité de l'image. Enfin, Krissian et al. \cite{Krissian_2009_diffusion_MRI} et Mendrik et al. \cite{Mendrik2009_HDCS} cherchent à lisser le bruit par un mécanisme de diffusion. Les premiers proposent d'estimer automatiquement le bruit grâce à sa variance pour paramétrer le lissage. Les seconds proposent un lissage adaptatif continu permettant de prendre en compte la géométrie locale.    
     
     De nos jours, les progrès techniques et l'amélioration de la précision des machines ont résolu beaucoup de ces problèmes. La recherche de gains de performances se tourne de plus en plus vers de l'apprentissage qui permet d'améliorer à la fois la qualité des images et d'accélérer les traitements existants. C'est par exemple le cas de méthodes à base de deep learning \cite{Higaki2019_deep_MRI_CT_quality} qui permettent d'améliorer la résolution et de corriger le bruit.
 
@@ -92,25 +92,25 @@
 
       \paragraph{Contours explicites}
 
-      La méthode développée par Kass et al. \cite{Kass1988_snakes} (aussi appelés \textit{snakes}) est l'une des méthodes de contours actifs les plus populaires. Cette méthode formule l'énergie contrôlant la propagation du contour comme la somme pondérée d'une énergie interne et d'une énergie externe que l'algorithme cherche à minimiser. L'énergie interne est liée à la modélisation de l'objet que l'on cherche à segmenter et contraint l'expansion du contour (par exemple une énergie liée à un modèle géométrique). À l'inverse, l'énergie externe (basé par exemple sur les gradients de l'image) favorise la propagation du contour. La méthode de Kass et al. a ensuite connu de nombreuses variations par exemple avec Wang et al. \cite{Wang2012_vessel_level_set} qui proposent un modèle minimisant trois énergies : une énergie basée sur la courbure du contour, une énergie basée sur les gradients d'intensité de l'image et une énergie basée sur la correspondance du contour à un modèle cylindrique. Zeng \cite{Zeng2018_liver_hybrid_active_contour_region_growing} utilise les contours actifs pour segmenter de gros vaisseaux, sans débordement hors des structures. La paramétrisation du contour actif est basée sur l'estimation de l'intensité des vaisseaux fins détectés par un filtre bi-gaussien.
+      La méthode développée par Kass et al. \cite{Kass1988_snakes} (aussi appelés \textit{snakes}) est l'une des méthodes de contours actifs les plus populaires. Cette méthode formule l'énergie contrôlant la propagation du contour comme la somme pondérée d'une énergie interne et d'une énergie externe que l'algorithme cherche à minimiser. L'énergie interne est liée à la modélisation de l'objet que l'on cherche à segmenter et contraint l'expansion du contour (par exemple une énergie liée à un modèle géométrique). À l'inverse, l'énergie externe (basée par exemple sur les gradients de l'image) favorise la propagation du contour. La méthode de Kass et al. a ensuite connu de nombreuses variations par exemple avec Wang et al. \cite{Wang2012_vessel_level_set} qui proposent un modèle minimisant trois énergies : une énergie basée sur la courbure du contour, une énergie basée sur les gradients d'intensité de l'image et une énergie basée sur la correspondance du contour à un modèle cylindrique. Zeng et al. \cite{Zeng2018_liver_hybrid_active_contour_region_growing} utilisent les contours actifs pour segmenter de gros vaisseaux, sans débordement hors des structures. La paramétrisation du contour actif est basée sur l'estimation de l'intensité des vaisseaux fins détectés par un filtre bi-gaussien.
 
-      L'utilisation des contours actifs est particulièrement efficace sur des objets convexes. Lorsque la géométrie des structures est plus complexe ou très alongée comme pour les vaisseaux, la propagation du contour est plus difficile. \newV{La méthode est aussi moins performante lorsque l'aspect des vaisseaux est bruité et fragmenté}. De plus, l'implémentation du suivi des contours est complexe lorsque des changements de topologie ont lieu. C'est le cas, par exemple, de la séparation du contour en deux contours distincts.
+      L'utilisation des contours actifs est particulièrement efficace sur des objets convexes. Lorsque la géométrie des structures est plus complexe ou très allongée comme pour les vaisseaux, la propagation du contour est plus difficile. \newV{La méthode est aussi moins performante lorsque l'aspect des vaisseaux est bruité et fragmenté}. De plus, l'implémentation du suivi des contours est complexe lorsque des changements de topologie ont lieu. C'est le cas, par exemple, de la séparation du contour en deux contours distincts.
 
       \paragraph{Contours implicites} 
 
-      \newV{Le problème de suivi de la propagation du contour de la méthode précédente peut être contourné par une formulation implicite des contours. On définit alors un contour comme l'intersection de deux surfaces.} La première surface correspond à l'image vue comme une carte de hauteurs et la seconde courbe $\phi$ correspond aux critères de partition (Fig. \ref{fig:level_set}). La dynamique d'évolution du contour implicite est gérée par l'élévation de la courbe $\phi$ en fonction du temps. 
+      \newV{Le problème de suivi de la propagation du contour de la méthode précédente peut être contourné par une formulation implicite des contours. On définit alors un contour comme l'intersection de deux surfaces.} La première surface correspond à l'image vue comme une carte de hauteurs et la seconde surface $\phi$ correspond aux critères de partition (Fig. \ref{fig:level_set}). La dynamique d'évolution du contour implicite est gérée par l'élévation de la surface $\phi$ en fonction du temps. 
 
       \begin{figure}[h]
         \centering
         \includegraphics[width=0.45\textwidth]{Images/levelSet_1.png}
         \includegraphics[width=0.45\textwidth]{Images/levelSet_2.png}
-        \caption{Illustration des courbes de niveaux. À gauche, Les contours sont modélisés comme étant l'intersection de la surface représentant l'image (gris) et d'un critère de partition $\phi$ (surface en rouge). L'évolution du contour est contrôlée par l'élévation de $\phi$. Cette modélisation permet de segmenter le contour de structures déconnectées, visibles sur l'image de droite.}
+        \caption{Illustration des courbes de niveaux. À gauche, les contours sont modélisés comme étant l'intersection de la surface représentant l'image (gris) et d'un critère de partition $\phi$ (surface en rouge). L'évolution du contour est contrôlée par l'élévation de $\phi$. Cette modélisation permet de segmenter le contour de structures déconnectées, visibles sur l'image de droite.}
         \label{fig:level_set}
       \end{figure}
 
-      Li \cite{Li2011_mri_level_set} et al. utilisent les courbes de niveaux pour segmenter des objets malgré une intensité globale non homogène. Pour cela il définit un critère de classification local au voisinage des pixels afin d'estimer un champ de biais d'intensité qui est ensuite incorporé dans l'énergie de propagation.
+      Li et al. \cite{Li2011_mri_level_set} utilisent les courbes de niveaux pour segmenter des objets malgré une intensité globale non homogène. Pour cela, ils définissent un critère de classification local au voisinage des pixels afin d'estimer un champ de biais d'intensité qui est ensuite incorporé dans l'énergie de propagation.
 
-      \newV{Les contours implicites permettent de segmenter les contours d'objets fragmentés. Cependant, la formulation des courbes de niveaux est généralement plus difficile à définir que pour les contours actifs. Leur mise en œuvre en terme d'implémentation est de ce fait plus complexe.}
+      \newV{Les contours implicites permettent de segmenter les contours d'objets fragmentés. Cependant, la formulation des courbes de niveaux est généralement plus difficile à définir que pour les contours actifs. Leur mise en œuvre en termes d'implémentation est de ce fait plus complexe.}
 
       \subsubsection{Graph cut}
 
@@ -119,15 +119,15 @@
       \begin{figure}[h]
         \centering
         \includegraphics[width=0.5\textwidth]{Images/graph_cut.png}
-        \caption{Principe du \textit{graph cut}. Une partition est trouvée en supprimant les arrètes d'un graphe définit à partir des pixels de l'image. Cette partition minimise la vraissemblance entre les deux ensembles, ici des vaisseaux (rouge) et le fond (bleu). }
+        \caption{Principe du \textit{graph cut}. Une partition est trouvée en supprimant les arêtes d'un graphe défini à partir des pixels de l'image. Cette partition minimise la vraisemblance entre les deux ensembles, ici des vaisseaux (rouge) et le fond (bleu). }
         \label{fig:graph_cut}
       \end{figure}
 
-      Esneault et al. \cite{Esneault2009_moments_graph_cut} utilisent les graph cut afin de minimiser une énergie composée de trois critères (région, bordure et vaisseaux). Le modèle de vaisseaux est basé sur un modèle cylindrique. Zeng et al. \cite{Zeng2017_liver_oof_graph_cut} proposent un raffinement d'une segmentation initiale par graph cut, en utilisant un critère de région basé sur la vraisemblance logarithmique (negative log likelihood) et un critère de bordure basé sur le flux (Sec. \ref{sec:EA:rehaussement:echelle:flux}).
+      Esneault et al. \cite{Esneault2009_moments_graph_cut} utilisent les graph cuts afin de minimiser une énergie composée de trois critères (région, bordure et vaisseaux). Le modèle de vaisseaux est basé sur un modèle cylindrique. Zeng et al. \cite{Zeng2017_liver_oof_graph_cut} proposent un raffinement d'une segmentation initiale par graph cuts, en utilisant un critère de région basé sur la vraisemblance logarithmique (negative log likelihood) et un critère de bordure basé sur le flux (Sec. \ref{sec:EA:rehaussement:echelle:flux}).
 
       \subsubsection{Ensemble flou}
 
-      Le choix d'une délimitation entre fond et segmentation n'est pas toujours aisé, en particulier dans les images médicales où les bords des objets à segmenter sont assez mal définis. La théorie des ensembles flous permet de modéliser cette incertitude. Au lieu d'associer une classe binaire aux pixels, on associe à chaque pixel une probabilité d'appartenance à chaque classe définie pour le problème donné (Fig. \ref{fig:fuzzy_segmentation}). Un critère flou est ensuite construit afin de définir une segmentation binaire définitive.
+      Le choix d'une délimitation entre fond et segmentation n'est pas toujours aisé, en particulier dans les images médicales où les bords des objets à segmenter sont mal définis. La théorie des ensembles flous permet de modéliser cette incertitude. Au lieu d'associer une classe binaire aux pixels, on associe à chaque pixel une probabilité d'appartenance à chaque classe définie pour le problème donné (Fig. \ref{fig:fuzzy_segmentation}). Un critère flou est ensuite construit afin de définir une segmentation binaire définitive.
 
       \begin{figure}[h]
         \centering
@@ -145,7 +145,7 @@
       % Better results with deep learning
       Dans les années 2010, un changement de paradigme a lieu avec l'utilisation croissante des réseaux de neurones. En effet, l'apparition des modèles de réseaux profonds, l'augmentation de la puissance de calculs et un nombre croissant de données annotées ont drastiquement augmenté les performances de ces modèles. Puis, à partir de 2015 les réseaux convolutifs (CNN) prennent une place prépondérante dans la littérature de la segmentation. 
       
-      En pratique, on fournit des exemples à un réseau qui produit en réponse une prédiction. L'erreur entre la prédiction et la vérité terrain est ensuite rétro-propagée dans le réseau afin qu'il puisse corriger les prédictions erronées. Ce processus, appliqué de manière itérative sur un grand nombre d'exemples, est appelé entrainement. Deux types d'entraînement sont principalement utilisés, l'entraînement supervisé par paires \{image d'entrée, vérité terrains\} et l'entraînement non supervisé avec des images en entrée et une énergie à minimiser qui permet de contraindre la prédiction du réseau.
+      En pratique, on fournit des exemples à un réseau qui produit en réponse une prédiction. L'erreur entre la prédiction et la vérité terrain est ensuite rétro-propagée dans le réseau afin qu'il puisse corriger les prédictions erronées. Ce processus, appliqué de manière itérative sur un grand nombre d'exemples, est appelé entrainement. Deux types d'entraînement sont principalement utilisés, l'entraînement supervisé par paires \{image d'entrée, vérité terrain\} et l'entraînement non supervisé avec des images en entrée et une énergie à minimiser qui permet de contraindre la prédiction du réseau.
       % what is used in medical applications
       Dans le domaine médical, ce sont les réseaux convolutifs complets (FCNN), en particulier l'architecture d'auto-encodeur U-Net \cite{Ronneberger2015_Unet}, qui se sont imposés en permettant de segmenter de manière précise des organes. Ce modèle propose une architecture composée d'un encodeur et d'un décodeur symétriques, donnant au réseau sa forme en U caractéristique. Des \textit{skip connections}, permettent de propager les détails de l'encodeur vers le décodeur sans disparaître dans les opérations de rééchantillonages (\textit{pooling}) des couches successives du réseau.
 
@@ -161,7 +161,7 @@
       % Loss
       Les résultats des réseaux de neurones sont très dépendants de la fonction de coût qui évalue l'erreur entre la prédiction et les données. Pour la segmentation, la \textit{Dice loss} proposées par Sudre \cite{Sudre2017_DiceLoss} s'est popularisée. Cette fonction de coût repose sur le score de Dice qui mesure le recouvrement entre la prédiction et la vérité terrain. Plusieurs métriques similaires ont été proposées et une revue des fonctions de coût pour la segmentation est présentée par Jadon et al. \cite{Jadon2020_survey_seg_loss}. Plus récemment des travaux ont exploré l'introduction de critères topologiques (notamment les composantes connexes) afin de limiter la fragmentation des segmentations ; un problème qui touche les structures fines telles que les vaisseaux \cite{Ventura2017iterative_topo},\cite{Hu2019_topo_homo_persi},\cite{Clough2019_topo_homo_persi}. Ces méthodes restent toutefois très coûteuses en temps de calcul, en particulier lorsqu'elles sont appliquées sur des données 3D. 
 
-      Le nombre des données joue un rôle crucial dans la performance des réseaux de neurones. Cependant, nous avons vu dans le chapitre \chapContextN les difficultés de trouver des bases de données publiques avec un nombre important de données bien annotées. 
+      Le nombre des données joue un rôle crucial dans la performance des réseaux de neurones. Cependant, nous avons vu dans le chapitre \chapContextN{} les difficultés de trouver des bases de données publiques avec un nombre important de données bien annotées. 
 
       Plusieurs méthodes permettent de contourner partiellement ce problème. La plus utilisée est l'augmentation de données \cite{Liskowski2016_data_augmentation}. Celle-ci utilise des données existantes pour appliquer des modifications spatiales ou spectrales des échantillons afin de créer artificiellement des données supplémentaires. D'autres méthodes comptent sur l'utilisation de données partielles, ou d'annotations complètes sur seulement une partie des données \cite{Tajbakhsh2020_imperfect_datasets}. Certains auteurs ont aussi exploré le transfert de style afin de générer des images d'une modalité grâce à des images d'une autre modalité. Chartsias et al. \cite{Chartsias2017_heart_adversarial_im} proposent la génération adversaire d'images IRM grâce à des images TDM et un masque d'alignement des structures. Ils montrent qu'en entraînant un réseau sur des images réelles et générées synthétiquement, on augmente les performances d'un réseau de segmentation. Huo et al. \cite{Huo2018_adversarial} explorent la génération à la fois d'une nouvelle modalité et de sa segmentation.
 
@@ -179,7 +179,7 @@
 
     Créer une chaîne de segmentation est une tâche complexe. Elle doit apporter des réponses efficaces à la fois à la gestion des artefacts d'acquisition des images, de l'apparence des organes à détecter et de l'extraction d'éléments sémantiques de haut niveau. 
 
-    Les solutions ont été apportées par l'élaboration de chaînes de traitements complexes pour les méthodes sans deep learning. Ainsi, pour la segmentation des vaisseaux hépatiques, Marcan et al. \cite{Marcan2014_vessel_seg} proposent un pipeline de segmentation en 16 étapes mélangeant filtrage du bruit, sélection des éléments pertinents par masques et analyses des composantes connexes pour la segmentation des vaisseaux du foie. Goceri et al. \cite{Goceri2017_vessel} proposent une méthode en 14 étapes alliant une partition en régions d'intérêt et un étirement du contraste (\textit{contrast stretching}) afin de différencier vaisseaux hépatiques des tissus du foie.
+    Les solutions ont été apportées par l'élaboration de chaînes de traitements complexes pour les méthodes sans deep learning. Ainsi, pour la segmentation des vaisseaux hépatiques, Marcan et al. \cite{Marcan2014_vessel_seg} proposent un pipeline de segmentation en 16 étapes mélangeant filtrage du bruit, sélection des éléments pertinents par masques et analyse des composantes connexes pour la segmentation des vaisseaux du foie. Goceri et al. \cite{Goceri2017_vessel} proposent une méthode en 14 étapes alliant une partition en régions d'intérêt et un étirement du contraste (\textit{contrast stretching}) afin de différencier vaisseaux hépatiques des tissus du foie.
   
     Pour le deep learning, cette complexité se retrouve au niveau de la construction de l'architecture du réseau et de la construction de la base de donnée. Si l'on veut traiter l'information en 3D afin de tirer parti de l'ensemble de la géométrie des vaisseaux, les ressources physiques nécessaires deviennent rapidement un goulot d'étranglement.  
     
@@ -192,13 +192,13 @@
       \label{fig:moccia_table}
     \end{figure}
 
-    Premièrement, il existe une disparité dans les métriques de comparaisons. Certains articles utilisent les métriques standard de classification : précision (\textit{precision}), justesse (\textit{accuracy}), sensibilité, spécificité. D'autres travaux utilisent des métriques de recouvrement comme le Dice ou les coefficients de corrélations de Matthew (MCC) et d'autres des opérateurs intégraux de type \textit{Area under curve} (AUC) ou \textit{Receiving Operator} (ROC). Les résultats de certaines méthodes sont mêmes parfois simplement évalués visuellement par des experts.
+    Premièrement, il existe une disparité dans les métriques de comparaisons. Certains articles utilisent les métriques standard de classification : précision (\textit{precision}), justesse (\textit{accuracy}), sensibilité, spécificité. D'autres travaux utilisent des métriques de recouvrement comme le Dice ou les coefficients de corrélation de Matthew (MCC) et d'autres des opérateurs intégraux de type \textit{Area Under Curve} (AUC) ou \textit{Receiving Operator} (ROC). Les résultats de certaines méthodes sont mêmes parfois simplement évalués visuellement par des experts.
 
     Deuxièmement, il y a une hétérogénéité dans les jeux de données. Entre deux articles, il peut y avoir de grandes différences sur le nombre d'images utilisées, les modalités d'acquisition et leur disponibilité. Cette disparité est plus marquée pour les volumes 3D. Des contre-exemples existent comme pour l'imagerie du fond de l'œil (fundus) qui disposent de trois jeux de données annotés qui font référence (DRIVE, STARE, CHASE). L'accessibilité de ces jeux de données annotés est en partie responsable du grand nombre d'articles les utilisant.
 
     Troisièmement, il est difficile de juger les bénéfices de chaque bloc algorithmique dans une chaîne de segmentation. Une étude ablative, comme on le ferait sur les réseaux de neurones, dans laquelle chaque bloc est retiré afin d'étudier sa performance n'est pas forcément possible. Il est donc complexe de juger si les gains obtenus par une méthode sont atteints grâce à sa modélisation du problème, l'utilisation de caractéristiques particulièrement pertinentes, de la métrique permettant une segmentation efficace ou simplement de la paramétrisation judicieuse de l'algorithme.
 
-    En étudiant plus en détail les blocs algorithmiques utilisés pour la segmentation vasculaire traditionnelle, une famille de filtres est utilisée régulièrement en amont des chaînes de traitement. Leur positionnement en fait un élément clé qui conditionne la suite de la segmentation. Ces filtres ont aussi la possibilité d'être appliqués sur les données d'entrées pour le deep learning. Une étude de leurs propriétés nous paraissait donc pertinente comme un premier pas vers la construction d'un algorithme de segmentation.
+    En étudiant plus en détail les blocs algorithmiques utilisés pour la segmentation vasculaire traditionnelle, une famille de filtres est utilisée régulièrement en amont des chaînes de traitement. Leur positionnement en fait un élément clé qui conditionne la suite de la segmentation. Ces filtres ont aussi la possibilité d'être appliqués sur les données d'entrée pour le deep learning. Une étude de leurs propriétés nous paraissait donc pertinente comme un premier pas vers la construction d'un algorithme de segmentation.
 
 
 % ____________________________________
@@ -214,11 +214,11 @@
     \centering
     \includegraphics[height=5cm]{Images/enhancement_part1.png}
     \includegraphics[height=5cm]{Images/enhancement_part2.png}
-    \caption{Exemple de filtre de rehaussement de vaisseaux. À droite, un foie en MIP, à gauche les vaisseaux rehaussés. La plupart des vaisseaux inclus dans l'intervalle d'échelle sélectionné sont conservés. Des artefacts de bruit et de bords sont observables.}
+    \caption{Exemple de filtre de rehaussement de vaisseaux. À droite, un foie en MIP, à gauche les vaisseaux rehaussés. La plupart des vaisseaux inclus dans l'intervalle d'échelles sélectionné sont conservés. Des artefacts de bruit et de bords sont observables.}
     \label{fig:exemple_vesselness}
   \end{figure}
 
-  Les filtres de rehaussement vaisseaux cherchent à isoler et améliorer le signal des structures géométriques associées à des vaisseaux (Fig. \ref{fig:exemple_vesselness}). Ces filtres répondent pour tout ou partie aux objectifs suivants :
+  Les filtres de rehaussement de vaisseaux cherchent à isoler et améliorer le signal des structures géométriques associées à des vaisseaux (Fig. \ref{fig:exemple_vesselness}). Ces filtres répondent pour tout ou partie aux objectifs suivants :
 
   \begin{itemize}
   \item détecter les structures vasculaires ;
@@ -232,11 +232,11 @@ Les filtres de rehaussement de vaisseaux reposent sur quatre principes : une mod
 
 \paragraph{Modélisation des vaisseaux}
 
-\newV{on observe que les vaisseaux sont de longues structures pleines et tortueuses dont la géométrie varie en taille et en courbure. C'est pourquoi la modélisation la plus populaire est d'assimiler les vaisseaux à des structures tubulaires. Les réseaux vasculaires sont formés par la connexion de structures tubulaires qui produisent alors une bifurcation. On parle de  bifurcations lorsqu'un vaisseau principal se divise en deux branches, trifurcations en trois et N-furcations dans le cas général. Dans la suite de ce manuscrit, nous effectuons un abus de langage en nommant "bifurcations" l'ensemble des furcations, puisque c'est le cas le plus couramment rencontré. Des hypothèses sont aussi faites sur l'intensité des vaisseaux. Selon les modalités, les vaisseaux peuvent apparaître noirs sur fond plus clair (IRM en phase T1, angiogramme) ou blanc sur fond plus foncé (IRM en phase T2, injection d'agent de contraste). Les hypothèses sont interchangeables, car on peut tout à fait inverser les niveaux de gris de l'image pour passer d'une hypothèse à l'autre. Pour la suite, nous prenons l'hypothèse que les vaisseaux sont clairs sur fond plus sombre.}
+\newV{On observe que les vaisseaux sont de longues structures pleines et tortueuses dont la géométrie varie en taille et en courbure. C'est pourquoi la modélisation la plus populaire est d'assimiler les vaisseaux à des structures tubulaires. Les réseaux vasculaires sont formés par la connexion de structures tubulaires qui produisent alors une bifurcation. On parle de  bifurcations lorsqu'un vaisseau principal se divise en deux branches, trifurcations en trois et N-furcations dans le cas général. Dans la suite de ce manuscrit, nous effectuons un abus de langage en nommant "bifurcations" l'ensemble des furcations, puisque c'est le cas le plus couramment rencontré. Des hypothèses sont aussi faites sur l'intensité des vaisseaux. Selon les modalités, les vaisseaux peuvent apparaître noirs sur fond plus clair (IRM en phase T1, angiogramme) ou blancs sur fond plus foncé (IRM en phase T2, injection d'agent de contraste). Les hypothèses sont interchangeables, car on peut tout à fait inverser les niveaux de gris de l'image pour passer d'une hypothèse à l'autre. Pour la suite, nous prenons l'hypothèse que les vaisseaux sont clairs sur fond plus sombre.}
 
 \paragraph{Espace d'échelles} 
 
-\newV{Dans un réseau vasculaire, les plus gros vaisseaux peuvent faire plusieurs dizaines de voxels de diamètre tandis que les vaisseaux observables les plus fins, peuvent atteindre les limites de la résolution des capteurs et  mesurer jusqu'à un voxel de diamètre. La détection d'un réseau vasculaire dans sa totalité implique de détecter des vaisseaux de différentes tailles. Il n'est cependant pas envisageable de réécrire un algorithme pour chaque taille de vaisseaux ; c'est pourquoi des cadres théoriques, appelés \emph{espaces d'échelles} ont été formulés. Ces espaces d'échelles permettent d'établir un cadre uniforme pour sélectionner les structures d'une image à une échelle donnée. Trois espaces d'échelles sont couramment associés au rehaussement vasculaire dans la littérature : l'espace d'échelles gaussien, l'espace d'échelles de flux orienté et l'espace d'échelles granulométrique.}
+\newV{Dans un réseau vasculaire, les plus gros vaisseaux peuvent faire plusieurs dizaines de voxels de diamètre tandis que les vaisseaux observables les plus fins peuvent atteindre les limites de la résolution des capteurs et  mesurer jusqu'à un voxel de diamètre. La détection d'un réseau vasculaire dans sa totalité implique de détecter des vaisseaux de différentes tailles. Il n'est cependant pas envisageable de réécrire un algorithme pour chaque taille de vaisseaux ; c'est pourquoi des cadres théoriques, appelés \emph{espaces d'échelles} ont été formulés. Ces espaces d'échelles permettent d'établir un cadre uniforme pour sélectionner les structures d'une image à une échelle donnée. Trois espaces d'échelles sont couramment associés au rehaussement vasculaire dans la littérature : l'espace d'échelles gaussien, l'espace d'échelles de flux orienté et l'espace d'échelles granulométrique.}
 \paragraph{Descripteurs de géométrie}
 
 \newV{Mesurer la similarité entre un modèle tubulaire théorique et une structure de l'image nécessite l'utilisation de descripteurs de géométrie. Ces descripteurs sont une représentation compacte, mesurable et locale des caractéristiques d'une structure. Le gradient (le taux de changement d'intensité), la courbure ou la saillance (capacité de la structure à se démarquer du fond) sont des exemples de caractéristiques. Dans la suite de ce chapitre, nous présentons les descripteurs dérivatifs, de phase et à base de flux orienté. Ces trois types de descripteurs ont la particularité d'être des descripteurs matriciels qui peuvent être représentés de manière compacte. Nous présentons ensuite les éléments structurants tubulaires issus de la morphologie mathématique.}
@@ -244,16 +244,16 @@ Les filtres de rehaussement de vaisseaux reposent sur quatre principes : une mod
 \paragraph{Mesure de tubularité}
 \newV{Les mesures de tubularité permettent de déterminer le degré de tubularité d'un voxel par rapport à son voisinage local. Pour les descripteurs matriciels, nous verrons que cette mesure s'exprime comme une combinaison de valeurs propres. Pour les descripteurs de morphologie mathématique le degré de tubularité est principalement dicté par l'élément structurant. Nous verrons cependant un type d'éléments structurants pour lequel la mesure de tubularité repose sur un vote basé sur leurs orientations.}
 
-\newV{Nous avons décrit les quatre principes sur lesquels reposent les filtres de rehaussement de manière indépendante. En pratiques, ils sont tributaires les uns des autres à des degrés variables. Par exemple, les descripteurs dérivatifs utilisés avec un espace gaussien peuvent être remplacés par des descripteurs de phase sans difficulté. Ils ne sont cependant pas compatibles avec un espace d'échelles de flux. La morphologie mathématique propose une approche fondamentalement différente, plus proche du \textit{pattern matching}, dans laquelle l'élément structurant est au cœur de l'espace d'échelles et de la description des structures. Dans la suite de ce chapitre, nous présentons les différents composants des filtres de rehaussement tels que présentés dans la table \ref{tab:recap_filters_components}.}
+\newV{Nous avons décrit les quatre principes sur lesquels reposent les filtres de rehaussement de manière indépendante. En pratique, ils sont tributaires les uns des autres à des degrés variables. Par exemple, les descripteurs dérivatifs utilisés avec un espace gaussien peuvent être remplacés par des descripteurs de phase sans difficulté. Ils ne sont cependant pas compatibles avec un espace d'échelles de flux. La morphologie mathématique propose une approche fondamentalement différente, plus proche du \textit{pattern matching}, dans laquelle l'élément structurant est au cœur de l'espace d'échelles et de la description des structures. Dans la suite de ce chapitre, nous présentons les différents composants des filtres de rehaussement tels que présentés dans la table \ref{tab:recap_filters_components}.}
 
 \begin{table}[!ht]
 \begin{tabular}{c|c|c}
     \hline
     \multicolumn{3}{c}{Méthodes matricielles} \\
     \hline
-    \tbf{Espace d'échelles} & \tbf{type de descripteur} & \tbf{Mesure de tubularité} \\
+    \tbf{Espace d'échelles} & \tbf{Type de descripteur} & \tbf{Mesure de tubularité} \\
     \hline
-    \multirow{2}{*}{Gaussien}   & Dérivation   & \multirow{3}{*}{combinaisons de valeurs propres}  \\
+    \multirow{2}{*}{Gaussien}   & Dérivation   & \multirow{3}{*}{Combinaisons de valeurs propres}  \\
     \cline{2-2}
                                        & Phase        &                                                   \\ 
     \cline{1-2}
@@ -262,18 +262,18 @@ Les filtres de rehaussement de vaisseaux reposent sur quatre principes : une mod
     \hline
     \multicolumn{3}{c}{Méthode par morphologie mathématique} \\
     \hline
-    \tbf{Espace d'échelles} & \tbf{type de descripteur} & \tbf{Mesure de tubularité} \\
+    \tbf{Espace d'échelles} & \tbf{Type de descripteur} & \tbf{Mesure de tubularité} \\
     \hline
     \multirow{2}{*}{Granulométrique}             & \multirow{2}{*}{Élément structurant} & Élément structurant \\
-                                                        &                                      & vote sur les orientations \\
+                                                        &                                      & Vote sur les orientations \\
   \hline
 \end{tabular}
-\caption{Composants des filtres de rehaussement et leurs affinités. Certains composants des méthodes matricielles sont interchangeables, mais ils ne sont pas compatibles avec les méthodes à base de morphologie mathématiques.}
+\caption{Composants des filtres de rehaussement et leurs affinités. Certains composants des méthodes matricielles sont interchangeables, mais ils ne sont pas compatibles avec les méthodes à base de morphologie mathématique.}
 \label{tab:recap_filters_components}
 \end{table}
 
 \subsection{Filtres basés descripteurs matriciels}
-\newV{Dans cette section, nous présentons d'abord l'espace d'échelles gaussien puis les descripteurs dérivatifs et de phase qui lui sont associés. Nous présentons ensuite l'espace d'échelles de flux et le descripteur de flux orienté. Nous passons ensuite en revue les différentes mesures de tubularités applicables avec les descripteurs matriciels.} 
+\newV{Dans cette section, nous présentons d'abord l'espace d'échelles gaussien puis les descripteurs dérivatifs et de phase qui lui sont associés. Nous présentons ensuite l'espace d'échelles de flux et le descripteur de flux orienté. Nous passons ensuite en revue les différentes mesures de tubularité applicables avec les descripteurs matriciels.} 
 
 \subsubsection{Espace d'échelles gaussien}
 \label{sec:EA:rehaussement:echelle:gaussien}
@@ -293,12 +293,12 @@ La sélection de l'échelle dans un espace gaussien se fait par le choix de l'é
   \label{eq:Gaussienne 3D}
 \end{equation}
 
-Il convient de noter que pour un $\sigma$ donné, le diamètre des structures n'est pas supérieure ou égale à $\sigma$, mais plutôt supérieure ou égale à $\alpha\sigma$. En effet, en empruntant le formalisme des statistiques, l'intervalle de confiance, c'est-à-dire la couverture d'une distribution normale, correspond pour $\sigma=1$ à $34.1$ \percent{}, $68$ \percent{}pour $\sigma=2$ et $99.7$ \percent{}pour $\sigma=3$ de la surface de la gaussienne. Ainsi, pour $\sigma=1$ on détectera en théorie des objets de rayon $3\sigma$ et de diamètre $6\sigma$.  
+Il convient de noter que pour un $\sigma$ donné, le diamètre des structures n'est pas supérieur ou égal à $\sigma$, mais plutôt supérieur ou égal à $\alpha\sigma$. En effet, en empruntant le formalisme des statistiques, l'intervalle de confiance, c'est-à-dire la couverture d'une distribution normale, correspond pour $\sigma=1$ à $34.1$ \percent{}, $68$ \percent{}pour $\sigma=2$ et $99.7$ \percent{}pour $\sigma=3$ de la surface de la gaussienne. Ainsi, pour $\sigma=1$ on détectera en théorie des objets de rayon $3\sigma$ et de diamètre $6\sigma$.  
 
 \begin{figure}[!ht]
   \centering
   \includegraphics[height=5cm]{Images/normal_distribution_probability_coverage.png}
-  \caption{Densité de probablité d'une distribution normale exprimée en pourcentage en fonction de la moyenne $\mu$ et de l'écart type $\sigma$. $99.7$ \percent{}des valeurs sont comprises dans l'intervale $[\mu-3\sigma,\mu+3\sigma]$. Pour un vaisseau, on peut donc prendre hypothèse que la relation entre son diamètre $D$ et la gaussienne de l'espace d'échellesest $D=6\sigma$.\protect\footnotemark}
+  \caption{Densité de probablité d'une distribution normale exprimée en pourcentage en fonction de la moyenne $\mu$ et de l'écart type $\sigma$. $99.7$ \percent{}des valeurs sont comprises dans l'intervale $[\mu-3\sigma,\mu+3\sigma]$. Pour un vaisseau, on peut donc prendre hypothèse que la relation entre son diamètre $D$ et la gaussienne de l'espace d'échelles est $D=6\sigma$.\protect\footnotemark}
   \label{fig:normal_distribution_probability_coverage}
 \end{figure}
 
@@ -335,7 +335,7 @@ L'espace gaussien présente cependant des défauts. Le lissage de l'image impliq
 \subsubsubsection{Descripteurs dérivatifs}
 \label{sec:EA:rehaussement:hessienne}
 
-\newV{Les descripteurs dérivatifs permettent de décrire les variations d'intensités autour d'un voxel. Les descripteurs du premier degré décrivent vitesse de variation des intensités autour d'un voxel. La matrice des dérivées partielles représentant ces variations dans les trois dimensions est appelée Jacobienne (Eq. \ref{eq:jacobian}). Une matrice alternative, le tenseur de structure (Eq. \ref{eq:structure}),  lui est quelquefois substituée \cite{Mendrik2009_HDCS}.}
+\newV{Les descripteurs dérivatifs permettent de décrire les variations d'intensité autour d'un voxel. Les descripteurs du premier degré décrivent la vitesse de variation des intensités autour d'un voxel. La matrice des dérivées partielles $J$ représentant ces variations dans les trois dimensions est appelée jacobienne (Eq. \ref{eq:jacobian}). Une matrice alternative $S$, le tenseur de structure (Eq. \ref{eq:structure}),  lui est quelquefois substituée \cite{Mendrik2009_HDCS}.}
 
 \begin{equation}
   J(I) =
@@ -370,9 +370,9 @@ L'espace gaussien présente cependant des défauts. Le lissage de l'image impliq
 \end{equation}
 
 
-Pour les vaisseaux sanguins, qui peuvent être vu comme des maxima locaux étroits, la description de la courbure des intensités autour d'un voxel est plus pertinente. Cette courbure est décrite par la matrice des dérivées partielles secondes : la matrice Hessienne (Eq. \ref{eq:hessian_matrix}). 
+Pour les vaisseaux sanguins, qui peuvent être vu comme des maxima locaux étroits, la description de la courbure des intensités autour d'un voxel est plus pertinente. Cette courbure est décrite par la matrice des dérivées partielles secondes $H$ : la matrice hessienne (Eq. \ref{eq:hessian_matrix}). 
 
-Les valeurs propres et les vecteurs propres issus de la Hessienne sont une représentation compacte des variations exprimées par la matrice. les vecteurs propres permettent d'exprimer les directions principales de la courbure (pour la Hesienne) et les valeurs propres expriment la force de la courbure pour chaque direction.
+Les valeurs propres et les vecteurs propres issus de la hessienne sont une représentation compacte des variations exprimées par la matrice. Les vecteurs propres permettent d'exprimer les directions principales de la courbure (pour la hessienne) et les valeurs propres expriment la force de la courbure pour chaque direction.
 Les valeurs propres et vecteurs propres de la hessienne permettent de quantifier l'orientation, le sens et l'amplitude du voisinage d'un point. L'utilisation des valeurs propres est explicité dans la section \ref{sec:mesure_tubularity}.
 
 \begin{equation}
@@ -395,7 +395,7 @@ Les valeurs propres et vecteurs propres de la hessienne permettent de quantifier
 \subsubsubsection{Descripteurs de phase}
 \label{sec:EA:rehaussement:Phase}
 
-Une image peut-être à la fois vue comme une matrice de pixels et comme un signal sinusoïdal discret en 2 ou 3 dimensions. \newV{La représentation sous forme de signal dépend de deux paramètres : l'amplitude, correspondant à l'intensité des pixels, et la phase correspond au décalage temporel ou spatial de ce signal. En pratique on s'intéresse plutôt à la mesure de la différence de phase entre les périodes de deux signaux \ref{fig:phase_shift}.}
+Une image peut-être à la fois vue comme une matrice de pixels et comme un signal sinusoïdal discret en 2 ou 3 dimensions. \newV{La représentation sous forme de signal dépend de deux paramètres : l'amplitude, correspondant à l'intensité des pixels, et la phase correspond au décalage temporel ou spatial de ce signal. En pratique on s'intéresse plutôt à la mesure de la différence de phase entre les périodes de deux signaux (Fig. \ref{fig:phase_shift}).}
 
 \begin{figure}[!ht]
   \centering
@@ -404,16 +404,16 @@ Une image peut-être à la fois vue comme une matrice de pixels et comme un sign
   \label{fig:phase_shift}
 \end{figure}
 
-La phase est indépendante de l'amplitude et n'est donc pas affectée par des changements d'intensités. Oppenhei et al. \cite{Oppenheim1981_phase_importance} démontrent l'importance de ces caractéristiques de l'image et montrent une correspondance avec le système visuel humain. 
+La phase est indépendante de l'amplitude et n'est donc pas affectée par des changements d'intensité. Oppenhei et al. \cite{Oppenheim1981_phase_importance} démontrent l'importance de ces caractéristiques de l'image et montrent une correspondance avec le système visuel humain. 
 
 \begin{figure}[h]
   \centering
   \includegraphics[height=5cm]{Images/PC_decomposition.png}
-  \caption{Décomposition de Fourier d'un signal. En certains points (rouge) la phase de chaque composante du signal est synchronisée. Ces points correspondent aux éléments saillants des images et soont indépendants des variations d'intensités (amplitude) de l'image. Le contraste de phase correspond à la mesure de la synchronisation des phases des composantes du signal.}
+  \caption{Décomposition de Fourier d'un signal. En certains points (rouge) la phase de chaque composante du signal est synchronisée. Ces points correspondent aux éléments saillants des images et sont indépendants des variations d'intensité (amplitude) de l'image. Le contraste de phase correspond à la mesure de la synchronisation des phases des composantes du signal.}
   \label{fig:phase_congruency}
 \end{figure}
 
-Plusieurs constructions de filtres de rehaussement se basent sur cette propriété pour la détection des vaisseaux. Obara et al. \cite{Obara2012_phase} utilisent un tenseur de structure basé sur le contraste de phase \ref{fig:phase_congruency}. Les valeurs propres de ce tenseur permettent ensuite d'exprimer une mesure de tubularité.
+Plusieurs constructions de filtres de rehaussement se basent sur cette propriété pour la détection des vaisseaux. Obara et al. \cite{Obara2012_phase} utilisent un tenseur de structure basé sur le contraste de phase (Fig. \ref{fig:phase_congruency}). Les valeurs propres de ce tenseur permettent ensuite d'exprimer une mesure de tubularité.
 
 Ce tenseur est exprimé comme :
 
@@ -421,7 +421,7 @@ Ce tenseur est exprimé comme :
   T_{PC} = \sum_o PC_{o}(p)(n_{o}n^T - \alpha \text{I})
 \end{equation}
 
-Avec $PC(x)$ la fonction de congruence de phase, $n_{\theta}=[cos(\theta),sin(\theta)]^T$ le vecteur d'orientation $o$, $I$ le tenseur unitaire, $\alpha = 1/(m-1)$ avec $m$ la dimension de $I$. $PC(x)$ permet de détecter les éléments saillants à la manière d'un détecteur de contours.
+avec $PC(x)$ la fonction de congruence de phase, $n_{\theta}=[cos(\theta),sin(\theta)]^T$ le vecteur d'orientation $o$, $I$ le tenseur unitaire, $\alpha = 1/(m-1)$ avec $m$ la dimension de $I$. $PC(x)$ permet de détecter les éléments saillants à la manière d'un détecteur de contours.
 En effet, une image vue comme un signal peut être décomposée comme un ensemble de signaux sinusoïdaux. Les éléments saillants tels que les bordures ou les coins d'objets correspondent à une synchronisation, e.g congruence, de ces signaux pour un angle donné. La congruence de phase s'exprime par :
 
 \begin{equation}
@@ -446,10 +446,10 @@ Enfin, ces filtres sont dépendants du nombre d'orientations échantillonnées $
   \label{eq:flux}
   \end{equation}
   
-  \newV{Le calcul du flux s'applique à la surface d'un objet fermé dont les frontières sont clairements définies. On évite donc par construction le débordement observé avec l'espace gaussien. Les structures en forme de disques, de sphères \cite{Law2008_OOF} ou de cylindres \cite{Wang2019_cylindrical_flux} sont utilisés pour la détection des vaisseaux. Dans ce contexte, l'échelle est définie par la taille de la surface sur laquelle est calculée le flux. Pour un disque et une sphère, le paramètre d'échelle correspond donc au diamètre de l'objet. Cette formulation de l'échelle diffère des méthodes précédentes, car les objets tubulaires ne sont détectés que pour une échelle donnée, là où les deux autres techniques conservent les objets à l'échelle donnée et aux échelles supérieures. Elle a aussi l'avantage de limiter l'analyse du flux à la surface de la sphère et donc de produire une réponse qui ne déborde pas.}
+  \newV{Le calcul du flux s'applique à la surface d'un objet fermé dont les frontières sont clairements définies. On évite donc, par construction, le débordement observé avec l'espace gaussien. Les structures en forme de disques, de sphères \cite{Law2008_OOF} ou de cylindres \cite{Wang2019_cylindrical_flux} sont utilisés pour la détection des vaisseaux. Dans ce contexte, l'échelle est définie par la taille de la surface sur laquelle est calculée le flux. Pour un disque et une sphère, le paramètre d'échelle correspond donc au diamètre de l'objet. Cette formulation de l'échelle diffère des méthodes précédentes, car les objets tubulaires ne sont détectés que pour une échelle donnée, là où les deux autres techniques conservent les objets à l'échelle donnée et aux échelles supérieures. Elle a aussi l'avantage de limiter l'analyse du flux à la surface de la sphère et donc de produire une réponse qui ne déborde pas.}
 
-  \newV{Afin de garantir une précision constante du calcul du flux, il est nécessaire d'échantilloner la surface de la sphère à intervalle réguliers et constants peut importe la taille de $S$. Plus l'échelle sélectionnée est grande, et donc plus la surface de la sphère est grande, plus le nombre d'échantillons requis est important. Cette contrainte fait croite le coût en calcul proportionellement à la taille de la sphère.} Law et al. \cite{Law2009_efficient_implementation} proposent une formulation élégante du calcul de flux dans le domaine de Fourier afin de réduire drastiquement le temps de calcul par rapport à l'implémentation naïve.
-  Pour y parvenir, Law et al. proposent d'exprimer le calcul de flux sous la forme d'une convolution dans le domaine temporel. L'avantage de la convolution est double : on évite l'étape d'échantillonnage sur la surface et la convolution s'exprime comme une multiplication dans le domaine de Fourier. On peut exprimer le calcul de flux en termes de volume et non plus en termes de surface grâce au théorème de la divergence qui établit une égalité entre le flux à la surface d'un objet et le flux à l'intérieur de son volume. Ainsi :
+  \newV{Afin de garantir une précision constante du calcul du flux, il est nécessaire d'échantilloner la surface de la sphère à intervalle réguliers et constants peut importe la taille de $S$. Plus l'échelle sélectionnée est grande, et donc plus la surface de la sphère est grande, plus le nombre d'échantillons requis est important. Cette contrainte fait croître le coût en calcul proportionnellement à la taille de la sphère.} Law et al. \cite{Law2009_efficient_implementation} proposent une formulation élégante du calcul de flux dans le domaine de Fourier afin de réduire drastiquement le temps de calcul par rapport à l'implémentation naïve.
+  Pour y parvenir, ils proposent d'exprimer le calcul de flux sous la forme d'une convolution dans le domaine temporel. L'avantage de la convolution est double : on évite l'étape d'échantillonnage sur la surface et la convolution s'exprime comme une multiplication dans le domaine de Fourier. On peut exprimer le calcul de flux en termes de volume et non plus en termes de surface grâce au théorème de la divergence qui établit une égalité entre le flux à la surface d'un objet et le flux à l'intérieur de son volume. Ainsi :
   \begin{equation}
     flux_{C} = \int_{\partial C}< \vec{v},\vec{n} > d\rho \equiv \int_{C }\Delta I d\nu
   \end{equation}
@@ -458,7 +458,7 @@ Enfin, ces filtres sont dépendants du nombre d'orientations échantillonnées $
     f_s(x,y,z) = \int_{\partial R_s}\vec{v}(x+t,y+p, z+q) . \vec{n}_{(t,p,q)}dA
     \label{eq:next_oof}
   \end{equation}
-  avec $R_s$ une région sphérique de rayon $s$, $dA$ une surface infinitésimale sur la surface $\partial R_s$, $\vec{n}_{(t,p,q)}$ le vecteur normal à $dA$ à la position $(t,p,q)$ et $\vec{v}$ le gradient de l'image $I$. $\vec{v}$ est obtenu à partir de l'image $I$ lissée par un noyau gaussien afin d'assurer la dérivabilité du signal de $I$ comme explicité dans la section \ref{sec:EA:rehaussement:hessienne}. $\vec{v}=\nabla(g*I)$.
+  avec $R_s$ une région sphérique de rayon $s$, $dA$ une surface infinitésimale sur la surface $\partial R_s$, $\vec{n}_{(t,p,q)}$ le vecteur normal à $dA$ à la position $(t,p,q)$ et $\vec{v}$ le gradient de l'image $I$. $\vec{v}$ est obtenu à partir de l'image $I$ lissée par un noyau gaussien (i.e. $\vec{v}=\nabla(g)*I)$.) afin d'assurer la dérivabilité du signal de $I$ comme explicité dans la section \ref{sec:EA:rehaussement:hessienne}.
   Eq. \ref{eq:next_oof} est équivalente à :
   \begin{align}
     f_s(x,y,z) & = \int_{R_s} \vec{div}( \vec{v}(x+t,y+p, z+q) ) dtdpdq \\
@@ -483,13 +483,14 @@ Enfin, ces filtres sont dépendants du nombre d'orientations échantillonnées $
     \label{eq:oof_next2}
   \end{align}
   avec $*$ l'opérateur de convolution, $\Delta$ l'opérateur laplacien.
-  Eq. \ref{eq:oof_next2} exprimée dans le domaine de Fourier donne :
+  L'équation \ref{eq:oof_next2} exprimée dans le domaine de Fourier donne :
   \begin{align}
     FFT( I * h_s(x,y,z) ) &= FFT(I) . FFT(h_s(u,v,w)) \\
+    \nonumber
                           &= FFT(I) . FFT(ds(u,v,w)) . (j2 \pi)^2 ( (\frac{u}{N_x})^2 + (\frac{v}{N_y})^2 + (\frac{w}{N_z})^2 )  \\
-                          & .  \exp( -( (\frac{u}{N_x})^2 + (\frac{v}{N_y})^2 + (\frac{w}{N_z})^2 ) 2(\pi\sigma)^2 )
+                          & . \exp( -( (\frac{u}{N_x})^2 + (\frac{v}{N_y})^2 + (\frac{w}{N_z})^2 ) 2(\pi\sigma)^2 )
   \end{align}
-  \newV{avec $N_x$,$N_y$ et $N_z$ les dimensions de l'image le long des axes $x$, $y$ et $z$.}
+  \newV{avec $N_x$, $N_y$ et $N_z$ les dimensions de l'image le long des axes $x$, $y$ et $z$.}
 \subsubsection{Descripteurs associés à l'espace d'échelles de flux}
 \subsubsubsection{Flux orienté sphérique}
 
@@ -497,8 +498,8 @@ Enfin, ces filtres sont dépendants du nombre d'orientations échantillonnées $
 \begin{equation}
     f(x;r, \widehat{\rho} )= \int_{\delta S_r} (( v(x + r\widehat{n}).\widehat{\rho})\widehat{\rho}). \widehat{n}\,dA = \widehat{\rho}^{T}Q_{r,x}\widehat{\rho}  	\nonumber
 \end{equation}
-où $v(.)$ correspond au gradient de l'image à la position ".", $dA$ une zone infinitésimale sur la surface $\delta S_r$ et $\widehat{n}$ la normale unitaire orienté vers l'extérieur de la sphère $\delta S_r$.
-Les $i^{ème}$ lignes et $j^{ème}$ colonnes de $Q$ sont définies par: 
+où $v(.)$ correspond au gradient de l'image à la position ".", $dA$ est une zone infinitésimale sur la surface $\delta S_r$ et $\widehat{n}$ la normale unitaire orientée vers l'extérieur de la sphère $\delta S_r$.
+Les $i^{ème}$ ligne et $j^{ème}$ colonne de $Q$ sont définies par: 
 \begin{equation}
     q_{r,x}^{i,j} = \int_{\delta S_r} (( v_i(x + r\widehat{n}).\widehat{\rho})\widehat{\rho}).n_j\,dA = \widehat{\rho}^{T}Q_{r,x}\widehat{\rho}  \nonumber	
 \end{equation}
@@ -512,18 +513,18 @@ En pratique, le flux entrant est minimal quand le flux sortant est maximisé, c'
 \subsubsection{Mesures de tubularité}
 \label{sec:mesure_tubularity}
 
-\newV{Basées sur les espaces d'échelles et les descripteurs matriciels vu précédement, plusieurs mesures de tubularités ont été proposées dans la littérature. Nous n'évoquerons ici que le cas de la hessienne, puisque nous avons vu précédemment que la matrice de flux orienté $Q$ lui était équivalente. Les mesures de tubularité reposent sur une représentation condensée de ces matrices : les vecteurs propres et les valeurs propres.}
-\newV{La matrice hessienne telle que nous l'avons formulé précédement est exprimée par rapport aux axes $x$,$y$ et $z$ de l'image. Les vecteurs propres forment une base vectorielle orthogonale différente de la base utilisée dans la matrice hessienne. Les vecteurs propres sont ainsi orientés dans les directions principales des variations de courbure d'intensité du voisinage d'un voxel. Les valeurs propres sont des facteurs d'homothétie des vecteurs propres et correspondent à la force de la variation de courbure des intensités dans le sens du vecteur propre associé (Fig. \ref{fig:ev}).}
+\newV{Basées sur les espaces d'échelles et les descripteurs matriciels vu précédement, plusieurs mesures de tubularité ont été proposées dans la littérature. Nous n'évoquerons ici que le cas de la hessienne, puisque nous avons vu précédemment que la matrice de flux orienté $Q$ lui était équivalente. Les mesures de tubularité reposent sur une représentation condensée de ces matrices : les vecteurs propres et les valeurs propres.}
+\newV{La matrice hessienne telle que nous l'avons formulée précédement est exprimée par rapport aux axes $x$, $y$ et $z$ de l'image. Les vecteurs propres forment une base vectorielle orthogonale différente de la base utilisée dans la matrice hessienne. Les vecteurs propres sont ainsi orientés dans les directions principales des variations de courbure d'intensité du voisinage d'un voxel. Les valeurs propres sont des facteurs d'homothétie des vecteurs propres et correspondent à la force de la variation de courbure des intensités dans le sens du vecteur propre associé (Fig. \ref{fig:ev}).}
 
 \begin{figure}
 \centering
   \includegraphics[width=0.6\textwidth]{Images/eigen_values.png}
-\caption{À gauche, vecteurs de variations des intensités exprimés en fonction de la base de l'image. À droite même représentation sous la forme de vecteurs propres et de valeurs propres. La représentation avec les vecteurs propres simplifie la description du voisinage sans perte d'information.}
+\caption{À gauche, vecteurs de variation des intensités exprimés en fonction de la base de l'image. À droite, même représentation sous la forme de vecteurs propres et de valeurs propres. La représentation avec les vecteurs propres simplifie la description du voisinage sans perte d'information.}
 \label{fig:ev}
 \end{figure}
-\newV{Lorsqu'ils sont calculés sur un voxel appartenant au centre d'une structure tubulaire les vecteurs propres prennnent un alignement spécifique. Le vecteur $v_1$ associé à la valeur propre $\lambda_1$ est orienté dans la direction principale du tube (Fig. \ref{fig:structures_hessienne}). Pour des vaisseaux, cette direction correspond à la direction de circulation du sang. Les deux autres vecteurs propres $v_2$  et $v_3$ sont orthogonaux à $v1$ et forment les axes majeurs et mineurs de l'ellipse qui compose la coupe transversale de la structure tubulaire. De ce fait, le degré de tubularité d'un objet peut-être directement exprimé grâce aux valeurs propres $\lambda_1$,$\lambda_2$,$\lambda_3$ associées aux vecteurs propres $v_1$,$v_2$,$v_3$.}
+\newV{Lorsqu'ils sont calculés sur un voxel appartenant au centre d'une structure tubulaire les vecteurs propres prennnent un alignement spécifique. Le vecteur $v_1$ associé à la valeur propre $\lambda_1$ est orienté dans la direction principale du tube (Fig. \ref{fig:structures_hessienne}). Pour des vaisseaux, cette direction correspond à la direction de circulation du sang. Les deux autres vecteurs propres $v_2$  et $v_3$ sont orthogonaux à $v_1$ et forment les axes majeurs et mineurs de l'ellipse qui compose la coupe transversale de la structure tubulaire. De ce fait, le degré de tubularité d'un objet peut-être directement exprimé grâce aux valeurs propres $\lambda_1$, $\lambda_2$, $\lambda_3$ associées aux vecteurs propres $v_1$, $v_2$, $v_3$.}
 
-Soit les valeurs propres $\lambda_1$,$\lambda_2$,$\lambda_3$ tels que $|\lambda_1| \leq |\lambda_2| \leq |\lambda_3|$.  La tubularité peut s'exprimer de la manière suivante \cite{Lorenz1997_multi} :
+Soit les valeurs propres $\lambda_1$, $\lambda_2$, $\lambda_3$ tels que $|\lambda_1| \leq |\lambda_2| \leq |\lambda_3|$.  La tubularité peut s'exprimer de la manière suivante \cite{Lorenz1997_multi} :
 \begin{align}
   \lambda_1 \approx 0 \\
   \nonumber
@@ -532,18 +533,18 @@ Soit les valeurs propres $\lambda_1$,$\lambda_2$,$\lambda_3$ tels que $|\lambda_
   \label{eq:tubularity}
 \end{align}
 
-\newV{Dans la direction de $v_1$ qui correspond à la direction du tube, l'intensité reste relativement constante (i.e. $\lambda_1 \approx 0$). Dans le plan de la coupe transversale du tube, l'intensité décroit rapidement au fur et à mesure que l'on s'éloigne du centre du vaisseaux (i.e. $\lambda_1 \ll \lambda_2$). Enfin, la coupe transversale des vaisseaux est assimilée à une ellipse quasi circulaire (i.e. $\lambda_2 \approx \lambda_3$).}
+\newV{Dans la direction de $v_1$ qui correspond à la direction du tube, l'intensité reste relativement constante (i.e. $\lambda_1 \approx 0$). Dans le plan de la coupe transversale du tube, l'intensité décroît rapidement au fur et à mesure que l'on s'éloigne du centre du vaisseaux (i.e. $\lambda_1 \ll \lambda_2$). Enfin, la coupe transversale des vaisseaux est assimilée à une ellipse quasi circulaire (i.e. $\lambda_2 \approx \lambda_3$).}
 
 \begin{figure}[!ht]
   \centering
   \includegraphics[height=8cm]{Images/table_structures.png}
-  \caption{Valeur des valeurs propres en fonction de la forme de la géométrie locale. On distingue trois grands types de géométrie : Les plateaux, les sphères et les tubes.}
+  \caption{Poids des valeurs propres en fonction de la forme de la géométrie locale. On distingue trois grands types de géométrie : les plateaux, les sphères et les tubes.}
   \label{fig:structures_hessienne}
 \end{figure}
 
-\newV{L'équation \ref{eq:tubularity} est la définition idéale d'une structure tubulaire. En pratique, la géométrie d'un réseau vasculaire est complexe. Elle est composée d'un mélange de géométrie tubulaire, planaire et sphérique à des degrés divers. Ces variations possèdent parfois des propriétés proches de structures indésirées pour le rehaussement de vaisseaux. On peut citer le bruit composé de petites structures sphériques ou encore les bords planaires des organes.}
+\newV{L'équation \ref{eq:tubularity} est la définition idéale d'une structure tubulaire. En pratique, la géométrie d'un réseau vasculaire est complexe. Elle est composée d'un mélange de géométries tubulaires, planaires et sphériques à des degrés divers. Ces variations possèdent parfois des propriétés proches de structures indésirées pour le rehaussement de vaisseaux. On peut citer le bruit composé de petites structures sphériques ou encore les bords planaires des organes.}
 
-Plusieurs mesures de tubularités ont donc été proposées dans la littérature afin de différencier au mieux les vaisseaux des autres types de structures. Nous présentons six d'entre elles dans la suite de cette section.
+Plusieurs mesures de tubularité ont donc été proposées dans la littérature afin de différencier au mieux les vaisseaux des autres types de structures. Nous présentons six d'entre elles dans la suite de cette section.
 
 \subsubsubsection{Sato}
 
@@ -558,12 +559,12 @@ Ce filtre a l'avantage de lisser la réponse et de réduire le bruit. Deux param
 \nonumber
 F =
 \left\{
-\begin{array}{lr}
+\begin{array}{ll}
 \lambda^\star_c \exp(-\frac{{\lambda^\star_1}^2}{2(\alpha_1 \lambda^\star_c)^2})  & 
 \textrm{Si } \lambda^\star_1 \leqslant 0, \lambda^\star_c \neq 0 \\
 \lambda^\star_c \exp(-\frac{{\lambda^\star_1}^2}{2(\alpha_2\lambda^\star_c)^2})  &  
 \textrm{Si } \lambda^\star_1 > 0, \lambda^\star_c \neq 0 \\
-0 & \textrm{Sinon}
+0 & \textrm{sinon}
 \end{array}
 \right.
 \end{equation}
@@ -587,11 +588,11 @@ Ces mesures permettent de discriminer les blobs ($R_b$), différencier les plate
               \end{cases}
 \end{align}
 
-Cette fonction est contrôlée par trois paramètres $\alpha$, $\beta$, $C$, faisant du filtre de Frangi le filtre nécessitant un paramétrage complexe. Cette méthode est utilisée dans la plupart des applications de segmentation avec rehaussement.
+Cette fonction est contrôlée par trois paramètres $\alpha$, $\beta$, $C$, qui rendent complexe le paramétrage du filtre. Cette méthode est utilisée dans la plupart des applications de segmentation avec rehaussement.
 
 \subsubsubsection{Meijering}
 
-Meijering et al. \cite{Meijering2004_neurite_vesselness} proposent un filtre pour la détection de neurites dans des images fluoroscopiques. Ils s'intéressent en particulier à rehausser les structures fines d'un ou deux voxels de large grâce à un filtre de détection de structures tubulaires dont l'élongation est maximisé. Elle a ensuite été testée en 3D dans \cite{Obara2012_phase}. Le filtre repose sur une matrice hessienne modifiée $H'(f)$ que nous définissons de la manière suivante :
+Meijering et al. \cite{Meijering2004_neurite_vesselness} proposent un filtre pour la détection de neurites dans des images fluoroscopiques. Ils s'intéressent en particulier à rehausser les structures fines d'un ou deux voxels de large grâce à un filtre de détection de structures tubulaires dont l'élongation est maximisée. Cette méthode a ensuite été testée en 3D dans \cite{Obara2012_phase}. Le filtre repose sur une matrice hessienne modifiée $H'(f)$ que nous définissons de la manière suivante :
 \begin{equation}
   %\small
     H^{'}(f)=
@@ -604,7 +605,7 @@ Meijering et al. \cite{Meijering2004_neurite_vesselness} proposent un filtre pou
 
 avec $h_{ij}$ les dérivées partielles secondes dont les définitions ont été rappelées section \ref{sec:EA:rehaussement:hessienne}.
 
-Le paramètre $\alpha$ est utilisé pour orienter le filtre afin que son élongation soit maximale dans une direction. Meijering avait prouvé pour le cas 2D que la valeur optimale de $\alpha$ était -$1/3$. La preuve de la valeur optimale de $\alpha$ pour le cas 3D, n'a jamais été explicitement documenté. Nous fournissons une preuve en annexe \ref{APP:Proof of Meijering's maximal flatness for 3D case} pour le cas 3D et démontrons que le $\alpha$ optimal est $-2/3$. Les trois valeurs propres de $H'(f)$ sont exprimées en fonctions de celles de $H(f)$ comme :
+Le paramètre $\alpha$ est utilisé pour orienter le filtre afin que son élongation soit maximale dans une direction. Meijering avait prouvé pour le cas 2D que la valeur optimale de $\alpha$ était $-1/3$. La preuve de la valeur optimale de $\alpha$ pour le cas 3D, n'a jamais été explicitement documenté. Nous fournissons une preuve en annexe \ref{APP:Proof of Meijering's maximal flatness for 3D case} pour le cas 3D et démontrons que le $\alpha$ optimal est $-2/3$. Les trois valeurs propres de $H'(f)$ sont exprimées en fonction de celles de $H(f)$ comme :
 \begin{equation}
   \begin{aligned}
     \nonumber \lambda_1' = \alpha\lambda_1 + \lambda_2 + \lambda_3 \\
@@ -623,11 +624,11 @@ La mesure de tubularité est alors :
   \end{array}
   \right.
 \end{equation}
-où $\lambda_{max} = \max\{\lambda_{1}^{'},\lambda_{2}^{'},\lambda_{3}^{'}\}$ sont calculé pour chaque voxel, et $\lambda_{min}$ est la valeur propre minimale parmi \newV{l'ensemble des valeurs propres calculées pour tous les pixels de l'image.}
+où $\lambda_{max} = \max\{\lambda_{1}^{'},\lambda_{2}^{'},\lambda_{3}^{'}\}$ est calculé pour chaque voxel, et $\lambda_{min}$ est la valeur propre minimale parmi \newV{l'ensemble des valeurs propres calculées pour tous les pixels de l'image.}
 
 \subsubsubsection{OOF}
 
-\newV{Pour le flux orienté, Law et al. \cite{Law2008_OOF} proposent d'utiliser différentes combinaisons de valeurs propres. Dans le cas de leurs expériences sur des données réels, ils utilisent la moyenne géométrique des valeurs propres de la coupe transversale des vaisseaux :}
+\newV{Pour le flux orienté, Law et al. \cite{Law2008_OOF} proposent d'utiliser différentes combinaisons de valeurs propres. Dans le cas de leurs expériences sur des données réelles, ils utilisent la moyenne géométrique des valeurs propres de la coupe transversale des vaisseaux :}
 \begin{equation}
 \nonumber
     F =
@@ -676,7 +677,7 @@ Zhang et al. \cite{Zhang2018_liver_fuzzy_connectedness} proposent d'améliorer l
 \subsubsection{Espace d'échelles granulométrique}
 \label{sec:EA:rehaussement:echelle:granulometrie}
 
-La granulométrie est l'étude des tailles des particules d'un échantillon. En chimie, on utilise par exemple la technique du tamisage. Elle permet, grâce à un tamis et une grille dont on contrôle la taille du maillage, de ne conserver que des particules dont la taille est trop grosse pour passer à travers le tamis. Un principe similaire est applicable en morphologie mathématique sur les images binaires et par extension en niveaux de gris. \newV{En morphologie mathématique, la forme et la taille du maillage du tami est remplacé par l'élément structurant.}
+La granulométrie est l'étude des tailles des particules d'un échantillon. En chimie, on utilise par exemple la technique du tamisage. Elle permet, grâce à un tamis et une grille dont on contrôle la taille du maillage, de ne conserver que des particules dont la taille est trop grosse pour passer à travers le tamis. Un principe similaire est applicable en morphologie mathématique sur les images binaires et par extension en niveaux de gris. \newV{En morphologie mathématique, la forme et la taille du maillage du tami sont exprimés par l'élément structurant.}
 
 \subsubsubsection{Érosion et dilatation}
 
@@ -731,7 +732,7 @@ L'érosion de $A$ par $B_p$ est l'ensemble de tous les points $p$ tel que $B_p$ 
 \subsubsubsection{Fermeture et ouverture}
 À partir des opérations d'érosion et de dilatation, on peut définir des opérations composites : l'ouverture et la fermeture.
 \paragraph{Fermeture}
-L'ouverture est définie comme la dilatation de $A$ par $B_p$ suivi de l'érosion du résultat par $B_p$.
+La fermeture est définie comme la dilatation de $A$ par $B_p$ suivi de l'érosion du résultat par $B_p$.
 \begin{equation}
  A \bullet B_p = (A \oplus B_p) \ominus B_p
 \end{equation}  
@@ -758,18 +759,18 @@ L'ouverture est définie comme l'érosion de $A$ par $B_p$ suivie de la dilatati
   \includegraphics[height=3cm]{Images/morpho_open_k5.png}
   \includegraphics[height=3cm]{Images/morpho_open_k21.png}
   \includegraphics[height=3cm]{Images/morpho_open_k31.png}
-  \caption{Exemple d'ouverture. L'augmentation de la taille de l'élément structurant fait disparaitre les structures dont la surface ne peut inclure l'élément structurant. L'espace d'échelles formé par une ouverture se comporte comme un espace d'échelles gaussien en conservant toutes les structures de taille supérieure à la taille de l'élément structurant. }
+  \caption{Exemple d'ouverture. L'augmentation de la taille de l'élément structurant fait disparaitre les structures dont la surface ne peut inclure l'élément structurant. L'espace d'échelles formé par une ouverture se comporte comme un espace d'échelles gaussien en conservant toutes les structures de tailles supérieure à la taille de l'élément structurant. }
   \label{fig:morpho_ouverture}
 \end{figure}
 L'opérateur d'érosion est utilisé pour supprimer les structures et convexités de taille inférieure à la surface de l'élément structurant (Fig. \ref{fig:morpho_ouverture}). La dilatation qui suit l'érosion permet d'assurer que la taille des éléments reste stable.
 
 \newV{En utilisant l'ouverture, on peut définir un espace d'échelles qui se comporte comme un espace d'échelles gaussien. C'est-à-dire que plus la taille de l'élément structurant augmente et plus on élimine des structures de grande taille. Cet espace ne souffre pas d'une fusion parasite des structures adjacentes.}
 
-\subsubsubsection{Morphologie en niveau de gris}
+\subsubsubsection{Morphologie en niveaux de gris}
 
-Les opérations que nous avons définies jusqu'à maintenant sont applicables pour les images binaires. Pour des images de niveau de gris les filtres \emph{min} et \emph{max} sont analogues à l'érosion et la dilatation binaire.
+Les opérations que nous avons définies jusqu'à maintenant sont applicables pour les images binaires. Pour des images de niveaux de gris les filtres \emph{min} et \emph{max} sont analogues à l'érosion et la dilatation binaire.
 
-Ainsi la dilatation en niveau de gris est définie pour chaque voxel à la position $p$ par le maximum de la valeur des voxels $p_x$ de l'image $I$  compris dans la zone de l'élément structurant $B_p$ :
+Ainsi la dilatation en niveaux de gris est définie pour chaque voxel à la position $p$ par le maximum de la valeur des voxels $p_x$ de l'image $I$  compris dans la zone de l'élément structurant $B_p$ :
 \begin{equation}
 I \oplus_{ng} B_p = \max_{p_x \in B_p} I(p_x) \
 \end{equation}
@@ -816,7 +817,7 @@ L'ouverture est définie par :
     \adjincludegraphics[width=\textwidth,trim={{0.1\width} {0.05\height} {0\width} {0.1\height}},clip]{Images/ng_open.png}  
     \caption{ouverture}
   \end{subfigure}  
-  \caption{Opérateurs morphologiques appliqué aux images en niveau de gris. L'élément structurant utilisé est une boite de $3\times3$.}
+  \caption{Opérateurs morphologiques appliqués aux images en niveaux de gris. L'élément structurant utilisé est un carré de $3\times3$.}
   \label{fig:greyscale_morpho}
 \end{figure}
 
@@ -832,7 +833,7 @@ L'ouverture est définie par :
 \label{fig:sazak_bowler_hat}
 \end{figure}
 
-L'un des défauts de la méthode que nous venons d'exposer est le caractère fixe des éléments structurants qui ne permettent pas toujours de capturer les variations de formes des vaisseaux. Hejimans et al. \cite{Heijmans2005_path_opening} proposent une famille d'éléments structurants variables dont la forme est définie par une grille d'adjacences. Des améliorations successives de cet algorithme ont été proposé : Cokelaer et al. \cite{Cokelaer2012_efficient_path_opening} proposent une version robuste au bruit en autorisant des discontinuités dans l'élément structurant, Van de Gronde et al. \cite{Gronde2015_fast_path_opening} proposent une implémentation efficace de l'algorithme en $o( N log ( L ))$ avec $N$ le nombre de pixels de l'image et $L$ la taille du chemin. Enfin Merveille et al. \cite{Merveille2018_curvilinear} itèrent sur la méthode en proposant un classement de l'orientation des chemins afin de segmenter les vaisseaux dans des images 2D et 3D (Sec. \ref{sec:sub_rorpo}). 
+L'un des défauts de la méthode que nous venons d'exposer est le caractère fixe des éléments structurants qui ne permettent pas toujours de capturer les variations de formes des vaisseaux. Hejimans et al. \cite{Heijmans2005_path_opening} proposent une famille d'éléments structurants variables dont la forme est définie par une grille d'adjacences. Des améliorations successives de cet algorithme ont été proposés : Cokelaer et al. \cite{Cokelaer2012_efficient_path_opening} proposent une version robuste au bruit en autorisant des discontinuités dans l'élément structurant, Van de Gronde et al. \cite{Gronde2015_fast_path_opening} proposent une implémentation efficace de l'algorithme en $O( N log ( L ))$ avec $N$ le nombre de pixels de l'image et $L$ la taille du chemin. Enfin Merveille et al. \cite{Merveille2018_curvilinear} itèrent sur la méthode en proposant un classement de l'orientation des chemins afin de segmenter les vaisseaux dans des images 2D et 3D (Sec. \ref{sec:sub_rorpo}). 
 
 \subsubsubsection{RORPO}
 \label{sec:sub_rorpo}
@@ -842,11 +843,11 @@ RORPO \cite{Merveille2018_curvilinear} est construit sur un espace d'échelles g
 \begin{figure}[ht]
 \centering
 \includegraphics[height=4cm]{Images/rorpo_path.png}
-\caption{Illustration de relations d'adjacence permettant de définir les éléments structurants de RORPO. Cette relation est définie par rapport à un graphe $G_i$ défini par un ensemble de noeud $E_i$ et d'arrêtes $E_i$. L'ensemble des arrêtes est défini selon un ensemble d'orientations spécifiques $\Gamma_i$. Les éléments structurants définis pour ces orientations détectent l'ensemble des structures de même nature orientées de la même manière.}
+\caption{Illustration de relations d'adjacence permettant de définir les éléments structurants de RORPO. Cette relation est définie par rapport à un graphe $G_i$ défini par un ensemble de nœuds $E_i$ et d'arêtes $E_i$. L'ensemble des arêtes est défini selon un ensemble d'orientations spécifiques $\Gamma_i$. Les éléments structurants définis pour ces orientations détectent l'ensemble des structures de même nature orientées de la même manière.}
 \label{fig:rorpo_adjacency}
 \end{figure}
 
-Les ouvertures sont calculées avec des éléments structurants définis dans 7 orientations principales de l'espace 3D de manière à capturer les objets de différentes formes tels que les blobs, les structures linéaires et les plateaux. Une étape finale consiste à classifier les différentes formes en triant les orientations des éléments structurants. En effet, pour des objets tubulaires, tous les éléments structurants sont orientés dans la même direction . RORPO est complétement lié à son espace d'échelles (Sec. \ref{sec:EA:rehaussement:echelle:granulometrie}), contrairement aux mesures de tubularité basés sur des valeurs propres qui peuvent s'adapter à plusieurs espaces (gaussien, flux, phase).
+Les ouvertures sont calculées avec des éléments structurants définis dans 7 orientations principales de l'espace 3D de manière à capturer les objets de différentes formes tels que les blobs, les structures linéaires et les plateaux. Une étape finale consiste à classifier les différentes formes en triant les orientations des éléments structurants. En effet, pour des objets tubulaires, tous les éléments structurants sont orientés dans la même direction. RORPO est complétement lié à son espace d'échelles (Sec. \ref{sec:EA:rehaussement:echelle:granulometrie}), contrairement aux mesures de tubularité basées sur des valeurs propres qui peuvent s'adapter à plusieurs espaces (gaussien, flux, phase).
 
 %\ref{fig:rorpo_orientations}
 %\begin{figure}[!ht]
@@ -859,12 +860,12 @@ Les ouvertures sont calculées avec des éléments structurants définis dans 7 
 \subsection{Multi-échelle}
   \label{sec:EA:rehaussement:echelle:multiScale}
 
-  \newV{Jusqu'à maintenant, nous avons présenté la manière de sélectionner une seule échelle en fonction de l'espace d'échelles choisi (gaussien, de flux ou granulométrique).} Pour capturer l'ensemble des variations de tailles du réseau vasculaire, il suffit d'appliquer les filtres de tubularité sur un ensemble d'échelles, unes à unes. Les résultats de ces traitements sont rarement exploités séparément. À la place, ils sont fusionnés dans une seule et même réponse grâce à un opérateur $\max$. Cet opérateur permet de récupérer pour un pixel donné la réponse maximale à travers l'ensemble des échelles.
+  \newV{Jusqu'à maintenant, nous avons présenté la manière de sélectionner une seule échelle en fonction de l'espace d'échelles choisi (gaussien, de flux ou granulométrique).} Pour capturer l'ensemble des variations de tailles du réseau vasculaire, il suffit d'appliquer les filtres de tubularité sur un ensemble d'échelles, une à une. Les résultats de ces traitements sont rarement exploités séparément. À la place, ils sont fusionnés dans une seule et même réponse grâce à un opérateur $\max$. Cet opérateur permet de récupérer pour un pixel donné la réponse maximale à travers l'ensemble des échelles.
 
   De manière explicite, le résultat du filtre de rehaussement $R_{multi echelle}$ est défini comme le maximum des rehaussements $R_{p}$ appliqués à l'image I à l'échelle $p$ :
   
   \begin{equation}
-    R(I)_{multi \acute echelle} = max_{p}R_{p}(I) 
+    R(I)_{multi \acute echelle} = \max_{p}R_{p}(I) 
   \end{equation}
 
   \newV{Le paramètre $p$ dépend de l'espace d'échelles utilisé et correspond soit à $\sigma$ pour l'espace gaussien, le rayon de la sphère de l'espace de flux et la taille de l'élément structurant pour l'espace granulométrique.}
@@ -876,7 +877,7 @@ Les ouvertures sont calculées avec des éléments structurants définis dans 7 
   \begin{figure}[!ht]
     \centering
     \includegraphics[height=6cm]{Images/scale_space.png}
-    \caption{Exemple de l'espace gaussien dans lequel $\sigma$ est le paramètre d'échelle. Espace d'échelles linéaire vs. espace d'échelles logarithmique : $borne_{inf}=1,borne_{sup}=10,échelles=6$. Avec l'échelle logarithmique, les variations des petits vaisseaux sont mieux capturés.}
+    \caption{Représentation de l'espace gaussien dans lequel $\sigma$ est le paramètre d'échelle. Espace d'échelles linéaire vs. espace d'échelles logarithmique : $\sigma_{inf}=1, \sigma_{sup}=10, \textrm{nombre d'échelles}=6$. Avec l'échelle logarithmique, les variations des petits vaisseaux sont mieux capturées.}
     \label{fig:scale_space}
   \end{figure}
 
@@ -886,16 +887,16 @@ Les ouvertures sont calculées avec des éléments structurants définis dans 7 
 
 \todo{Une methode supplémentaire, sorte de post-processing qui renforce le rehaussement}
 
-On ne peut aborder les filtres de rehaussement de vaisseaux sans aborder cadres de diffusions. Leur objectif est d'améliorer le signal des vaisseaux en homogénéisant leur intensité et en renforçant leurs bords. Pour cela, les filtres de diffusion proposent un schéma de lissage itératif qui prend en compte la géométrie des structures à lisser.
+On ne peut aborder les filtres de rehaussement de vaisseaux sans aborder les cadres de diffusions. Leur objectif est d'améliorer le signal des vaisseaux en homogénéisant leur intensité et en renforçant leurs bords. Pour cela, les filtres de diffusion proposent un schéma de lissage itératif qui prend en compte la géométrie des structures à lisser.
 
-\newV{HDCS \cite{Mendrik2009_HDCS} (Hybrid diffusion with continuous switch), propose un lissage hybride qui permet de choisir un type de lissage spécifique en fonction du voisinage du voxel traité. Un lissage isotrope est appliqué dans les régions d'intensités quasi constantes et un lissage anysotrope est utilisé le long des bordures des structures. La transition entre les types de lissage en fonction des régions est assurée par une combinaison linéaire des deux filtres pondérés par une mesure de la géométrie locale.}
+\newV{HDCS \cite{Mendrik2009_HDCS} (Hybrid diffusion with continuous switch), propose un lissage hybride qui permet de choisir un type de lissage spécifique en fonction du voisinage du voxel traité. Un lissage isotrope est appliqué dans les régions d'intensités quasi constantes et un lissage anisotrope est utilisé le long des bordures des structures. La transition entre les types de lissage en fonction des régions est assurée par une combinaison linéaire des deux filtres pondérés par une mesure de la géométrie locale.}
 
 VED \cite{Manniesing2006_VED} (Vessel enhancement diffusion) propose un lissage basé sur les méthodes de rehaussement hessien. Ce cadre permet ainsi d'homogénéiser la réponse de n'importe quel filtre de rehaussement hessien en lissant selon le sens du rehaussement.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[height=8cm]{Images/VED.png}
-  \caption{Comparaison de VED+Frangi (centre) contre Frangi (droite). Le rehaussement est lissé et l'homogénéité générale des vaisseaux est renforcé. Les flèches montrent les améliorations remarquables.}
+  \caption{Comparaison de VED+Frangi (centre) contre Frangi (droite). Le rehaussement est lissé et l'homogénéité générale des vaisseaux est renforcée. Les flèches montrent les différences de comportement remarquables.}
   \label{fig:custom_fig}
 \end{figure}
 
@@ -904,7 +905,7 @@ Ces méthodes itératives sont coûteuses en temps de calcul et nécessitent une
 \section{Bilan et orientation des travaux}
 \label{sec:EA:bilan}
 
-Les constatations pour l'état de l'art du rehaussement de vaisseaux sont sensiblement les mêmes que celles dressées pour le bilan de l'état de l'art sur la segmentation (Sec. \ref{sec:problems_segmenation}). Les articles originaux testent souvent leurs méthodes sur des structures synthétiques simples ou des exemples variés. Elles sont toujours comparées à deux à quatre autres méthodes. Lorsqu'ils sont utilisés sur des données réelles, les filtres de rehaussement sont largement appliqués avec les paramètres recommandés par l'auteur, sans adaptation à une application particulière.
+Les constatations pour l'état de l'art du rehaussement de vaisseaux sont sensiblement les mêmes que celles dressées pour le bilan de l'état de l'art sur la segmentation (Sec. \ref{sec:problems_segmenation}). Les articles originaux testent souvent leurs méthodes sur des structures synthétiques simples ou des exemples variés. Elles sont toujours comparées à deux à quatre autres méthodes. Lorsqu'ils sont utilisées sur des données réelles, les filtres de rehaussement sont largement appliqués avec les paramètres recommandés par l'auteur, sans adaptation à une application particulière.
 
 Quelques travaux portent sur la comparaison des filtres de rehaussement. Luu et al. \cite{Luu2015_liver_vesselness_comparison} proposent une comparaison de trois filtres de rehaussement et trois filtres de diffusion pour la tomodensitométrie du foie. Phellan et al. \cite{Phellan2017_Brain_vesselness_comparison} proposent une comparaison de six filtres de rehaussement et trois filtres de diffusion sur des images d'IRM du cerveau et un jeu de données synthétiques.
 
@@ -913,11 +914,11 @@ Cependant, ces travaux ne nous permettent pas de répondre à plusieurs question
 \begin{itemize}
 \item quel filtre utiliser pour l'IRM du foie ?
 \item quel est l'impact de la paramétrisation sur la réponse des filtres ?
-\item quels types \newV{de tailles de vaisseaux} sont le mieux rehaussés ?
+\item La taille des vaisseaux a t'elle un impact sur la qualité du rehaussement ?
 \item quel est l'impact des filtres de rehaussement indépendamment de la segmentation ?
 \end{itemize}
 
-Dans le chapitre suivant, nous élaborons la construction d'un banc de tests d'étudier ces problématiques. Celui-ci nous permettra ensuite d'effectuer une analyse poussée des filtres de rehaussement des vaisseaux sanguins dans les chapitres suivants.
+Dans le chapitre suivant, nous élaborons la construction d'un banc de tests pour étudier ces problématiques. Celui-ci nous permettra ensuite d'effectuer une analyse poussée des filtres de rehaussement des vaisseaux sanguins dans les chapitres suivants.
 
 
 
