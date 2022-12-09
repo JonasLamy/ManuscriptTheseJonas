@@ -1,48 +1,43 @@
 \chapter{Analyse du rehaussement}
 \label{sec:Analysis}
-Nous avons présenté dans les chapitres précédents les problématiques liées aux images médicales (Chap. 1), puis nous avons illustré les grandes familles de rehaussement de vaisseaux (Chap. 2). Nous avons ensuite construit un banc de test capable d'évaluer l'influence du rehaussement sur des zones d'intérêt précises (Chap. 3). Enfin, nous avons traité un ensemble de bases de données publiques de manière à définir 6 zones d'intérêt spécifiques dont nous rappelons brièvement les notations~:
+\section{Conditions initiales}
+Nous avons présenté dans les chapitres précédents les problématiques liées aux images médicales (Chap. 1), puis nous avons illustré les grandes familles de rehaussement de vaisseaux (Chap. 2). Nous avons ensuite construit un banc de test capable d'évaluer l'influence du rehaussement sur des zones d'intérêt précises (Chap. 3). Dans ce chapitre, nous mettons à profit l'ensemble des connaissances et outils vus précédemment afin d'analyser en détail sept filtres de rehaussement de vaisseaux. Pour commencer, nous récapitulons rapidement les bases de données utilisées ainsi que les filtres sélectionnés avant de définir les métriques et la méthode d'évaluation utilisée.
+
+Nous avons à disposition trois bases de données présentées dans le Chap. 2 : l'Ircad, une base de 20 volumes en tomodensitométrie ; trois versions de VascuSynth, contenant chacune 120 volumes, définies avec différents niveaux de bruit ricien $\sigma=\{2,4,6\}$ et Bullitt, une base de 33 volumes IRM en phase T2, a laquelle a été ajouté du bruit ricien ($\sigma=4$) et des biais en intensités. Nous disposons, pour ces jeux de données, des vérités terrains binaires des vaisseaux ainsi que des masques construits précédemment (Sec. \label{sec:evaluation}) dénomés comme suit :
 
 \begin{itemize}
-\item Un masque global de l'organe \maskglobal ;
-\item un masque de voisinage (union des zones internes et externes adjacentes des vaisseaux)  \maskvascular ;
-\item des masques de voisinage des vaisseaux basés sur la taille : \maskvesselLarge, \maskvesselMedium, \maskvesselSmall ;
-\item un masque des bifurcations \maskbif.
-\end{itemize}
+  \item \maskglobal pour le masque global, qui correspond à l'organe du volume traité.
+  \item \maskvascular pour le voisinage des vaisseaux, qui correspond à l'union des vaisseaux et des zones proches des vaisseaux (voir la méthode de construction ci-dessous) ;
+  \item \maskvesselLarge, \maskvesselMedium, \maskvesselSmall, les masques de voisinage des vaisseaux, qui constituent une partition dépendante de la taille des vaisseaux de \maskvascular;
+  \item \maskbif, le masque des bifurcations à l'intérieur des vaisseaux.
+  \end{itemize}
 
-\section{Conditions initiales}
+Les sept filtres choisis pour cette analyse sont ceux détaillés dans le chapitre \chapSOTAN{} et dont la construction cherche à répondre à des problématiques spécifiques différentes. Ces particularités sont résumées dans la table \ref{Tab:available_vesselness} du chapitre précédent. 
 
-Dans ce chapitre, nous mettons à profit l'ensemble des connaissances et outils vus précédemment afin d'analyser en détail sept filtres de rehaussement de vaisseaux. Pour commencer, nous récapitulons rapidement les bases de données utilisées ainsi que les filtres sélectionnés avant de définir les métriques et la méthode d'évaluation utilisée.
-
-Nous avons à disposition trois bases de données présentées dans le Chap. 2 : l'Ircad, une base de 20 volumes en tomodensitométrie ; trois versions de VascuSynth, contenant chacune 120 volumes, définies avec différents niveaux de bruit ricien $\sigma=\{2,4,6\}$ et Bullitt, une base de 33 volumes IRM en phase T2, auquel on a ajouté du bruit ricien ($\sigma=4$) et des biais en intensités. Nous disposons, pour ces jeux de données, des vérités terrains binaires des vaisseaux ainsi que des masques construits précédemment et rappelés en début de chapitre.
-
-Le choix de cette évaluation par zones permet d'enrichir significativement l'analyse, par rapport à une analyse globale classique. En effet, le rehaussement global et le rehaussement vasculaire local peuvent être de qualités très différentes. C'est par exemple le cas de filtres sensibles aux structures en plateaux telles que les bordures des organes. L'évaluation par taille apporte, elle aussi, une information supplémentaire sur les limites du rehaussement à l'échelle macro et mésoscopique. Elle permet de plus de quantifier quelle partie du réseau vasculaire rehaussé participe le plus aux performances globales. Enfin, la répartition en zones permet d'évaluer les performances des filtres sur des parties peu représentatives de l'ensemble du réseau vasculaire, mais qui peuvent être critiques dans certaines applications. C'est par exemple le cas des bifurcations pour le suivi de lignes centrales.
-
-Les sept filtres choisis pour cette analyse sont ceux détaillés dans le Chap. 2 et dont la construction cherche à répondre à des problématiques spécifiques différentes. Ces particularités sont résumées dans la table \ref{tab:diffMethods}. 
-
-\begin{table}[ht]
-  \begin{center}
-    \resizebox{\textwidth}{!}{
-\begin{tabular}{l|l|l|l}
-Méthode                               & Base                  &  Idée principale                              &   Date  \\ \hline  \hline 
-Sato et al.      & Hessienne               & Reconnexion des vaisseaux et contrôle du bruit  & 1997   \\ \hline
-Frangi et al.    & Hessienne             & Contrôle du bruit ainsi que des structures en plateaux et sphériques   & 1998   \\ \hline
-Meijering et al. & Hessienne             & Détection de structures fines                          & 2004 \\ \hline
-OOF et al.       & Flux               & Contraindre l'analyse à la surface d'une sphère pour limiter le débordement de la réponse               & 2010 \\ \hline
-Jerman et al.    & Hessienne             & Augmenter l'homogénéité de la réponse et simplifier la paramétrisation            & 2016 \\ \hline
-Zhang et al.     & Hessienne              & Limiter le rehaussement des bordures du foie         & 2018 \\ \hline
-RORPO et al.     & Morphologie            & Discriminer les structures tubulaires par un vote de chemins orientés                         & 2018  
-\end{tabular}
-    }
-\end{center}
-\caption{Liste des filtres disponibles dans le banc de test ainsi que leur principale caractéristique.}
-\label{tab:diffMethods}
-\end{table}
+%\begin{table}[ht]
+%  \begin{center}
+%    \resizebox{\textwidth}{!}{
+%\begin{tabular}{l|l|l|l}
+%Méthode                               & Base                  &  Idée principale                              &   Date  \\ \hline  \hline 
+%Sato et al.      & Hessienne               & Reconnexion des vaisseaux et contrôle du bruit  & 1997   \\ \hline
+%Frangi et al.    & Hessienne             & Contrôle du bruit ainsi que des structures en plateaux et sphériques   & 1998   \\ \hline
+%Meijering et al. & Hessienne             & Détection de structures fines                          & 2004 \\ \hline
+%Law et al. (OOF)       & Flux               & Contraindre l'analyse à la surface d'une sphère pour limiter le débordement de la réponse               & 2010 \\ \hline
+%Jerman et al.    & Hessienne             & Augmenter l'homogénéité de la réponse et simplifier la paramétrisation            & 2016 \\ \hline
+%Zhang et al.     & Hessienne              & Limiter le rehaussement des bordures du foie         & 2018 \\ \hline
+%Merveille et al. (RORPO)     & Morphologie            & Discriminer les structures tubulaires par un vote de chemins orientés                         & 2018  
+%\end{tabular}
+%    }
+%\end{center}
+%\caption{Liste des filtres disponibles dans le banc de test ainsi que leur principale caractéristique.}
+%\label{tab:diffMethods}
+%\end{table}
 
 \section{Métriques}
 
-Pour cette expérience, nous utilisons plusieurs métriques. La majorité des métriques utilisées repose sur la comparaison voxel à voxel entre le résultat binarisé d'un filtre et un jeu de paramètres donné.
+Pour cette expérience, nous utilisons plusieurs métriques. La majorité des métriques utilisées repose sur la comparaison voxel à voxel entre le résultat binarisé d'un filtre associé à un jeu de paramètres donné et la vérité terrain.
 
-On peut classifier les voxels selon 4 classes différentes : Les vrais positifs ($VP$) lorsqu'il y a une correspondance 1-1 entre le $i^{ème}$ voxel du résultat binaire et le $i^{ème}$ voxel de la vérité terrain, les vrais négatifs ($VN$) pour une correspondance 0-0, les faux positifs ($FP$) lors d'une correspondance 1-0 et les faux négatifs ($FN$) pour une correspondance 0-1. Ces quatres classes sont quelquefois représentés sous la forme d'une matrice de confusion (Tab. \ref{tab:confusion_matrix}).
+On peut classifier les voxels du résultat binaire selon 4 classes différentes : Les vrais positifs ($VP$) lorsqu'il y a une correspondance 1-1 entre le $i^{ème}$ voxel du résultat binaire et le $i^{ème}$ voxel de la vérité terrain, les vrais négatifs ($VN$) pour une correspondance 0-0, les faux positifs ($FP$) lors d'une correspondance 1-0 et les faux négatifs ($FN$) pour une correspondance 0-1. Ces quatres classes sont quelquefois représentés sous la forme d'une matrice de confusion (Tab. \ref{tab:confusion_matrix}).
 
 \begin{table}
   \centering
@@ -58,7 +53,7 @@ On peut classifier les voxels selon 4 classes différentes : Les vrais positifs 
   \label{tab:confusion_matrix}
 \end{table}
 
-Un certain nombre de métriques issues de ces quantités sont utilisées de manière classique dans la littérature. Ces métriques sont définies entre $0$ et $1$, avec $1$ le meilleur score possible. 
+Un certain nombre de métriques rencontrées couramment dans la littérature repose sur un rapport entre ces quantités. Ces métriques sont définies entre $0$ et $1$, avec $1$ le meilleur score possible. 
 
 \paragraph{Précision}
 La précision représente la proportion de voxels prédits positifs par rapport à la proportion de voxels positifs prédits totaux.
@@ -70,7 +65,7 @@ Cette mesure permet d'évaluer la proportion de voxels correctement classifiés 
 
 \paragraph{Sensibilité}
 
-La sensibilité est la proportion de voxels positifs prédits parmi les positifs réels.
+La sensibilité est la proportion de voxels positifs prédits parmi les voxels attendus comme positifs.
 
 \begin{equation}
   Sensibilit\acute{e} = \frac{VP}{P} = \frac{VP}{VP+FN}
@@ -80,13 +75,13 @@ Cette mesure permet d'évaluer si le filtre est capable de détecter tous les va
 
 \paragraph{Spécificité}
 
-La spécificité est la proportion de voxels négatifs correctement prédits parmi les voxels négatifs réels.
+La spécificité est la proportion de voxels négatifs correctement prédits parmi les voxels attendus comme négatifs.
 
 \begin{equation}
   Sp\acute{e}cificit\acute{e} = \frac{VN}{N} = \frac{VN}{VN+FP}
 \end{equation}
 
-Cette mesure permet d'évaluer si le filtre rehausse des structures non annotées dans la vérité terrain. Elle est l'équivalent pour les vrais négatifs de la sensibilité.
+Cette mesure permet d'évaluer si le filtre rehausse des structures non annotées dans la vérité terrain. \newV{Elle est l'équivalent de la sensibilité appliquée aux voxels de fond}.
 
 \paragraph{Justesse}
 
@@ -96,10 +91,9 @@ La justesse, est une métrique plus large que la précision. Elle prend en compt
   Justesse = \frac{VP+VN}{P+N} = \frac{VP+VN}{VP+VN+FP+FN}
 \end{equation}
 
-La précision mesure la qualité de la classification globale, à la fois le bon rehaussement et à la fois l'absence de faux rehaussement.
+La justesse mesure la qualité de la classification globale. Elle valorise les voxels bien classifiés et pénalise les erreurs de classification.
 
-Bien que toutes ces mesures soient informatives d'un aspect particulier de la segmentation, elles n'ont pas toutes le même poids. En effet, les vaisseaux représentent moins de 5 \percent{}de l'ensemble des voxels d'un volume. Le poids des voxels négatifs peut donc dans une certaine mesure être très supérieur au poids des voxels positifs. On peut ainsi être amené, avec la justesse, à sous-estimer des erreurs de segmentation. Les mesures les plus significatives pour nos expériences parmi ces mesures, sont la sensibilité et la précision.
-
+Bien que toutes ces mesures soient informatives pour un aspect particulier de la segmentation, elles n'ont pas toutes le même poids. En effet, les vaisseaux représentent moins de $5$ \percent{}de l'ensemble des voxels d'un volume. Le nombre des voxels négatifs peut donc dans une certaine mesure être très supérieur au nombre des voxels positifs. On peut ainsi être amené, avec la justesse, à sous-estimer des erreurs de segmentation. Par exemple, prenons un  volume de $27$ millions de voxels dont $5$ \percent{} des voxels appartiennent à des vaisseaux. Si l'ensemble des voxels des vaisseaux est classé comme faux négatif alors la valeur de la justesse reste élevée ($0.905$). Parmi les métriques vues précédement, celles dont les variations sont les plus significatives pour les structures éparses sont la sensibilité et la précision. 
 
 \paragraph{Dice}
 
@@ -107,71 +101,91 @@ Le score de Dice, aussi connu sous le nom de F1-score est une mesure de recouvre
 
 \begin{equation}
   \textrm{Dice} = \frac{2 VP}{FP + FN + 2 VP} \\ 
+  \label{eq:Dice}
 \end{equation}
 
-Le Dice est une mesure populaire dans la littérature, mais il n'exprime que le recouvrement des voxels positifs correctement classifiés. Un recouvrement total aura une mesure de $1$ là où un recouvrement nul aura une mesure de $0$. Cette mesure est performante lorsque l'on s'intéresse à maximiser l'intersection entre la vérité terrain et la segmentation. Cependant, elle ne permet pas de différencier un ensemble de segmentations qui auraient un nombre similaire de vrais positifs, mais dont la proportion de FP et de FN est différente. Pour notre analyse, il est en effet souhaitable d'avoir une métrique qui permet de différencier les sur-segmentations et les sous-segmentations. Dans notre analyse, le Dice sert donc de mesure d'évaluation secondaire. Il permet notamment d'évaluer les performances du rehaussement des bifurcations, puisque la métrique principale n'est pas définie dans cette zone d'intérêt.
+Le Dice est une mesure populaire dans la littérature, mais il n'exprime que le recouvrement des voxels positifs correctement classifiés. Un recouvrement total aura une mesure de $1$ là où un recouvrement nul aura une mesure de $0$. Cette mesure est performante lorsque l'on s'intéresse à maximiser l'intersection entre la vérité terrain et la segmentation. Cependant, elle ne permet pas de différencier un ensemble de segmentations qui auraient un nombre similaire de vrais positifs, mais dont la proportion de FP et de FN est différente. Pour notre analyse, il est en effet souhaitable d'avoir une métrique qui permet de différencier les sur-segmentations et les sous-segmentations. Dans notre analyse, le Dice sert donc de mesure d'évaluation secondaire. Il permet notamment d'évaluer les performances du rehaussement des bifurcations, puisque l'autre métrique d'évaluation que nous utilisons (voir MCC ci-dessous) n'est pas définie dans cette zone d'intérêt.
 
 \paragraph{Coefficient de corrélation de Matthew}
 
-Le coefficient de corrélation de Matthew (MCC), un cas spécifique du score $\phi$ \cite{Chicco2020_advantages_MCC_Dice}, est plus  expressif que le Dice puisqu'il intègre la classification correcte du fond, les vrais négatifs, dans la mesure. Cette métrique est définie entre $-1$ et $1$ avec $1$ un volume binaire égal à la vérité terrain et $-1$ un volume binaire étant le complémentaire de la vérité terrain.
+Le coefficient de corrélation de Matthew (MCC), un cas spécifique du score $\phi$ \cite{Chicco2020_advantages_MCC_Dice}, est plus  expressif que le Dice puisqu'il intègre la classification correcte du fond, les vrais négatifs, dans la mesure. Cette métrique est définie entre $-1$ et $1$. Un MCC égal à $1$ correspond à un volume binaire égal à la vérité terrain et un MCC égal à $-1$ correspond à un volume binaire étant le complémentaire de la vérité terrain.
 
 \begin{equation}
   \textrm{MCC} = \frac{TP \cdot TN - FP \cdot FN}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
+  \label{eq:MCC}
 \end{equation}
 
-Bien que le Dice soit plus commun dans la littérature, le MCC est présenté par Chicco et Jurman \cite{Chicco2020_advantages_MCC_Dice} comme une mesure plus stable pour les structures éparses telles que les vaisseaux. Le MCC n'est pas défini dans un certain nombre de cas, et notamment lorsque les zones d'intérêt sur lesquelles sont caculées les métriques ne contiennent pas de voxels négatifs. Pour ces zones, on utilise le Dice pour l'évaluation. 
-
+Bien que le Dice soit plus commun dans la littérature, le MCC est présenté par Chicco et Jurman \cite{Chicco2020_advantages_MCC_Dice} comme une mesure plus stable pour les structures éparses telles que les vaisseaux. Le MCC n'est pas défini dans un certain nombre de cas, et notamment lorsque les vérités terrains des zones d'intérêt sur lesquelles sont calculées les métriques ne contiennent pas de voxels négatif. Pour ces zones, on utilise le Dice pour l'évaluation. 
 
 \paragraph{Rapport signal sur bruit}
 
 %\todo{ Est-ce que je garde le SNR sachant qu'au final on ne l'a jamais exploité ?}
 
-Nous avons souhaité intégrer une mesure au banc de test qui ne dépende pas d'un processus de binarisation mais qui exprime la distance entre la vérité terrain et la sortie du filtre. Nous avons choisi le PSNR, qui est habituellement utilisé pour évaluer le degré de dégradation d'une image causée par du bruit. On illustre habituellement ce processus par le cas d'un message qui subirait des pertes lorsque que celui-ci est envoyé à travers un canal de communication. Le PSNR est défini par :
+Nous avons souhaité intégrer une mesure au banc de test qui ne dépende pas d'un processus de binarisation mais qui exprime la distance entre la vérité terrain et la sortie du filtre. Nous avons choisi le PSNR, qui est habituellement utilisé pour évaluer le degré de dégradation d'une image causée par du bruit. Le PSNR est défini par :
 
 \begin{align}%\label{Eq: SNR_and_PSNR}
   %\nonumber
   %\textrm{SNR} & = \log_{10}\Big( \frac{1}{|I|}\frac{ \sum_{x} I_{\textrm{Filter}}(x)^2 }{ \sum_{x} I_{\textrm{Ground-truth}}(x)^2 } \Big) \\
  \nonumber
-  \textrm{PSNR} & = \log_{10}\Big( \frac{ (\max_x I(x))^2  }{ \textrm{MSE}( I_{\textrm{GT}}, I_{\textrm{Filtre}} ) } \Big)
+  \textrm{PSNR} & = \log_{10}\Big( \frac{ (\max_x I_{GT}(x))^2  }{ \textrm{MSE}( I_{\textrm{GT}}, I_{\textrm{Filtre}} ) } \Big)
 \end{align}
 
-avec $I$ l'image de sortie, $I_{filtre}$ l'image filtrée, $I_{GT}$ l'image binaire et MSE l'erreur au sens des moindres carrés. Plus le PSNR est haut, plus l'image filtrée est proche de l'image binarisée. Dans le cas où les deux sont égales, le PSNR est infini.
+avec $I_{\textrm{filtre}}$ l'image filtrée, $I_{GT}$ l'image binaire et MSE l'erreur au sens des moindres carrés. Plus le PSNR est haut, plus l'image filtrée est proche de l'image binarisée. Dans le cas où les deux sont égales, le PSNR est infini.
 
-Dans notre cas, nous utilisons le PSNR comme une mesure de similarité entre la sortie du filtre non binarisée et la vérité terrain normalisée (0 ou 1). Afin que des comparaisons fiables puissent être effectuées entre deux sorties de filtre, il est nécessaire de réaliser une mise à l'échelle de l'intensité de sortie du filtre entre 0 et 1 et de la vérité terrain (1 et non 255). En effet, nous nous sommes assurés que tous les filtres aient une sortie définie entre 0 et 1 (Chap. 3) mais rien ne garantit que la plage de rehaussement couvre l'ensemble de l'intervalle [0,1] et non un intervalle quelconque comme [0,0.3]. Il n'y a en effet pas de raisons, autre que pour des considérations de visualisation par l'œil humain, de différencier deux filtres (ou jeux de paramètres) produisant le même résultat binaire après seuillage, mais dont la dynamique est définie sur deux plages différentes.
+Dans notre cas, nous utilisons le PSNR comme une mesure de similarité entre la sortie du filtre non binarisée et la vérité terrain normalisée (0 ou 1). Afin que la comparaison du PSNR entre filtres ai un sens, nous réalisont une mise à l'échelle de l'intensité de sortie du filtre entre 0 et 1 et de la vérité terrain (1 et non 255). En effet, nous nous sommes assurés que tous les filtres aient une sortie définie entre 0 et 1 (Chap. 3) mais rien ne garantit que la plage de rehaussement couvre l'ensemble de l'intervalle [0,1] et non un intervalle quelconque comme [0,0.3].
 
-Un faible PSNR nous indique soit que le rehaussement est très bruité, soit qu'il déborde ou que le niveau général de l'intensité du rehaussement est faible.
+Un faible PSNR nous indique soit que le rehaussement est très bruité, soit qu'il dépasse les limites des structures ou que le niveau général de l'intensité du rehaussement est faible.
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=\textwidth]{Images/similarity_procedure.png}
+  \caption{On peut considérer le processus de filtrage de la manière suivante : une image de vaisseaux binaire est altérée par un processus d'acquisition (TDM ou IRM) qui produit des artefacts. Les filtres de rehaussement de vaisseaux cherchent à rétablir l'image binaire originale. Pour juger de la qualité du rehaussement, on utilise soit des mesures de similarité binaires qui nécessitent un seuillage préalable (matrice de confusion) soit une mesure en niveau de gris directement à partir de la sortie du filtre (PSNR).}
+  \label{fig:custom_fig}
+\end{figure}
 
 
 \paragraph{Courbe ROC}
 
-La courbe ROC (\textit{Receiving Operator Characteristic}) est une visualisation de l'évolution du taux de vrai positif en fonction du taux de faux positif au fur et à mesure des seuillages successifs appliqués au filtre. Pour rappel, Le taux de vrai positif correspond à la sensibilité et le taux de faux positif est égal à $1-\text{spécificité}$. 
+La courbe ROC (\textit{Receiving Operator Characteristic}) est une visualisation de l'évolution du taux de vrai positif en fonction du taux de faux positif au fur et à mesure des seuillages successifs appliqués au résultat des filtres. Pour rappel, Le taux de vrai positif correspond à la sensibilité et le taux de faux positif est égal à $1-\text{spécificité}$. 
 
-Cette courbe donne une vue globale différente sur les performances des filtres pour différents seuils. Elle nous permet d'évaluer asymptotiquement les performances entre deux filtres alors que les autres métriques nous servent à quantifier les performances optimales d'un filtre. 
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=\textwidth]{Images/roc_example.png}
+  \caption{Construction d'une courbe ROC. (a) profil d'intensité de la vérité terrain. (b) profil d'intensité d'un filtre de rehaussement de vaisseaux. Selon le seuil de binarisation appliqué ($s_1,...,s_i$), on obtient des performances différentes. (c) La courbe ROC formé par le taux de vrai positif (TVP) et le taux de faux positif (TFP) en fonction du seuil résume ces variations.}
+  \label{fig:roc_example}
+\end{figure}
 
-Lors de la construction de courbes ROC, il convient d'éviter une erreur lors du calcul. Une courbe ROC classique est définie par un ensemble de points $P$ qui forment généralement un pseudo arc de cercle entre les points (0,0) et (1,1). Dans le cas des filtres de rehaussement, la répartition des points sur l'arc est très hétérogène. Cette hétérogénéité dépend souvent de la diversité géométrique des structures rehaussées, car deux structures qui possèdent la même géométrie ont une valeur de rehaussement similaire. Au contraire, des structures différentes seront détectées à des seuils de tubularité différents. Ce point devient problématique lorsque l'on veut calculer une courbe ROC moyenne pour un filtre et un jeu de paramètres donnés appliqués à l'ensemble des volumes d'une base. Par exemple, si l'on possède trois courbes ROC de 200 points chacune représentée sous la forme d'une liste de points, on ne peut pas moyenner les points en fonction des indices ($m_i = (ROC^1_{i} + ROC^2_{i} + ROC^3_{i})/3 $). Les points ne sont en effet pas échantillonnés de la même manière sur la courbe et la moyenne est faussée (Fig. \ref{fig:good_and_bad_roc}). Pour résoudre ce problème, il est nécessaire d'interpoler chaque courbe de manière à obtenir le même échantillonnage régulier sur chaque courbe. On obtient ainsi une courbe moyenne réellement représentative de la moyenne des ROC.
+
+Cette courbe donne une vue globale de la performance des filtres pour l'ensemble des seuils possibles (Fig. \ref{fig:roc_example}). Elle permet le suivi de l'évolution des performances des filtres en fonction du seuil de décision choisi. Les autres métriques nous servent à quantifier les performances optimales d'un filtre. 
+
+Une courbe ROC classique est définie par un ensemble de points $P$ dont les coordonnées sont en abscisse le TVP et en ordonnée le TFP. Cet ensemble forme généralement un pseudo arc de cercle entre les points (0,0) et (1,1) (Fig. \ref{fig:roc_example} (c)). Selon les images et les filtres appliqués, la répartition des voxels classifiés en tant que vrai ou faux positif est variable et donc la répartition des points le long de la courbe ROC est elle aussi variable. Par exemple, Les points qui forment la courbe ROC d'un filtre qui rehausse bien les vaisseaux sans rehausser le bruit seront réparti sur un intervalle de TFP faible, par exemple $[0,0.3]$. Un filtre qui rehausse une partie du bruit aura une répartition plus régulière sur l'axe des abscisses au fur et à mesure que le TFP augmente. 
+
+Cette représentation de la courbe par un ensemble de points définis sur des intervalles différents demande une attention particulière pour le calcul de courbes ROC moyennes. Par exemple, si l'on possède trois courbes ROC de 200 points, chacune représentée sous la forme d'une liste de points, on ne peut pas moyenner les points en fonction des indices ($m_i = (ROC^1_{i} + ROC^2_{i} + ROC^3_{i})/3 $). Les points ne sont en effet pas échantillonnés de la même manière sur la courbe et la moyenne est faussée (Fig. \ref{fig:good_and_bad_roc}). Pour résoudre ce problème, il est nécessaire d'interpoler chaque courbe de manière à obtenir le même échantillonnage régulier sur chaque courbe. On obtient ainsi une courbe moyenne réellement représentative de la moyenne des ROC.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[height=5cm]{Images/ROC_badMean.pdf}
   \includegraphics[height=5cm]{Images/ROC_goodMean.pdf}
-  \caption{En violet, courbe ROC moyenne construite à partir des courbes ROC en gris. À gauche, la courbe moyenne est construite sans interpolation. À droite, courbe ROC avec interpolation.}
+  \caption{En violet, courbe ROC moyenne construite à partir des courbes ROC en gris. À gauche la courbe moyenne est construite sans interpolation. À droite, courbe ROC avec interpolation. Les points rouges sur les courbes grises sont les points ayant servi à moyenné le point rouge sur la courbe violette.}
   \label{fig:good_and_bad_roc}
 \end{figure}
 
-\section{Optimisation}
+\section{Optimisation des paramètres}
 
-Nous avons cherché à comprendre si une paramétrisation optimale des filtres était nécessaire et s'il existait des règles pratiques régissant le choix des paramètres. En effet, les paramètres sont décrits par des considérations géométriques théoriques, mais la manière de les régler est rarement décrite. À la place, des paramètres par défaut sont généralement proposés. C'est par exemple le cas de Frangi ($\alpha=0.5,\beta=0.5$), ou Sato $(\alpha_1=0.5,\alpha_2=2$) dont les recommandations sont reprises dans de nombreux articles. Ces paramètres sont rarement discutés. Pourtant, dans certains articles plus applicatifs, les paramètres utilisés par les auteurs sont différents. Par exemple, Marcan et al. \cite{Marcan2014_vessel_seg} pour la segmentation dans l'IRM du foie proposent d'utiliser ($\alpha=0.3,\beta=0.7$) dans leur chaîne de segmentation. On peut donc légitimement se demander quel est l'impact des paramètres sur le rehaussement final et quels paramètres utiliser en fonction d'une base de données spécifique.
+L'un des objectifs de l'analyse des filtres de rehaussement est d'évaluer l'impact de leurs paramètres. Le choix des paramètres des filtres repose sur des considérations géométriques théoriques, mais en pratique les valeurs des paramètres à utiliser sont rarement discutées. À la place, des paramètres par défaut sont généralement proposés. C'est par exemple le cas de Frangi ($\alpha=0.5,\beta=0.5$), ou Sato $(\alpha_1=0.5,\alpha_2=2$) dont les recommandations sont reprises dans de nombreux articles. Ces paramètres sont rarement discutés. Pourtant, dans certains articles plus applicatifs, les paramètres utilisés par les auteurs sont différents. Par exemple, Marcan et al. \cite{Marcan2014_vessel_seg} proposent d'utiliser ($\alpha=0.3,\beta=0.7$)dans leur chaîne de segmentation,  pour l'IRM du foie. Nous avons donc voulu identifier s'il existait des règles pour le choix des valeurs des paramètres et si la recherche de paramètres optimaux était pertinente pour le rehaussement de vaisseaux.
 
-Pour répondre à cette question, nous avons cherché à optimiser les filtres de manière à proposer un rehaussement optimal pour une segmentation la plus élémentaire possible. Ainsi, l'objectif est de pouvoir analyser le rehaussement au plus près des filtres sans prétraitements ou des post-traitements qui pourraient cacher des spécificités des filtres. Par exemple, un traitement qui consiste à conserver les composantes connexes supérieures à 100 voxels minimiserait l'analyse de la robustesse des filtres au bruit.
+Nous avons donc mesuré les performances d'un ensemble de jeux de paramètres pour chaque filtre et essayé de déterminer le jeu de paramètre optimal pour chaque jeu de données par rapport à une mesure et une zone d'intérêt.
 
-Nous avons choisi de définir l'optimalité du rehaussement par rapport au MCC mesuré entre la vérité terrain binaire des vaisseaux et les volumes filtrés puis binarisés. Le MCC permet non seulement de mesurer la qualité du rehaussement des vaisseaux, mais aussi de hiérarchiser plus précisément le rehaussement de structures erronées, contrairement au Dice. L'optimalité d'une métrique dépend aussi de la zone d'intérêt sélectionnée pour effectuer l'optimisation. Pour cela, nous avons choisi le masque \maskglobal afin de prendre en compte l'ensemble des problématiques du rehaussement : la détection des vaisseaux, la  différenciation avec les autres structures, la qualité du filtrage et l'amélioration du signal des vaisseaux. Nous aurions également pu choisir de maximiser le rehaussement des vaisseaux en utilisant leur voisinage comme zone d'optimisation. Nous aurions ainsi trouvé les paramètres donnant un rehaussement optimal des vaisseaux. Cependant, pour des considérations de temps, de puissance de calcul et de volume de données à analyser, nous avons choisi de n'optimiser les paramètres que par rapport à une seule zone d'intérêt.
+Nous avons choisi d'utiliser comme métrique d'optimisation le MCC, qui mesure la similarité entre la vérité terrain binaire des vaisseaux et les volumes filtrés puis binarisés. Nous avons choisi le MCC plutôt que le Dice afin de différencier les variations de faux positifs et de faux négatifs qui ne sont pas nécessairement mesurés par le Dice (Eq. \ref{eq:Dice} et \ref{eq:MCC}). Comme le MCC est évalué des structures binaires, le rehaussement est simplement seuillé avant la comparaison avec la vérité terrain. Afin d'éviter de cacher des spécificités potentielles des filtres, aucun prétraitement ou post-traitement n'est réalisé sur le seuillage. Par exemple, ajouter un traitement qui consisterait à éliminer toutes les composantes connexes inférieures à 100 voxels minimiserait l'analyse de la robustesse des filtres au bruit.
 
-L'ensemble des paramètres liés aux filtres de rehaussement peuvent être classifiés en deux groupes : les paramètres d'échelle qui définissent la fenêtre permettant de capturer la taille des vaisseaux et les paramètres intrinsèques des méthodes permettant de détecter la forme des vaisseaux. Par exemple, le filtre de Frangi possède 3 paramètres liés à l'échelle et trois paramètres qui pondèrent le filtrage en fonction de la géométrie. Quand un nombre élevé de paramètres (i.e $K \gg 1$) nécessite d'être optimisé (e.g. $K=6$ pour Frangi), trouver un jeu de paramètres optimal induit par l'espace à $K$-dimensions est coûteux en temps de calcul.
+La zone d'intérêt sur laquelle est calculée la métrique influence le choix du jeu paramètre optimal. Nous avons choisi le masque \maskglobal afin que le jeu de paramètres optimal maximise la détection des vaisseaux, la  différenciation avec les autres structures, la qualité du filtrage et l'amélioration du signal des vaisseaux. Nous aurions également pu choisir de maximiser le rehaussement des vaisseaux en utilisant leur voisinage comme zone d'optimisation. Cependant, certains artefacts n'auraient pas d'impact sur le choix du jeu de paramètres. 
+
+L'ensemble des paramètres liés aux filtres de rehaussement peuvent être classifiés en deux groupes : les paramètres d'échelle qui définissent la fenêtre permettant de capturer la taille des vaisseaux et les paramètres intrinsèques des méthodes permettant de détecter la forme des vaisseaux. Par exemple, le filtre de Frangi possède 3 paramètres liés à l'échelle et trois paramètres qui pondèrent le filtrage en fonction de la géométrie. Quand un nombre élevé de paramètres (i.e $K \gg 1$) nécessite d'être optimisé (e.g. $K=6$ pour Frangi), trouver un jeu de paramètres optimal dans l'espace à $K$-dimensions est coûteux en temps de calcul.
 
 Dans nos expériences, nous avons choisi d'optimiser l'ensemble des paramètres en deux étapes :
 
 \begin{itemize}
-\item L'optimisation de l'échelle en utilisant des paramètres intrinsèques fixes ;
+\item l'optimisation de l'échelle en utilisant des paramètres intrinsèques fixes ;
 \item l'optimisation des paramètres intrinsèques en utilisant le jeu d'échelles optimales trouvé à l'étape précédente.
 \end{itemize}
 
@@ -180,7 +194,7 @@ Les paramètres intrinsèques fixes sont ceux recommandés par les auteurs des m
 \begin{figure}[!ht]
   \centering
   \includegraphics[height=6cm]{Images/flowchart_benchmark.pdf}
-  \caption{Diagramme illustrant l'optimisation en deux temps : d'abord l'optimisation de l'échelle puis l'optimisation des paramètres intrinsèques.}
+  \caption{Diagramme illustrant l'optimisation en deux temps : d'abord l'optimisation de l'échelle puis l'optimisation des paramètres intrinsèques. $\{P^*_{\acute{e}chelle},P^*_{intr}\}$ forme le jeu de paramètre optimal final.}
   \label{fig:flowchart_opti}
 \end{figure}
 
@@ -188,83 +202,93 @@ Les paramètres intrinsèques fixes sont ceux recommandés par les auteurs des m
 \subsection{Méthode de calcul}
 \subsubsection{Calcul du MCC moyen}
 
-  Notre définition du MCC moyen a connu deux formulations successives afin de supprimer les biais présents dans la première définition (Fig. \ref{fig:illustration_opti}). 
+  Notre définition du MCC moyen a connu deux formulations successives afin de supprimer les biais présents dans la première définition (Fig. \ref{fig:illustration_opti}). La première formulation présentait des défauts que nous avons corrigé dans la seconde version.
   
-  Nous présentons la méthode de calcul du MCC moyen pour un  seul filtre et une seule base de données. En réalité nous avons calculé le MCC moyen de tous les jeux de paramètres pour tous les filtres sur l'ensemble des bases de données. De plus, le MCC moyen optimal est calculé pour la zone d'intérêt \maskglobal, mais une fois le jeu de paramètres optimal trouvé, la moyenne de chacune des métriques présentées précédemment est calculée pour ce jeu de paramètres dans les six zones d'intérêt. Le calcul de la moyenne de chaque métrique est effectué de la même manière que celle du MCC.
+  Nous présentons la méthode de calcul du MCC moyen pour un  seul filtre et une seule base de données. En réalité nous avons calculé le MCC moyen de tous les jeux de paramètres pour tous les filtres sur l'ensemble des bases de données. De plus, le MCC moyen optimal est calculé pour la zone d'intérêt \maskglobal, mais une fois le jeu de paramètres optimal trouvé, la moyenne de chacune des métriques présentées précédemment est calculée pour ce jeu de paramètres dans les six zones d'intérêt. Le calcul de la moyenne de chaque métrique est effectué de la même manière que celle du MCC.    
 
-  \begin{figure}[H]
+  \paragraph{Première version}
+
+  \begin{figure}[!ht]
     \centering
-    \includegraphics[height=6cm]{Images/optim.png}
-    \caption{Illustration des deux itérations pour le calcul du MCC moyen. Exemple pour deux volumes $V1$ et $V2$ filtrés par les jeux de paramètres $P1$ et $P2$ En haut, l'itération $1$ reposant sur la moyenne des MCC des seuils de volumes filtrés. En bas, l'itération 2 reposant sur la moyenne des seuils maximisant le MCC.}
-    \label{fig:illustration_opti}
-  \end{figure}    
+    \includegraphics[width=\textwidth]{Images/optim_v1.png}
+    \caption{Exemple de la première version du calcul du jeu de paramètre optimal. Ici, seulement deux jeux de paramètres $P1$ et $P2$ sont appliqués à deux volumes $V1$ et $V2$. Les points correspondent aux valeurs des MCC des volumes filtrés et seuillés par le seuil $s$. Dans cette version, la moyenne s'effectue par niveaux de seuils.}
+    \label{fig:optim_v1}
+  \end{figure}
 
-  \paragraph{Première itération}
-
-  Soit $F$ un filtre de rehaussement et $D$ un jeu de données. Soit $P$ l'ensemble des jeux de paramètres. 
+  Soit $F$ un filtre de rehaussement et $D$ un jeu de données de $N$ images. Soit $P$ l'ensemble des jeux de paramètres
   $\forall p \in P$, $\forall v \in D$ :
   \begin{equation}
     R_{p,v} = F_{p}(v)
   \end{equation}
-  Soit l'ensemble $S$ des seuillages appliqués à $R$ tels que $\forall s \in S$ :
+
+  avec $R_{p,v}$ le résultat du filtrage de $v$ par $F_p$.
+  Soit l'ensemble $S$ des seuillages $s$ appliqués à $R$ tels que $\forall s \in S$ :
   \begin{equation}
-    RS_{p,v,s} = seuillage(R_{p,v}) 
+    RS_{p,v,s} = seuillage(R_{p,v},s) 
   \end{equation}
-  Soit la valeur du MCC $MCC_{p_i,v_j,s_k}$ calculée pour le volume seuillé $RS_{p_i,v_j,s_k}$.
+  Soit la valeur du MCC $MCC_{p,v,s}$ calculée pour le volume seuillé $RS_{p,v,s}$.
   Alors le MCC moyen par seuil $\overline{MCC}_{p_i,s_k}$ est défini par :
   \begin{equation}
-    \overline{MCC}_{p_i,s_k} = \frac{1}{N}\sum_{j=1}^{N} MCC_{p_i,v_j,s_k}
+    \overline{MCC}_{p_i,s_k} = \frac{1}{N}\sum_{v \in D} MCC_{p,v,s}
   \end{equation}
-  Le meilleur MCC moyen $\overline{MCC}_{p_i}$ par jeu de paramètres est défini par : 
+  Le meilleur MCC moyen $\overline{MCC}_{p}$ par jeu de paramètres est défini par : 
   \begin{equation}
-    \overline{MCC}_{p_i} = \arg\max_{\forall s_k \in S} \overline{MCC}_{p_i,s_k}
+    \overline{MCC}_{p} = \max_{s \in S} \overline{MCC}_{p,s}
   \end{equation}
   Le meilleur jeu de paramètres $p*$ est défini comme le jeu de paramètres dont le MCC moyen est maximal :
   \begin{equation}
-    p* = \arg\max_{p_i \in P} \overline{MCC}_{p_i}
+    p* = \arg\max_{p \in P} \overline{MCC}_{p}
   \end{equation}
 
-  Cette méthode, utilisée dans nos premiers travaux \cite{Lamy2020_VPH_bench} \cite{Lamy2021_RRPR} \cite{Lamy2020_ICPR} \cite{Lamy2021_ORASIS}, souffre des mêmes limitations qu'une moyenne effectuée naïvement pour calculer des courbes ROC. Elle traite en effet des rehaussements ayant des dynamiques différentes, ce qui sous-estime les résultats. La démarche initiale de cette méthode était d'émuler un fonctionnement où un opérateur aurait à manipuler un algorithme de segmentation paramétré une seule fois pour une utilisation régulière.
+  Cette méthode (Fig. \ref{fig:optim_v1}), utilisée dans nos premiers travaux \cite{Lamy2020_VPH_bench} \cite{Lamy2021_RRPR} \cite{Lamy2020_ICPR} \cite{Lamy2021_ORASIS}, souffre des mêmes limitations qu'une moyenne effectuée naïvement pour calculer des courbes ROC. Elle traite en effet des rehaussements ayant des dynamiques différentes, ce qui sous-estime les résultats. 
   
-  \paragraph{Deuxième itération}
-  Pour la deuxième itération, il a été choisi de maximiser le MCC du rehaussement dès l'étape de seuillage en choisissant le seuil maximisant le MCC par volume, plutôt que de moyenner le MCC par seuil sur l'ensemble des volumes. 
+  \paragraph{Deuxième version}
 
-  Soit $F$ un filtre de rehaussement et $D$ un jeu de données. Soit $P$ l'ensemble des jeux de paramètres. 
-  $\forall p \in P$, $\forall v \in D$ :
+  \begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{Images/optim_v2.png}
+    \caption{Exemple de la seconde version du calcul du jeu de paramètre optimal. Ici, seulement deux jeux de paramètres $P1$ et $P2$ sont appliqués à deux volumes $V1$ et $V2$. Les points correspondent aux valeurs des MCC des volumes filtrés et seuillés par le seuil $s$. Dans cette version, la moyenne est calculée à partir du MCC maximum obtenu par volume.}
+    \label{fig:optim_v2}
+  \end{figure}
+
+  Pour la deuxième itération (Fig. \ref{fig:optim_v2}), il a été choisi de maximiser le MCC du rehaussement dès l'étape de seuillage en choisissant le seuil maximisant le MCC par volume, plutôt que de moyenner le MCC par seuil sur l'ensemble des volumes. 
+
+  Soit $F$ un filtre de rehaussement et $D$ un jeu de données de $N$ images. Soit $P$ l'ensemble des jeux de paramètres. 
+  $\forall p \in P$, $\forall v \in D$, on nomme $R_{p,v}$ le résultat du filtre de paramètres $p$ appliqué à l'image $v$:
   \begin{equation}
     R_{p,v} = F_{p}(v)
   \end{equation}
-  Soit l'ensemble $S$ des seuillages appliqués à $R$. tel que $\forall s \in S$ 
+  Soit l'ensemble $S$ des seuillages appliqués à $R_{p,v}$. tel que $\forall s \in S$ 
   \begin{equation}
-    RS_{p,v,s} = seuillage(R_{p,v}) 
+    RS_{p,v,s} = seuillage(R_{p,v},s) 
   \end{equation}
-  Soit la valeur du MCC $MCC_{p_i,v_j,s_k}$ calculé pour le volume seuillé $RS_{p_i,v_j,s_k}$.
+  Soit la valeur du MCC $MCC_{p,v,s}$ calculée pour le volume seuillé $RS_{p,v,s}$.
   Alors le MCC maximal par volume $MCC_{p_i,v_j}^{max}$ est défini par :
   \begin{equation}
-    MCC_{p_i,v_j}^{max} = \max_{\forall s_k \in S} MCC_{p_i,v_j,s_k}
+    MCC_{p,v}^{max} = \max_{\forall s \in S} MCC_{p,v,s}
   \end{equation}
   Le meilleur MCC moyen $\overline{MCC}_{p_i}$ par jeu de paramètres est défini par : 
   \begin{equation}
-    \overline{MCC}_{p_i} = \frac{1}{N} \sum_{j=1}^{N} MCC_{p_i,v_j}^{max}
+    \overline{MCC}_{p} = \frac{1}{N} \sum_{v \in D} MCC_{p,v}^{max}
   \end{equation}
-  Le meilleur jeu de paramère $p*$ est défini comme le jeu de paramètre dont le MCC moyen est maximal :
+  Le meilleur jeu de paramère $p^*$ est défini comme le jeu de paramètre dont le MCC moyen est maximal :
   \begin{equation}
-    p* = \arg\max_{p_i \in P} \overline{MCC}_{p_i}
+    p^* = \arg\max_{p \in P} \overline{MCC}_{p}
   \end{equation}
 
-  Dans cette itération, on émule un fonctionnement où un opérateur est capable de paramétrer pour chaque volume le seuil idéal. On tire donc le maximum des performances du pipeline de segmentation. Cette manière de procéder est utilisée aux deux étapes de l'optimisation sans changement de l'algorithme. Dans notre analyse du rehaussement, le pas appliqué entre chaque seuil est de 0.005, ce qui conduit à 201 seuils binaires. Cette méthode est utilisée dans nos travaux \cite{Lamy2022_TMI}.
+  Dans cette itération, on choisi la procédure d'optimisation la plus favorable à chaque filtre. On tire donc le maximum des performances du pipeline de segmentation. Cette manière de procéder est utilisée aux deux étapes de l'optimisation sans changement de l'algorithme. Dans notre analyse du rehaussement, le pas appliqué entre chaque seuil est de 0.005, ce qui conduit à 201 seuils binaires. Cette méthode est utilisée dans nos travaux \cite{Lamy2022_TMI}.
 
   \subsection{Choix des paramètres}
 
-Une stratégie de recherche exhaustive (\textit{grid search}) est réalisée pour ces paramètres. Les conditions de cette recherche sont résumées dans les tables \ref{tab:SS_interval}, \ref{tab:SS_interval_RORPO} (paramètres d'échelles) et la table \ref{table:PS_interval} (paramètres intrinsèques).
+Une stratégie de recherche exhaustive (\textit{grid search}) est réalisée pour l'optimisation des paramètres d'échelles $P_{\acute{e}chelle}$ et $P_{intr}$. Les conditions de cette recherche sont résumées dans les tables \ref{tab:SS_interval} et \ref{tab:SS_interval_RORPO} (paramètres d'échelles) et la table \ref{table:PS_interval} (paramètres intrinsèques).
 
-Le choix des paramètres a été fait de manière à trouver un compromis entre temps de calcul total du banc de test, espacement des paramètres et exhaustivité. Les limites des paramètres d'échelles ont été définies à la main en mesurant la taille des structures des troncs des réseaux vasculaires pour la limite haute et les limites de la résolution d'un pixel pour la limite basse. Une échelle inférieure à un pixel n'aurait en effet pas de sens pour les espaces gaussiens et de flux. La mesure de la taille des structures a été effectuée sur des images isotropes de résolution $[1\textrm{mm},1\textrm{mm},1\textrm{mm}]$. 
+Le choix des paramètres a été fait de manière à trouver un compromis entre temps de calcul total du banc de test, espacement des paramètres et exhaustivité. Les limites des paramètres d'échelles ont été définies en mesurant la taille des structures des troncs des réseaux vasculaires pour la limite haute et les limites de la résolution d'un pixel pour la limite basse. Une échelle inférieure à un pixel n'aurait en effet pas de sens pour les espaces gaussiens et de flux. La mesure de la taille des structures a été effectuée sur des images isotropes de résolution $[1\textrm{mm},1\textrm{mm},1\textrm{mm}]$. 
 
 Nous avons aussi intégré des limites de distances entre deux échelles successives d'un même jeu de paramètres. Cette limite permet d'éviter les jeux de paramètres aux échelles redondantes. C'est pourquoi, tout jeu de paramètres d'échelle dont la différence entre chaque échelle successive est inférieure à $\frac{1}{6} mm$ est éliminé. Pour RORPO, les tailles minimale et maximale des chemins ont été choisies empiriquement par validation visuelle. Une limite minimale à la taille entre deux chemins successifs pour un jeu de paramètres a aussi été déterminée empiriquement de manière à limiter la redondance.
  %Un jeu de paramètres de RORPO est composé d'une taille de chemin minimale $e_{min}$, d'un facteur d'échelle $f$ et d'un nombre d'itérations $i$ qui permettent de définir une suite géométrique $e_i = e_{min} \times f^i$. 
 
  \begin{table}[H]
-  \caption{Paramètres d'échelle pour les filtres utilisant un espace d'échelles basé sur le diamètre :  Frangi, Sato, Meijering, Jerman, Zhang, OOF. Les conditions  assurent que l'écart entre chaque échelle $i$ est supérieur à la résolution d'un voxel.}
+  \caption{Paramètres d'échelle pour les filtres utilisant un espace d'échelles basé sur le diamètre :  Frangi, Sato, Meijering, Jerman, Zhang, OOF. Les conditions  assurent que l'écart entre deux échelles successives $\sigma_i$ et $\sigma_j$ soit supérieur à la résolution d'un voxel.}
   \label{tab:SS_interval}
   \begin{center}
     \begin{tabular}{  l  c  c  c }
@@ -274,7 +298,7 @@ Nous avons aussi intégré des limites de distances entre deux échelles success
       Paramètres & Intervalle & Pas & Conditions \\
       \hline
       $\sigma_{\min}$ & $[0.4,1.8]$ & $0.4$ & \\
-      $\sigma_{\max}$ & $[1.4,3.4]$  & $0.4$ & $\sigma_{min,i} - \sigma_{max,i} > \frac{1}{6}$ mm \\ 
+      $\sigma_{\max}$ & $[1.4,3.4]$  & $0.4$ & $\sigma_{i} - \sigma_{j} > \frac{1}{6}$ mm \\ 
       Nombre d'échelles & $[\![3,4]\!]$ & $1$ & \\
       \hline
       \hline
@@ -283,7 +307,7 @@ Nous avons aussi intégré des limites de distances entre deux échelles success
       Paramètres & Intervalle & Pas & Conditions \\
       \hline
       $\sigma_{\min}$ & $[0.2,1.6]$ & $0.4$ & \\
-      $\sigma_{\max}$ & $[1.2,3.2]$  & $0.4$ & $\sigma_{min,i} - \sigma_{max,i} > \frac{1}{6}$ mm \\ 
+      $\sigma_{\max}$ & $[1.2,3.2]$  & $0.4$ & $\sigma_{i} - \sigma_{j} > \frac{1}{6}$ mm \\ 
       Nombre d'échelles & $[\![3,4]\!]$ & $1$ & \\
       \hline
     \end{tabular}
@@ -291,7 +315,7 @@ Nous avons aussi intégré des limites de distances entre deux échelles success
 \end{table}
 
 \begin{table}[H]
-  \caption{ Paramètres d'échelle pour RORPO sans le paramètre de dilatation. Les conditions d'espacement entre chaque échelle $i$ assure que deux échelles successives ne soient pas similaires.}
+  \caption{ Paramètres d'échelle pour RORPO sans le paramètre de dilatation. Les conditions d'espacement assure que deux échelles successives $i$ et $j$  ne soient pas similaires et que chemin de taille maximal $\acute{é}chelle_{max}$ ne dépasse pas une certaine taille.}
   \label{tab:SS_interval_RORPO}
   \begin{center}
     \begin{tabular}{  l  c  c  c }
@@ -301,7 +325,7 @@ Nous avons aussi intégré des limites de distances entre deux échelles success
       Paramètres & Intervalle & Pas & Conditions \\
       \hline
       Échelle min. & $[30,150]$ & $10$ & \\
-      Facteur & $[1.1,1.6]$ & $0.1$ & $20 < \textrm{échelle}_{i} - \textrm{échelle}_{j} < 200$ \\ 
+      Facteur & $[1.1,1.6]$ & $0.1$ & $20 < \textrm{échelle}_{i} - \textrm{échelle}_{j} \textrm{~et~} \textrm{échelle}_{max} < 200 $ \\ 
       Nb. d'échelles & $[\![2,4]\!]$ & $1$ & \\
       \hline
       \hline
@@ -311,7 +335,7 @@ Nous avons aussi intégré des limites de distances entre deux échelles success
       \hline
       Échelle min. & $[30,90]$ & $10$ & \\
       
-      Facteurs & $[1.1,1.5]$  & $0.1$ & $ 20 < \textrm{échelle}_{i} - \textrm{échelle}_{j} < 200$ \\
+      Facteurs & $[1.1,1.5]$  & $0.1$ & $ 20 < \textrm{échelle}_{i} - \textrm{échelle}_{j} \textrm{~et~} \textrm{échelle}_{max} < 200$ \\
       Nb. échelles & $[\![2,4]\!]$ & $1$ & \\
       \hline
       \hline
@@ -321,7 +345,7 @@ Nous avons aussi intégré des limites de distances entre deux échelles success
       \hline
       Échelle min. & $[10,90]$ & $10$ & \\
       
-      Facteur & $[1.1,1.5]$  &  $0.1$ & $ 9 < \textrm{échelle}_{i} - \textrm{échelle}_{j} < 100$ \\
+      Facteur & $[1.1,1.5]$  &  $0.1$ & $ 9 < \textrm{échelle}_{i} - \textrm{échelle}_{j} \textrm{~et~} \textrm{échelle}_{max} < 100$ \\
       
       Nb. d'échelles & $[\![2,4]\!]$ & $1$ & \\
       \hline
@@ -355,61 +379,65 @@ Au total, 41 jeux de paramètres d'échelle sont testés pour les filtres hessie
 
 \section{Résultats}
 
-Dans cette section, nous présentons et discutons les résultats quantitatifs et qualitatifs des différents filtres. En plus des sept filtres présentés précédemment, nous ajoutons un simple seuillage comme référence. La sortie de cette référence est l'image d'entrée normalisée et seuillée afin que le seuil soit optimisé de la même manière que les autres paramètres.
+Dans cette section, nous présentons et discutons des résultats quantitatifs et qualitatifs des différents filtres. En plus des sept filtres présentés précédemment, nous ajoutons un simple seuillage des volumes. La sortie de cette référence est l'image d'entrée normalisée et seuillée afin que le seuil soit optimisé de la même manière que les autres paramètres.
 
 Dans la suite, nous commençons par analyser les résultats des filtres dans le masque global \maskglobal. Puis, nous discutons des résultats obtenus sur les masques vasculaires \maskvascular, \maskvesselLarge, \maskvesselMedium, \maskvesselSmall. Enfin, nous exposons les résultats obtenus au niveau des bifurcations.
 
 \subsection{Résultats globaux}
 
+
 \begin{figure}[!ht]
-  \centering
-  \begin{subfigure}[t]{\textwidth}
-    \centering
-    \includegraphics[clip = true, height=8cm]{Images/standAloneLegend.pdf}
+  \begin{subfigure}[t]{0.78\textwidth}
+    \includegraphics[width=\textwidth,clip = true, trim  =  125 125 180 260]{Images/Ircad_ROC.pdf}  
   \end{subfigure}
-\end{figure}
-\begin{figure}[!ht]
-  \begin{subfigure}[t]{\textwidth}
-    \centering
-  \includegraphics[clip = true, trim  =  125 125 180 260, height=9cm]{Images/Ircad_ROC.pdf}
-  \caption{Ircad}
+  \begin{subfigure}[t]{0.2\textwidth}
+      \includegraphics[width=\textwidth,clip = true]{Images/standAloneLegend.pdf}
   \end{subfigure}
+
   \caption{Courbe ROC moyenne des sept filtres de rehaussement pour le jeu de l'Ircad.}
   \label{fig:Ircad_ROC}
 \end{figure}
 
 \begin{figure}[!ht]
   \centering
-  \begin{subfigure}[t]{\textwidth}
+  \begin{subfigure}[t]{0.78\textwidth}
     \centering
   \includegraphics[clip = true, trim  =  125 125 180 200, height=9cm]{Images/Bullitt_ROC.pdf}
-  \caption{Bullitt}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.2\textwidth}
+    \includegraphics[width=\textwidth,clip = true]{Images/standAloneLegend.pdf}
   \end{subfigure}
   \caption{Courbe ROC moyenne des sept filtres de rehaussement pour Bullitt.}
 \end{figure}
 \begin{figure}[!ht]
-  \begin{subfigure}[t]{\textwidth}
+  \begin{subfigure}[t]{0.78\textwidth}
     \centering
   \includegraphics[clip = true, trim  =  125 125 100 200, height=9cm]{Images/Vascu_2_ROC.pdf}
-  \caption{VascuSynth, $\sigma = 2$}
+\end{subfigure}
+\begin{subfigure}[t]{0.2\textwidth}
+  \includegraphics[width=\textwidth,clip = true]{Images/standAloneLegend.pdf}
 \end{subfigure}
 \caption{Courbe ROC moyenne des sept filtres de rehaussement pour VascuSynth $\sigma=2$.}
 \end{figure}
 
 \begin{figure}[!ht]
-  \begin{subfigure}[t]{\textwidth}
+  \begin{subfigure}[t]{0.78\textwidth}
     \centering
   \includegraphics[clip = true, trim  =  125 125 100 200, height=9cm]{Images/Vascu_4_ROC.pdf}
-  \caption{VascuSynth, $\sigma = 4$}
+\end{subfigure}
+\begin{subfigure}[t]{0.2\textwidth}
+  \includegraphics[width=\textwidth,clip = true]{Images/standAloneLegend.pdf}
 \end{subfigure}
 \caption{Courbe ROC moyenne des sept filtres de rehaussement pour VascuSynth $\sigma=4$.}
 \end{figure}
 
 \begin{figure}[H]
-  \begin{subfigure}[t]{\textwidth}
+  \begin{subfigure}[t]{0.78\textwidth}
     \centering
     \includegraphics[clip = true, trim  =  125 125 100 200, height=9cm]{Images/Vascu_6_ROC.pdf}
-    \caption{VascuSynth, $\sigma = 6$}
+\end{subfigure}
+\begin{subfigure}[t]{0.2\textwidth}
+  \includegraphics[width=\textwidth,clip = true]{Images/standAloneLegend.pdf}
 \end{subfigure}
 \caption{Courbe ROC moyenne des sept filtres de rehaussement pour VascuSynth $\sigma=6$.}
   \label{fig:Vascu6_ROC}
@@ -441,9 +469,9 @@ Dans la suite, nous commençons par analyser les résultats des filtres dans le 
 
 En observant les résultats présentés en table \ref{tab:quantitative results Ircad}, on peut remarquer que globalement, le MCC et le Dice de tous les filtres appliqués sur les images de foies de l'Ircad sont faibles (inférieurs à 0.5). Ce résultat était attendu puisque nous avons réduit notre chaîne de traitement au minimum. Cependant, ce résultat justifie quantitativement le fait qu'un filtre seul ne peut se substituer à une méthode de segmentation complète.
 
-Qualitativement (Fig. \ref{fig:qualitative results Ircad}), tous les filtres excepté RORPO produisent des faux positifs sur les bords du foie. Meijering semble produire les moins bons résultats en rehaussant à la fois fortement les bords et le bruit dans les tissus. En comparaison, la référence, permet de bien récupérer les vaisseaux larges, mais la qualité des vaisseaux décroît, avec une augmentation des déconnexions au fur et à mesure que les vaisseaux deviennent de plus en plus petits. 
+Qualitativement (Fig. \ref{fig:qualitative results Ircad}), tous les filtres excepté RORPO produisent des faux positifs sur les bords du foie. Meijering semble produire les moins bons résultats en rehaussant à la fois fortement les bords et le bruit dans les tissus. En comparaison, le seuillage, permet de bien récupérer les vaisseaux larges, mais la qualité des vaisseaux décroît, avec une augmentation des déconnexions au fur et à mesure que les vaisseaux deviennent de plus en plus petits. 
 
-Quantitativement, RORPO propose les meilleurs résultats avec un MCC de $0.475$. La référence obtenue par seuillage remporte le second meilleur MCC ($0.452$). Le fait qu'un simple seuillage produise de meilleurs résultats que la plupart des filtres sur des images TDM injectées peut paraître surprenant. Cependant, ces résultats sont à pondérer par le fait que les petits et moyens vaisseaux sont absents de la référence dans une proportion bien plus large que pour les filtres de rehaussement. En effet, tous les filtres ont des résultats supérieurs à la référence pour les moyens et petits vaisseaux.  
+Quantitativement, RORPO propose les meilleurs résultats avec un MCC de $0.475$. Le seuillage remporte le second meilleur MCC ($0.452$). Le fait qu'un simple seuillage produise de meilleurs résultats que la plupart des filtres sur des images TDM injectées peut paraître surprenant. Cependant, ces résultats sont à pondérer par le fait que les petits et moyens vaisseaux sont absents de la référence dans une proportion bien plus large que pour les filtres de rehaussement. En effet, tous les filtres ont des résultats supérieurs à la référence pour les moyens et petits vaisseaux.  
 
 Zhang produit le troisième meilleur résultat (MCC = $0.434$), alors que OOF (MCC = $0.277$) et Meijering (MCC = $0.231$) présentent les performances les plus faibles. Les meilleurs filtres (RORPO et Zhang) obtiennent ces performances par des stratégies différentes. La précision de RORPO est élevée ($0.666$) avec une sensibilité moyenne ($0.379$). Au contraire, Zhang présente une sensitivité importante ($0.435$) en contrepartie d'une précision plus faible ($0.515$).
 
@@ -467,7 +495,7 @@ Nous rappelons que ces résultats sont basés sur le meilleur jeu de paramètres
 
 \paragraph{Bullitt}
 
-\begin{table}[H]
+\begin{table}[!ht]
   \begin{center}
       \caption{Résultats quantitatifs (moyenne $\pm$ écart-type) dans le masque global \maskglobal sur le jeu de données de Bullitt.}
       \label{tab:quantitative results Bullit}
@@ -495,7 +523,7 @@ Nous attirons l'attention du lecteur sur le fait que nous n'avons pas observé d
 
 Quantitativement, RORPO offre de meilleurs résultats par rapport aux autres filtres (MCC=$0.543$). Sato (MCC=$0.475$) et Frangi (MCC=$0.474$) arrivent respectivement en seconde et troisième position. Bien que présentant des MCC proches, le rappel de Frangi est meilleur que celui de Sato  ($0.469$ et $0.399$) mais avec un plus faible taux de précision ($0.498$ vs. $0.585$). Jerman (MCC=$0.432$), Zhang (MCC=$0.424$) et OOF (MCC=$0.417$) présentent des résultats supérieurs à la base de référence (MCC=$0.396$) tandis que Meijering produit un fort taux de faux positifs qui pénalise le MCC ($0.349$).
 
-\begin{figure}[H]
+\begin{figure}[!ht]
   \centering
   \includegraphics[clip = true, trim = 90 20 90 20, height=4cm,width=3.9cm]{Images/Bullitt_GT.png}
   \includegraphics[clip = true, trim = 90 20 90 20, height=4cm,width=3.9cm]{Images/Bullitt_Baseline.png}
@@ -516,7 +544,7 @@ Quantitativement, RORPO offre de meilleurs résultats par rapport aux autres fil
 \paragraph{VascuSynth}
 
 
-\begin{table}[H]
+\begin{table}[!ht]
     \begin{center}
     \caption{Résultats quantitatifs (moyenne $\pm$ écart-type) dans le masque global \maskglobal sur les jeux de données de VascuSynth.}
     \label{Table:quantitative results Vascusynth}
@@ -548,7 +576,7 @@ Ce comportement était en partie attendu puisque nous n'avons pas utilisé le pa
 
 Comme le jeu de données VascuSynth ne présente pas de bords d'organes où d'artefacts similaires, l'éventualité d'un faux rehaussement lié à ces artefacts est limitée comparé aux jeux de données réels, excepté pour OOF qui rehausse les bordures de l'image assimilées à des plans. La mesure utilisée pour OOF distingue en effet mal les structures planaires des structures tubulaires. Une autre mesure de tubularité telle que la mesure de Frangi pourrait être utilisée pour éviter ce problème. Etrangement, quand le bruit n'est pas bien filtré, les filtres de rehaussement ont tendance à introduire de fausses structures tubulaires non présentes dans l'image d'origine (Fig. \ref{fig:noisy_tubes}).
 
-\begin{figure}[H]
+\begin{figure}[!ht]
   \centering
   \includegraphics[height=4cm]{Images/vascu_noise.png}
   \includegraphics[height=4cm]{Images/vascu_noise_OOF.png}
@@ -558,7 +586,7 @@ Comme le jeu de données VascuSynth ne présente pas de bords d'organes où d'ar
 
 Quantitativement, Frangi donne les meilleurs résultats pour $\sigma=2$ avec un MCC de $0.634$. Meijering  atteint un MCC de $0.603$ pour $\sigma=4$ et $0.565$ pour $\sigma=6$. Ces bonnes performances de Meijering peuvent s'expliquer par le fait que la géométrie des vaisseaux de VascuSynth corresponde aux hypothèses du modèle de Meijering (vaisseaux droits et de rayon constant). Sato obtient le troisième meilleur résultat pour le niveau de bruit $\sigma=2$ (MCC=$0.618$) tandis que Jerman présente de meilleurs résultats pour des niveaux de bruits supérieurs (MCC = $0.565$ pour $\sigma=4$ et MCC=$0.501$ pour $\sigma = 6$). Peu importe les cas, les deux filtres donnent des résultats similaires, puisque leur sensibilité est proche, indépendamment du niveau de bruit. La différence entre les deux filtres s'explique au niveau de la précision : pour des niveaux de bruit élevés (e.g. $\sigma=4$), Jerman présente une plus grande précision (MCC = $0.717$ vs. $0.661$) tandis que Sato présente une précision supérieure pour les faibles niveaux de bruit (MCC = $0.810$ vs. $0.689$). En général, Frangi est la méthode la plus robuste au bruit pour des niveaux de bruit élevés avec un PSNR de $26.496$ et $26.692$ pour $\sigma=4$ et $\sigma=6$, respectivement. Les résultats de la référence sont très mauvais à cause de la présence d'artefacts de haute intensité et d'un fond non homogène dans les données de VascuSynth. Ce comportement est une motivation supplémentaire pour l'usage de filtres de rehaussement pour des applications avec un contexte similaire. Globalement, RORPO produit les moins bons résultats sur VascuSynth alors que Zhang reste relativement stable, peu importe le niveau de bruit choisi.
 
-\begin{figure}[H]
+\begin{figure}[!ht]
   \centering
   
   \includegraphics[clip = true, trim = 80 80 80 80, height=3.5cm]{Images/Vascu_4_GT.png}
@@ -583,7 +611,7 @@ Les résultats quantitatifs des sept filtres sont présentés dans les tables \r
 
 \paragraph{Ircad}
 
-\begin{table}[H]
+\begin{table}[!ht]
   \begin{center}
   \caption{Résultats quantitatifs (moyenne $\pm$ écart-type) par catégorie de tailles de vaisseaux pour l'Ircad.}
   \label{tab:VesselssizeIrcad}
@@ -626,7 +654,7 @@ Tous les filtres hessiens et OOF ont des performances qui augmentent significati
 
 \paragraph{Bullitt}
 
-\begin{table}[H]
+\begin{table}[!ht]
   \begin{center}
   \label{tab:Vessels size Bullitt}
   \caption{Résultats quantitatifs (moyenne $\pm$ écart-type) par catégorie de tailles de vaisseaux pour Bullitt.}
@@ -678,7 +706,7 @@ Localement, les résultats pour \maskglobal et \maskvessel sont similaires puisq
 
 \paragraph{VascuSynth}
 
-\begin{table}[H]
+\begin{table}[!ht]
   \begin{centering}
   \caption{Résultats quantitatifs (moyenne $\pm$ écart-type) par catégorie de tailles de vaisseaux pour VascuSynth ($\sigma=2$).}
   \label{tab:Vessels size VascuSynth}
@@ -719,7 +747,7 @@ Globalement, le rehaussement des vaisseaux est le mieux réalisé par Frangi, à
 
 \subsection{Bifurcations}
 
-\begin{figure}[H]
+\begin{figure}[!ht]
   \centering
       \begin{subfigure}[t]{0.30\textwidth}
         \includegraphics[clip = true, trim  = 0 50 0 80, width=30mm]{Images/Ircad_k_GT.png}
@@ -763,7 +791,7 @@ Globalement, le rehaussement des vaisseaux est le mieux réalisé par Frangi, à
       \label{fig:bifurcation_Ircad}
   \end{figure}
   
-  \begin{figure}[H]
+  \begin{figure}[!ht]
     \centering
     \begin{subfigure}[t]{0.24\textwidth}
       \includegraphics[clip = true, trim  =  170 230 150 240, width=30mm]{Images/Vascu_2_k_GT.png}
@@ -808,7 +836,7 @@ Globalement, le rehaussement des vaisseaux est le mieux réalisé par Frangi, à
   \end{figure}
 
 
-\begin{figure}[H]
+\begin{figure}[!ht]
   \centering
       \begin{subfigure}[t]{0.33\textwidth}
           \begin{tikzpicture}
@@ -953,26 +981,34 @@ Encore une fois, les résultats avec les bifurcations sont corrélés avec le re
 
 \section{Discussion}
 
+\subsection{Recommandations sur l'usage des filtres}
+
 En se basant sur ces résultats d'expériences, il est possible de formuler quelques recommandations en fonction du masque de région d'intérêt.
 
-Nous avons observé que les performances de Meijering sont faibles sur les jeux de données réels, car le filtre rehausse fortement le bruit. Ce comportement est consistant avec le fait que Meijering est un filtre dédié au rehaussement dans des images très faiblement contrastés pour des applications de tracking. Il faut toutefois noter que Meijering présente de bons résultats sur les données synthétiques de VascuSynth. Il peut être intéressant d’appliquer Meijering dans plusieurs contextes :
+\subsubsection*{Meijering}
+
+ Nous avons observé que les performances de Meijering sont faibles sur les jeux de données réels, car le filtre rehausse fortement le bruit. Ce comportement est consistant avec le fait que Meijering est un filtre dédié au rehaussement dans des images très faiblement contrastés pour des applications de tracking. Il faut toutefois noter que Meijering présente de bons résultats sur les données synthétiques de VascuSynth. Il peut être intéressant d’appliquer Meijering dans plusieurs contextes :
 
 \begin{itemize}
-  \item Les images sont faiblement contrastées et présentent une géométrie des vaisseaux relativement droite sans variations de diamètres ;
+  \item les images sont faiblement contrastées et présentent une géométrie des vaisseaux relativement droite sans variations de diamètres ;
   \item l'utilisateur choisit d'appliquer une segmentation basée sur une stratégie de tracking et/ou applique une stratégie de post-traitement capable d'identifier les faux positifs.
 \end{itemize}
+
+\subsubsection*{OOF}
 
 OOF, couplé avec la mesure de tubularité de la moyenne géométrique, présente des résultats relativement faibles sur les jeux de données, ce qui peut s'expliquer par deux éléments : (1) le choix de la mesure dont le pouvoir de discrimination entre les plateaux et les structures tubulaires est faible ; et (2) OOF est basé sur l'hypothèse de sections des vaisseaux à géométrie circulaire, ce qui en pratique n'est pas toujours le cas, en particulier pour l'Ircad. Il convient aussi de noter que OOF est un cadre d'espace d'échelles et que différentes mesures de tubularité peuvent être utilisées en fonction de l'application d'intérêt. OOF est un bon choix dans les cas suivants : 
 
 \begin{itemize}
-  \item Les vaisseaux présentent des sections circulaires ;
+  \item les vaisseaux présentent des sections circulaires ;
   \item les réseaux vasculaires présentent un nombre important de vaisseaux adjacents.
 \end{itemize}
+
+\subsubsection{Sato et Frangi}
 
 Sato et Frangi présentent tous les deux de bonnes performances dans notre banc de test. Ces deux filtres proposent un bon compromis entre sensibilité et spécificité, mais produisent la plupart du temps une perte de signal au niveau des bifurcations. Nous recommandons Frangi dans les cas suivants :
 
 \begin{itemize}
-  \item Les vaisseaux dans les images sont de taille supérieure à quelques voxels ;
+  \item les vaisseaux dans les images ont des diamètres supérieurs à quelques voxels ;
   \item l'utilisateur a besoin d'un contrôle efficace sur le niveau de bruit à filtrer, au prix de la perte des petits vaisseaux ;
   \item \newV{le rehaussement des bifurcations est un facteur déterminant de la méthode de segmentation.}
 \end{itemize}
@@ -980,33 +1016,39 @@ Sato et Frangi présentent tous les deux de bonnes performances dans notre banc 
 Sato est recommandé dans les cas suivants :
 
 \begin{itemize}
-  \item Les images présentent peu de bruit ;
+  \item les images présentent peu de bruit ;
   \item les vaisseaux ont des sections circulaires ;
   \item les réseaux vasculaires comportent des vaisseaux adjacents.
 \end{itemize}
 
+\subsubsection*{Jerman}
+
 Jerman présente de bonnes performances avec une sensibilité importante et rehausse nettement les contours de vaisseaux. Cependant, le filtre a tendance à être plus sensible au bruit que les filtres hessiens classiques (i.e. Frangi et Sato) et partage la même tendance à surestimer le volume des vaisseaux. Nous recommandons le filtre de Jerman dans les cas suivants : 
 
 \begin{itemize}
-\item Les images avec de petits vaisseaux ;
-\item les images avec un faible niveau de bruit.
-\end{itemize} 
+\item les images présentent des vaisseaux fins et peu contrastés;
+\item le niveau de bruit des images est faible.
+\end{itemize}
+
+\subsubsection*{Zhang}
 
 Zhang est une version modifiée de Jerman, créé pour être moins sensible aux artefacts de bordure. Malheureusement la méthode est limitée à des organes spécifiques (ici le  foie). Bien que la méthode propose des résultats intéressants, celle-ci requiert une connaissance a priori de la distribution des intensités des structures de l'image seulement disponible pour certaines applications. Zhang est un bon filtre dans les cas suivants :
 
 \begin{itemize}
-\item Les applications où des masques sont disponibles ;
-\item un contraste constant des vaisseaux dans l'image.
+\item les applications où un masques des organes d'intérêts est disponible ;
+\item La distribution des intensités des vaisseaux se mélange peu avec la distribution d'intensité des autres tissus.
 \end{itemize}
 
-RORPO obtient la première place dans les deux jeux de données réels, mais produit des résultats faibles pour le jeu de données synthétique VascuSynth. Le filtre différencie de manière efficace les bords des organes et les structures tubulaires et ne surestime jamais la taille des vaisseaux. Cependant, RORPO favorise la spécificité par rapport à la sensibilité et de ce fait présente un plus grand nombre de faux négatifs que les autres méthodes. RORPO est un bon choix pour les applications suivantes~:
+\subsubsection*{RORPO}
+
+RORPO obtient la première place dans les deux jeux de données réels sur le masque global, mais produit des résultats faibles pour le jeu de données synthétique VascuSynth. Le filtre différencie de manière efficace les bords des organes et les structures tubulaires et ne surestime jamais la taille des vaisseaux. Cependant, RORPO favorise la spécificité par rapport à la sensibilité et de ce fait présente un plus grand nombre de faux négatifs que les autres méthodes. RORPO est un bon choix pour les applications suivantes~:
 
 \begin{itemize}
   \item Les applications nécessitant la détection des contours précis des vaisseaux ;
-  \item les applications avec une faible tolérance aux faux négatifs (e.g. quand la méthode d'extraction n'arrive pas à différencier les structures rehaussées). 
+  \item les applications où il est important de minimiser le nombre de faux positifs. 
 \end{itemize}
 
-%\subsection{Influence des paramètres}
+\subsection{Influence des paramètres}
 
 Nous avons voulu étudier plus en détail l'influence des paramètres des filtres ; identifier quels paramètres jouent un rôle significatif et de comprendre les choix des paramètres par défaut proposés par les auteurs lorsque c'est le cas. Les paramètres optimaux à la suite de nos expériences sont résumés dans la table \ref{tab:optimal_parameters}.
 
@@ -1037,34 +1079,38 @@ Nous avons voulu étudier plus en détail l'influence des paramètres des filtre
 \end{table}
 
 
-\subsection{Influence des paramètres d'échelle}
+\subsubsection{Influence des paramètres d'échelle}
 
-Les choix des paramètres d'échelle sont déterminant pour l'ensemble des filtres. Lorsque la technique de rehaussement est efficace, les variations entre une échelle non optimisée et une échelle optimisée sont très importantes. Entre le moins bon et le meilleur jeu de paramètres (étape 1 de l'optimisation), des variations de MCC entre $0.23$ et $0.30$ ont été observées pour les filtres hessien. Pour RORPO, dont le paramétrage repose exclusivement sur l'échelle des chemins composés par les élements structurants, une variation moyenne de $0.18$ du MCC a été observée. OOF présente le delta le plus faible, avec des variations de MCC moyennes de $0.07$. Une hypothèse est que la majeure partie des vaisseaux sont capturés dans une seule échelle, limitant ainsi l'impact de l'optimisation.
+Les choix des paramètres d'échelle sont déterminant pour l'ensemble des filtres. Lorsque la technique de rehaussement est efficace, les variations du résultat entre une échelle non optimisée et une échelle optimisée sont très importantes. Entre le moins bon et le meilleur jeu de paramètres (étape 1 de l'optimisation), des variations de MCC entre $0.23$ et $0.30$ ont été observées pour les filtres hessien. Pour RORPO, dont le paramétrage repose exclusivement sur la taille des éléments structurants, une variation moyenne de $0.18$ du MCC a été observée. OOF présente le delta le plus faible, avec des variations de MCC moyennes de $0.07$. Une hypothèse est que la majeure partie des vaisseaux sont capturés dans une seule échelle, limitant ainsi l'impact de l'optimisation.
 
-\subsection{Influence des paramètres intrinsèques}
+\subsubsection{Influence des paramètres intrinsèques}
 
-Pour l'optimisation des paramètres intrinsèques, Frangi est le filtre montrant le plus de variations de performances avec un MCC variant de $0.30$ entre le pire jeu de paramètres et le meilleur. 
+Nous proposons de décrire l'influence des paramètres intrinsèques sur les performances des filtres par l'étude des variations du MCC sur l'ensemble des jeux de paramètres d'un filtre. Nous proposons aussi d'étudier visuellement la réponse théorique des filtres pour les jeux de paramètres optimaux de la table \ref{tab:optimal_parameters}.
 
-On pouvait s'y attendre, puisque les paramètres composants la mesure de tubularité de Frangi affectent une diversité de géométries plus importante  que pour les autres filtres. De plus, l'optimisation montre que des combinaisons de jeux de paramètres assez éloignées produisent des résultats assez similaires en termes de MCC. Par exemple les paramètres $\alpha=0.4,\beta=1,C=30$, $\alpha=0.6,\beta=1.0,C=30$ et $\alpha=1,\beta=0.4,C=30$ produisent des MCC moyens sur l'Ircad de $0.342$, $0.351$ et $0.351$. On obtient donc des résultats quantitatifs similaires avec des valeurs de suppression de blobs et de plateaux assez différents (Fig. \ref{fig:frangi_params}).
+La visualisation de la réponse théorique d'un filtre pour un jeu de paramètre peut se faire grâce à un ensemble de valeurs propres. Comme nous l'avons vu dans le chapitre \chapSOTAN{} le rapport entre les valeurs propres permet de définir la géométrie locale à un voxel (Sec. \chapSOTAN{} Fig. \ref{sec:mesure_tubularity}). Calculer la réponse des filtres directement en fonction de valeurs propres théoriques et non mesurées nous permet de ce fait d'obtenir une signature du rehaussement d'un filtre pour un jeu de paramètre donné.  
 
-\begin{figure}[H]
+Nous construisons cette signature dans un domaine 3D défini par les trois valeurs propres $\lambda_1,\lambda_2,\lambda_3$ sur l'intervalle $[-B,0[$. Cet interval est suffisant pour étudier le rehaussement de structures intenses sur fond sombre (i.e. valeurs propres négatives). En fonction des valeurs du triplet de valeurs propres, on peut alors associé une géométrie à une valeur de rehaussement. On peut ainsi observer la réponse des filtres en fonction d'une combinaison de trois types de géométries : les tubes, les plateaux et les blobs (Fig. \ref{fig:exemple_geometry}).
+
+\begin{figure}[!ht]
   \centering
-  \includegraphics[height=8cm]{Images/frangi_params.png}
-  \caption{Paramètres intrinsèque de Frangi. À gauche, chaque point représente un jeu de paramètre dont la couleur indique le MCC moyen associé. À droite, représentation en surface des jeux de paramètres. Les surfaces représentées correspondent, de bas en haut, à $C=0$, $C=60$ et $C=30$. On observe un plateau de performances pour un nombre important de jeux de paramètres.}
-  \label{fig:frangi_params}
-  
-\end{figure}
-On peut visualiser de quelle manière les paramètres impactent le rehaussement en simulant une grille de valeurs propres négatives (Fig. \ref{fig:exemple_geometry}). Chaque axe représente l'évolution d'une valeur propre de 0 à une borne négative $B$ avec un pas $P$. Pour chaque triplet ($\lambda_1,\lambda_2,\lambda_3$) on peut ainsi calculer le rehaussement en connaissant en amont la géométrie. Sur cette grille, la diagonale de 0 à ($B_1,B_2,B_3$) correspond aux blobs, 3 points correspondent à des structures tubulaires parfaites, le reste des points forme des structures en plateaux.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[height=8cm]{Images/eigen_meaning.png}
-  \caption{Correspondance entre géométrie et valeurs propres. Les 3 structures tubulaires parfaites sont en bleu. La diagonale rouge représente les blobs. Les plateaux sont représentés par des structures vertes. Le reste correspond à des interpolations de ces trois configurations.}
+  \includegraphics[height=8cm]{Images/eigen_meaning_2.png}
+  \caption{Correspondance entre géométrie et valeurs propres. Les valeurs propres sont représentés par un triplet de flèches en chaque point. Les 3 structures tubulaires maximales de l'intervalle sont en bleu. La diagonale rouge représente les blobs. Les plateaux sont représentés par des structures vertes foncés. Le reste correspond à des interpolations de ces trois configurations.}
   \label{fig:exemple_geometry}
 \end{figure}
 
 
-En moyenne, une variation de MCC de $0.2$ a été observée entre les paramètres par défaut proposés par Frangi et les paramètres optimisés. D'un point de vue géométrique, les paramètres par défaut ($\alpha=0.5,\beta=0.5$) correspondent à un modèle de tubularité modéré. Les paramètres optimisés correspondent à un modèle plus relâché qui accepte plus de structures planaires et sphériques (Fig. \ref{fig:exemple_geometry_frangi}). Le filtre de Frangi présente le mécanisme d'atténuation de bruit le plus paramétrable et le plus efficace.
+\subsubsection{Frangi}
+Pour l'optimisation des paramètres intrinsèques, Frangi est le filtre montrant le plus de variations de performances avec un MCC variant de $0.30$ entre le pire jeu de paramètres et le meilleur. 
+
+On pouvait s'y attendre, puisque les paramètres composants la mesure de tubularité de Frangi affectent une diversité de géométries plus importante  que pour les autres filtres. De plus, l'optimisation montre parfois que des combinaisons de jeux de paramètres assez éloignées produisent des résultats assez similaires en termes de MCC. Par exemple les paramètres $\{\alpha=0.4$ ,$\beta=1\}$, $C=30$, $\alpha=0.6$, $\beta=1.0$, $C=30$ et $\{\alpha=1,\beta=0.4,C=30\}$ produisent des MCC moyens sur l'Ircad de $0.342$, $0.351$ et $0.351$. On obtient donc des résultats quantitatifs similaires avec des valeurs de suppression de blobs et de plateaux assez différents. On peut illustrer ces plateaux de jeux de paramètres en représentant l'ensemble de l'espace des paramètres intrinsèques pour une base de donnée en fonction du MCC moyen associé, ce que nous illustrons figure \ref{fig:frangi_params}. 
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[height=8cm]{Images/frangi_params.png}
+  \caption{Valeur du MCC moyen associé aux jeux de paramètres intrinsèques de Frangi pour la base de l'Ircad. À gauche, représentation de l'ensemble des paramètres intrinsèques testé sur le jeu de données. Chaque point représente un jeu de paramètres \{alpha, beta, C\} auquel est associé une couleur représentant le MCC moyen. À droite, représentation des mêmes jeux de paramètres sous la forme de surfaces. Chaque surface est définie par l'ensemble des variations de alpha et beta pour un C donné. L'élévation des vertexes de la surface correspond au MCC moyen pour un jeu de paramètre donné. Cette représentation illustre les plateaux de performances liés au paramètres intrinsèques du filtre de Frangi.}
+  \label{fig:frangi_params}
+\end{figure}
+
+En moyenne, une variation de MCC de $0.2$ a été observée entre les paramètres par défaut proposés par Frangi et les paramètres optimisés. D'un point de vue géométrique, les paramètres par défaut ($\alpha=0.5$, $\beta=0.5$) correspondent à un modèle de tubularité modéré. Les paramètres optimisés correspondent à un modèle plus relâché qui accepte plus de structures planaires et sphériques (Fig. \ref{fig:exemple_geometry_frangi}). Le filtre de Frangi présente le mécanisme d'atténuation de bruit le plus paramétrable et le plus efficace.
 
 \begin{figure}[H]
 
@@ -1088,11 +1134,11 @@ En moyenne, une variation de MCC de $0.2$ a été observée entre les paramètre
     \includegraphics[height=5cm]{Images/Frangi_default_P.png}
     \caption{Paramètres de Frangi}
   \end{subfigure}
-  \caption{Visualisation de la réponse des filtres en fonction des paramètres optimaux obtenus pour Frangi (Tab. \ref{tab:optimal_parameters}). Les paramètres par défaut sont présentés à titre indicatif (d).}
+  \caption{Visualisation de la réponse des filtres (en couleur) en fonction des paramètres optimaux obtenus pour Frangi (Tab. \ref{tab:optimal_parameters}). Les paramètres par défaut proposé par Frangi sont présentés à titre indicatif (d). Pour Bullitt (a) et VascuSynth (c), les paramètres optimaux ont une réponse proche des paramètres par défaut. Pour l'Ircad, les paramètres optimaux favorisent la détections de structures plus arrondies.}
   \label{fig:exemple_geometry_frangi}
 \end{figure}
 
-
+\subsubsection{Jerman et Zhang}
 Les filtres de Jerman et Zhang montrent de très faibles variations de MCC autour de $0.04$ entre le moins bon et le meilleur jeu de paramètres. Ceci est probablement causé par le seuillage automatique qui compense l'effet du paramètre $\tau$, dont le rôle est de contrôler l'homogénéité de la réponse du filtre. En termes de géométrie, les filtres de Jerman et Zhang sont les filtres qui relâchent le plus les contraintes sur le modèle de tubularité avec un rehaussement fort aussi bien pour les structures tubulaires que les blob/bifurcations. La contrainte est aussi beaucoup plus relâchée sur les vaisseaux qui présenteraient des structures planaires (Fig. \ref{fig:exemple_geometry_jerman}).
 
 \begin{figure}[H]
@@ -1108,10 +1154,11 @@ Les filtres de Jerman et Zhang montrent de très faibles variations de MCC autou
     \includegraphics[height=5cm]{Images/Ircad_Jerman_BP.png}
     \caption{Ircad et VascuSynth}
   \end{subfigure}
-  \caption{Paramètres optimaux pour Bullitt, VascuSynth $\sigma=2$ et l'Ircad pour le filtre de Jerman. Le rehaussement est plus homogène et accepte des structures tubulaires de géométries plus variées qu'un filtre comme Frangi ou Sato.}
+  \caption{Visualisation de la réponse du filtre de Jerman (couleur) pour les paramètres optimaux de Bullitt, VascuSynth $\sigma=2$ et l'Ircad. Le rehaussement est plus homogène et accepte des structures tubulaires de géométries plus variées qu'un filtre comme Frangi ou Sato.}
   \label{fig:exemple_geometry_jerman}
 \end{figure}
 
+\subsubsection{Sato}
 Le filtre de Sato présente très peu de variations par jeu de paramètres, avec une variation maximale moyenne de MCC de 0.02. Les paramètres par défaut proposés par Sato, sont donc très proches des paramètres optimaux trouvés. D'un point de vue géométrique, Sato propose une mesure assez stricte par rapport à la définition de la tubularité, avec une réponse forte pour les tubes. En particulier, le paramètre $\alpha_1$ contrôle la relaxation du modèle par rapport aux blobs/bifurcations (Fig. \ref{fig:exemple_geometry_Sato}).
 
 
@@ -1130,30 +1177,17 @@ Le filtre de Sato présente très peu de variations par jeu de paramètres, avec
     \includegraphics[height=5cm]{Images/Ircad_Sato_BP.png}
     \caption{VascuSynth}
   \end{subfigure}
-  \caption{Paramètres optimaux pour Bullitt, Ircad et VascuSynth $\sigma=2$ pour le filtre de Sato. Le rehaussement est plus strict en limitant le rehaussement à des variations plus faibles de la géométrie.}
+  \caption{Visualisation de la réponse du filtre de Sato (couleur) pour les paramètres optimaux de Bullitt, l'Ircad et VascuSynth $\sigma=2$ . Le rehaussement est plus strict en limitant le rehaussement à des variations plus faibles de la géométrie.}
   \label{fig:exemple_geometry_Sato}
 \end{figure}
 
-Il convient aussi noter que dans nos expériences, la plupart des paramètres optimaux des filtres ne sont pas choisis en fonction de leur capacité à produire une réponse forte en valeur absolue, mais à différencier les structures en valeurs relatives. Il est très probable que l'ajout de cette contrainte modifie les résultats, par exemple pour le cas du manque de signal des bifurcations.
-Dans un cas réel, il est difficile de trouver le seuil optimal quand la vérité terrain n'est pas disponible. Dans un contexte avec un seuil de décision fixe, les paramètres optimaux changent très probablement, car le rehaussement en valeur absolue devient une contrainte supplémentaire. Par conséquent, il devient important d'obtenir le rehaussement en valeur absolue le plus haut de manière à franchir le seuil de décision. On pourrait probablement vérifier cette hypothèse en optimisant les paramètres afin qu'ils maximisent le PSNR.
+Il convient aussi de noter que dans nos expériences, la plupart des paramètres optimaux des filtres ne sont pas choisis en fonction de leur capacité à produire une réponse forte en valeur absolue, mais à différencier les structures en valeurs relatives. On remarque ainsi que dans notre expérience, la plupart des rehaussements ont des valeurs souvent basses. Ces faibles valeurs de rehaussement sont compensées par la sélection du seuil optimal de binarisation.
 
-En effet, on peut noter que dans notre expérience, la plupart des volumes de résultats nécessitent un ajustement de la fenêtre de représentation des niveaux de gris à la visualisation, car les valeurs absolues de rehaussement sont souvent basses.
+Pour une utilisation pratique, et donc sans vérité terrain disponible, on peut avoir recours à un seuil de décision fixe plutôt que variable. Dans ce cas, la recherche d'un rehaussement le élevé en valeur absolue devient une contrainte d'optimisation des paramètres supplémentaire. Il est donc probable que les paramètres optimaux soient différents dans ces conditions. Dans notre banc de test actuel, vérifier cette hypothèse serait possible en optimisant les paramètres des filtres par rapport au PSNR plutôt qu'au MCC calculé sur la binarisation de la réponse des filtres.
 
-\section{Bilan}
+\subsection{temps de calcul des filtres}
 
-Dans ce chapitre, nous avons analysé sept filtres de rehaussement. Cette analyse repose à la fois sur les comparaisons des performances entre les filtres et la comparaison des performances de différents jeux de paramètres. 
-
-Nous avons exposé des différences notables entre les filtres dans leur capacité à rehausser le réseau vasculaire dans son ensemble, mais aussi à rehausser des parties spécifiques du réseau, tels que les vaisseaux fins. Nous avons aussi montré que leur performance peut varier significativement en présence de bruit. De plus, nous avons exposé les différentes faiblesses des filtres par rapport à leur réponse au niveau des bords des organes.
-
-Nous avons également démontré l'importance de la paramétrisation de l'espace d'échelles des filtres qui influe de manière significative sur la capacité des filtres à capturer l'ensemble des tailles de vaisseaux présents. Pour les paramètres intrinsèques, nous avons montré qu'ils jouaient, eux aussi, un rôle dans les performances des filtres. En effet, une mauvaise paramétrisation de ces paramètres peut faire chuter les performances des filtres de manière importante. Cette chute de performance est d'autant plus marquée dans des situations réelles lorsque choisir un seuil optimal après le rehaussement est particulièrement complexe. Cependant, dans un certain nombre de cas, des performances similaires peuvent être atteintes par un ensemble de jeux de paramètres. Ce type de plateau justifie l'utilisation de paramètres "par défaut" proposés par les auteurs des méthodes.   
-
-En tant que filtre sans paramètre intrinsèque, Meijering est le plus simple des filtres à paramétrer. RORPO et OOF sont aussi simples à paramétrer puisque RORPO n'a qu'un seul paramètre intrinsèque binaire (le paramètre de dilatation) et OOF dépend seulement d'un paramètre de lissage $\sigma$. Jerman et Zhang ont, eux aussi, un seul paramètre intrinsèque à régler, $\tau$, qui contrôle à la fois la netteté des bordures des vaisseaux et l'homogénéité du contraste. Dans la plupart des cas, le $\tau$ optimal est faible de manière à obtenir une réponse homogène. 
-
-Sato et Frangi sont les filtres les plus complexes à paramétrer. Ils possèdent $2$ et $3$ paramètres intrinsèques pour lesquels la correspondance avec la réalité physique des images est difficile à déterminer. Ces paramètres influencent directement la géométrie des structures et le résultat est donc sensible au changement de paramètres. Nous avons pu observer que les paramètres optimaux pour les deux filtres étaient choisis de manière à relaxer la contrainte de tubularité et rehausser les vaisseaux aux formes plus variés. Cependant, le gain de performances n'est pas significatif par rapport aux paramètres par défaut recommandés par les auteurs.
-
-\newV{L'étude du rehaussement sur les bifurcations n'est pas concluante. Bien qu'elle montre des performances élevées et consistantes pour le Filtre de Frangi, il est difficile de tirer des conclusions pour le reste des filtres. La seule conclusion notable est que les résultats sur les bifurcations s'alignent la plupart du teps sur les résultats obtenus pour le masque du voisinage des vaisseaux.}
-
-Le temps de calcul moyen pour chaque filtre sur trois volumes de chaque jeu de données est présenté dans la table \ref{tab:Computation time benchmark}. Tous les filtres hessiens sont relativement équivalents (environ 1 minute par volume), excepté pour Zhang puisque l'étape de K-moyenne induit un surcoût calculatoire.
+Le temps de calcul moyen pour chaque filtre sur trois volumes de chaque jeu de données est présenté dans la table \ref{tab:Computation time benchmark}. Tous les filtres hessiens sont similaires (environ 1 minute par volume), excepté pour Zhang puisque l'étape de K-moyenne induit un surcoût calculatoire.
 
 \begin{table}
   \centering
@@ -1174,9 +1208,23 @@ Le temps de calcul moyen pour chaque filtre sur trois volumes de chaque jeu de d
   \end{tabular}
   \end{table}
 
-OOF et RORPO requièrent beaucoup plus de puissance de calcul puisque leur complexité n'est pas linéaire par rapport à la taille de l'image. Cependant, l'implémentation de RORPO est parallélisée pour réduire le temps de calcul. OOF peut être implémenté sur GPU comme démontré par Law \cite{Law2009_efficient_implementation}.
+OOF et RORPO requièrent beaucoup plus de puissance de calcul puisque leur complexité n'est pas linéaire par rapport à la taille de l'image. Cependant, l'implémentation de RORPO est parallélisée pour réduire le temps de calcul. OOF peut être implémenté sur GPU comme démontré par Law \cite{Law2009_efficient_implementation} afin de réduire son temps de calcul.
 
-Enfin, il est important que noter que le résultat de ces expériences dépend des jeux de données et des vérités terrains associées. Les jeux de données publics sont rares et donc précieux, même s'ils présentent des limitations. En particulier, les vérités terrains de l'Ircad n'incluent pas certains vaisseaux larges, ce qui peut influencer les métriques calculées. De plus, le diamètre des vaisseaux est souvent sur-estimé, ce qui ajoute un biais systématique (positif ou négatif en fonction des méthodes) dans les résultats quantitatifs. Le jeu de données VascuSynth étant synthétique, la géométrie des vaisseaux est plus simple que pour les vaisseaux réels, ce qui impacte le résultat des filtres. De plus, l'environnement dans lequel sont les vaisseaux est plus simple que dans la plupart des images médicales, qui contiennent d'autres structures et organes.
+\section{Bilan}
+
+Dans ce chapitre, nous avons analysé sept filtres de rehaussement. Cette analyse repose à la fois sur les comparaisons des performances entre les filtres et la comparaison des performances de différents jeux de paramètres. 
+
+Nous avons exposé des différences notables entre les filtres dans leur capacité à rehausser le réseau vasculaire dans son ensemble, mais aussi à rehausser des parties spécifiques du réseau, tels que les vaisseaux fins. Nous avons aussi montré que leur performance peut varier significativement en présence de bruit. De plus, nous avons exposé les différentes faiblesses des filtres par rapport à leur réponse au niveau des bords des organes.
+
+Nous avons également démontré l'importance de la paramétrisation de l'espace d'échelles des filtres qui influe de manière significative sur la capacité des filtres à capturer l'ensemble des tailles de vaisseaux présents. Pour les paramètres intrinsèques, nous avons montré qu'ils jouaient, eux aussi, un rôle dans les performances des filtres. En effet, une mauvaise paramétrisation de ces paramètres peut faire chuter les performances des filtres de manière importante. Cette chute de performance est d'autant plus marquée dans des situations réelles lorsque choisir un seuil optimal après le rehaussement est particulièrement complexe. Cependant, dans un certain nombre de cas, des performances similaires peuvent être atteintes par un ensemble de jeux de paramètres. Ce type de plateau justifie l'utilisation de paramètres "par défaut" proposés par les auteurs des méthodes.   
+
+En tant que filtre sans paramètre intrinsèque, Meijering est le plus simple des filtres à paramétrer. RORPO et OOF sont aussi simples à paramétrer puisque RORPO n'a qu'un seul paramètre intrinsèque binaire (le paramètre de dilatation) et OOF dépend seulement d'un paramètre de lissage $\sigma$. Jerman et Zhang ont, eux aussi, un seul paramètre intrinsèque à régler, $\tau$, qui contrôle à la fois la netteté des bordures des vaisseaux et l'homogénéité du contraste. Dans la plupart des cas, le $\tau$ optimal est faible de manière à obtenir une réponse homogène. 
+
+Sato et Frangi sont les filtres les plus complexes à paramétrer. Ils possèdent $2$ et $3$ paramètres intrinsèques pour lesquels la correspondance avec la réalité physique des images est difficile à déterminer. Ces paramètres influencent directement la géométrie des structures et le résultat est donc sensible au changement de paramètres. Nous avons pu observer que les paramètres optimaux pour les deux filtres étaient choisis de manière à relaxer la contrainte de tubularité et rehausser les vaisseaux aux formes plus variés. Cependant, le gain de performances n'est pas significatif par rapport aux paramètres par défaut recommandés par les auteurs.
+
+\newV{L'étude du rehaussement sur les bifurcations manque de profondeur. Bien qu'elle montre de manière quantitative des performances élevées et consistantes pour le filtre de Frangi, il est difficile de tirer des conclusions pour le reste des filtres. La seule conclusion notable est que les résultats sur les bifurcations s'alignent la plupart du temps sur les résultats obtenus pour le masque du voisinage des vaisseaux.}
+
+Enfin, il est important que noter que le résultat de ces expériences dépend des jeux de données et des vérités terrains associées. Les jeux de données publics sont rares et donc précieux, même s'ils présentent des limitations. En particulier, les vérités terrains de l'Ircad n'incluent pas certains vaisseaux larges, ce qui influence les métriques calculées. De plus, le diamètre des vaisseaux est souvent sur-estimé, ce qui ajoute un biais systématique (positif ou négatif en fonction des méthodes) dans les résultats quantitatifs. Le jeu de données VascuSynth étant synthétique, la géométrie des vaisseaux est plus simple que pour les vaisseaux réels, ce qui impacte le résultat des filtres. De plus, l'environnement dans lequel sont les vaisseaux est plus simple que dans la plupart des images médicales, qui contiennent d'autres structures et organes.
 
 
 

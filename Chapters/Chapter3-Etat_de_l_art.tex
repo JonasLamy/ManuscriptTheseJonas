@@ -475,10 +475,13 @@ Enfin, ces filtres sont dépendants du nombre d'orientations échantillonnées $
   Ainsi, $f_s(x,y,z)$ peut être reformulée sous forme de convolution :
   \begin{align}
     f_s(x,y,z) & = \int_{\omega} d_s(t,p,q) \vec{div}( \vec{v}(x+t,y+p, z+q) ) dtdpdq \\
-    \nonumber
+              \nonumber
                & = \int_{\omega} d_s(t,p,q) (\Delta(g*I(x+t,y+p, z+q))) dtdpdq \\
+               \nonumber
                & = \int_{\omega} d_s(-t,-p,-q) (\Delta(g*I(x+t,y+p, z+q))) dtdpdq \\
+               \nonumber
                & = I(x,y,z) * d_s * \Delta g \\
+               \nonumber
                & = I * h_s(x,y,z)
     \label{eq:oof_next2}
   \end{align}
@@ -486,8 +489,9 @@ Enfin, ces filtres sont dépendants du nombre d'orientations échantillonnées $
   L'équation \ref{eq:oof_next2} exprimée dans le domaine de Fourier donne :
   \begin{align}
     FFT( I * h_s(x,y,z) ) &= FFT(I) . FFT(h_s(u,v,w)) \\
-    \nonumber
+                          \nonumber
                           &= FFT(I) . FFT(ds(u,v,w)) . (j2 \pi)^2 ( (\frac{u}{N_x})^2 + (\frac{v}{N_y})^2 + (\frac{w}{N_z})^2 )  \\
+                          \nonumber
                           & . \exp( -( (\frac{u}{N_x})^2 + (\frac{v}{N_y})^2 + (\frac{w}{N_z})^2 ) 2(\pi\sigma)^2 )
   \end{align}
   \newV{avec $N_x$, $N_y$ et $N_z$ les dimensions de l'image le long des axes $x$, $y$ et $z$.}
@@ -526,11 +530,12 @@ En pratique, le flux entrant est minimal quand le flux sortant est maximisé, c'
 
 Soit les valeurs propres $\lambda_1$, $\lambda_2$, $\lambda_3$ tels que $|\lambda_1| \leq |\lambda_2| \leq |\lambda_3|$.  La tubularité peut s'exprimer de la manière suivante \cite{Lorenz1997_multi} :
 \begin{align}
+  \label{eq:tubularity}
   \lambda_1 \approx 0 \\
   \nonumber
   \lambda_1 \ll \lambda_2 \\
+  \nonumber
   \lambda_2 \approx \lambda_3
-  \label{eq:tubularity}
 \end{align}
 
 \newV{Dans la direction de $v_1$ qui correspond à la direction du tube, l'intensité reste relativement constante (i.e. $\lambda_1 \approx 0$). Dans le plan de la coupe transversale du tube, l'intensité décroît rapidement au fur et à mesure que l'on s'éloigne du centre du vaisseaux (i.e. $\lambda_1 \ll \lambda_2$). Enfin, la coupe transversale des vaisseaux est assimilée à une ellipse quasi circulaire (i.e. $\lambda_2 \approx \lambda_3$).}
