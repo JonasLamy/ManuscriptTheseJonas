@@ -39,6 +39,17 @@ for i in $@
 do
     echo $i
 
+    if [[ $i == "Clean" ]]; then
+    rm *.lot
+    rm *.lol
+    rm *.out
+    rm *.aux
+    rm *.lof
+    rm *.toc
+    rm *.bbl
+    exit
+    fi
+
     if [[ $i == "Chap1" ]]; then
 	s+=$sC1
     fi
