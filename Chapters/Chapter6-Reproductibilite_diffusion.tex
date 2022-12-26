@@ -8,7 +8,7 @@ Dans ce chapitre, nous discutons de la reproduction puis de la diffusion de nos 
 
 La reproduction des résultats de recherche est une part aussi importante que leur diffusion, qu'elle peut part ailleurs favoriser. Bien que la diffusion soit fermement implantée dans la communauté scientifique par la publication d'articles ou la communication à travers des conférences nationales ou internationales, l'aspect reproductibilité est plus souvent négligé. Pourtant, celle-ci est primordiale pour la recherche. Elle contribue à rendre transparente toutes les étapes d'une expérience et d'en permettre la vérification par des tiers. Elle permet en particulier la validation des résultats par des tiers, qui est la base du consensus scientifique.
 
-Il existe différentes options et concepts liés à la reproduction des résultats. La définition de la reproduction de travaux est en effet variable selon les auteurs. Nous utilisons ainsi les définitions proposées par l'ACM \footnote{\url{https://www.acm.org/publications/policies/artifact-review-and-badging-current}} (\textit{association of computing machinery}) qui présente différents degrés de reproduction. Les auteurs distinguent trois définitions : 
+Il existe différentes options et concepts liés à la reproduction des résultats. La définition de la reproduction de travaux est en effet variable selon les auteurs. Nous utilisons ainsi les définitions proposées par l'ACM \footnote{\url{https://www.acm.org/publications/policies/artifact-review-and-badging-current}} (\textit{Association of Computing Machinery}) qui présente différents degrés de reproduction. Les auteurs distinguent trois définitions : 
 
 \paragraph{La répétabilité (même équipe - même équipement)}
 
@@ -19,7 +19,7 @@ La répétabilité consiste à ce qu'une équipe de chercheurs puisse reproduire
 
 La reproductibilité consiste à ce qu'une équipe de chercheurs différente de l'équipe initiale puisse reproduire les résultats de la première équipe avec la même précision et en utilisant la même méthodologie et les mêmes conditions d'opérations. Pour les expériences calculatoires, cela veut dire qu'un chercheur indépendant peut obtenir les mêmes résultats en utilisant le code de l'auteur original.
 
-\paragraph{La réplicabilité - (équipe différente - équipement différent)}
+\paragraph{La réplicabilité (équipe différente - équipement différent)}
 
 La réplicabilité consiste à ce qu'une équipe indépendante puisse reproduire les résultats d'une autre équipe à une précision donnée avec leur propre équipement et leurs propres algorithmes. Pour des expériences calculatoires, cela veut dire qu'un groupe indépendant peut reproduire les mêmes résultats avec sa propre implémentation.
 
@@ -27,16 +27,16 @@ La réplicabilité consiste à ce qu'une équipe indépendante puisse reproduire
 
 Pour notre travail, il était évident que notre banc de test devait être reproductible. En effet, c'est la condition minimale à remplir pour qu'un autre utilisateur puisse appliquer et/ou étendre nos travaux. Un autre avantage est qu'un code reproductible sert aussi de base d'exemples pratiques dont l'utilisateur peut s'inspirer pour créer ses propres expériences.
 
-Comme présenté dans les Chapitres \chapBenchN{} et \chapAnalysisN{}, le banc de test complet a nécessité 5 éléments : les bases de données, les filtres, le banc de test, les fichiers de paramètres des expériences et enfin les scripts d'analyse des résultats selon un critère d'optimisation.
+Comme présenté dans les chapitres \chapBenchN{} et \chapAnalysisN{}, le banc de test complet a nécessité 5 éléments : les bases de données, les filtres, le banc de test, les fichiers de paramètres des expériences et enfin les scripts d'analyse des résultats selon un critère d'optimisation.
 
-De manière à ce qu'un utilisateur puisse réutiliser nos données, nous avons rendu publics les volumes des jeux de données modifiés sur un serveur du LIRIS. Cette méthode assure donc la reproductibilité au niveau des données, puisque les mêmes volumes utilisés dans nos expériences peuvent être téléchargés. Cette première solution reste cependant fragile, puisque l'aléa de l'entretien de petites plateformes peut rendre ces données indisponibles. C'est par exemple le cas pour le banc de test de Manh Lu présenté dans le Chap. 3. Nous avons donc proposé une seconde option en rendant disponible le code permettant de générer l'ensemble des masques, des zones d'intérêt et des volumes modifiés à partir des bases de données publiques. Cette seconde option est cependant réplicable et non reproductible puisqu'une partie des artefacts, notamment le bruit est appliqué de manière aléatoire. Elle pourrait devenir reproductible si nous avions conservé les graines initialisant les générateurs de variables aléatoires, ce qui n'est pas le cas.  
+De manière à ce qu'un utilisateur puisse réutiliser nos données, nous avons rendu publics les volumes des jeux de données modifiés sur un serveur du LIRIS. Cette méthode assure donc la reproductibilité au niveau des données, puisque les mêmes volumes utilisés dans nos expériences peuvent être téléchargés. Cette première solution reste cependant fragile, puisque l'aléa de l'entretien de petites plateformes peut rendre ces données indisponibles. C'est par exemple le cas pour le banc de test de Manh Luu et al. présenté dans le Chap. 3. Nous avons donc proposé une seconde option en rendant disponible le code permettant de générer l'ensemble des masques, des zones d'intérêt et des volumes modifiés à partir des bases de données publiques. Cette seconde option est cependant réplicable et non reproductible puisqu'une partie des artefacts, notamment le bruit, est appliquée de manière aléatoire. Elle pourrait devenir reproductible si nous avions conservé les graines initialisant les générateurs de variables aléatoires, ce qui n'est pas le cas.  
 
-L'ensemble du code pour les filtres, le banc de test, les outils de génération des fichiers de paramètres ainsi que les scripts d'analyses est disponible publiquement sur un dépôt de la plateforme GitHub (\url{https://github.com/JonasLamy/LiverVesselness}). Nous avons différencié les versions associées aux publications majeures de nos travaux de manière à garder une traçabilité des itérations de nos travaux et d'associer une base de code à une publication spécifique. On évite ainsi de ne conserver que la version la plus récente et de perdre la reproductibilité sur les publications intermédiaires telles que les articles de conférence.
+L'ensemble du code pour les filtres, le banc de test, les outils de génération des fichiers de paramètres ainsi que les scripts d'analyses sont disponibles publiquement sur un dépôt de la plateforme GitHub (\url{https://github.com/JonasLamy/LiverVesselness}). Nous avons différencié les versions associées aux publications majeures de nos travaux de manière à garder une traçabilité des itérations de nos travaux et d'associer une base de code à une publication spécifique. On évite ainsi de ne conserver que la version la plus récente et de perdre la reproductibilité sur les publications intermédiaires telles que les articles de conférence.
 
 Nous avons aussi rendu public les fichiers de paramètres permettant de lancer l'ensemble des calculs du banc de test. Ces fichiers sont répartis en trois catégories~: 
 
 \begin{itemize}
-\item Les fichiers de configuration du banc de test pour le calcul de métriques ;
+\item les fichiers de configuration du banc de test pour le calcul de métriques ;
 \item les fichiers de description des bases de données ;
 \item les fichiers listant les paramètres des filtres.  
 \end{itemize}
@@ -51,10 +51,10 @@ Ce système de paramétrage a été mis à l'épreuve avec succès lorsque nous 
         
     \hline
     Étape                               & Répétable  & Reproductible   & Réplicable & Automatisation totale  \\
-    Génération des jeux de paramètres   &     X      &       X         &     X      &          -           \\
-    Génération des volumes              &     X      &       X         &     *      &          X           \\
-    Calcul des métriques                &     X      &       X         &     *      &          X           \\
-    Calcul des paramètres optimaux      &     X      &       X         &     *      &          -           \\
+    Génération des jeux de paramètres   &     $\times$      &       $\times$         &     $\times$      &          -           \\
+    Génération des volumes              &     $\times$      &       $\times$         &     *      &          $\times$           \\
+    Calcul des métriques                &     $\times$      &       $\times$         &     *      &          $\times$           \\
+    Calcul des paramètres optimaux      &     $\times$      &       $\times$         &     *      &          -           \\
     \hline
     \end{tabular}
     }
@@ -68,7 +68,7 @@ La réplicabilité est difficile à obtenir sur ce genre de banc de test, relati
 
 Nous n'avons pas assuré la réplicabilité de notre banc de test. Cependant, nous avons essayé de limiter au maximum les instabilités de notre code. Par exemple, nous avons détecté puis corrigé des inconsistances dans le seuillage des volumes de sortie après filtrage. 
 
-\newV{La nature de la représentation des nombres en flottant couplé à un seuillage binaire provoquait des inconsistances dans la répartition des voxels après le seuil. Par exemple, un test d'infériorité au sens large (Eq. \ref{eq:test_1}) appliqué au seuil $0.6$ classifie incorrectement un voxel flottant pour lequel $0.6$ est approximé par $0.59999999$}.
+\newV{La nature de la représentation des nombres en virgule flottant couplée à un seuillage binaire provoquait des inconsistances dans la répartition des voxels après le seuillage. Par exemple, un test d'infériorité au sens large (Eq. \ref{eq:test_1}) appliqué au seuil $0.6$ classifie incorrectement un voxel flottant pour lequel $0.6$ est approximé par $0.59999999$}.
 
 \begin{align}
     p(x) &=
@@ -79,7 +79,7 @@ Nous n'avons pas assuré la réplicabilité de notre banc de test. Cependant, no
     \label{eq:test_1}
 \end{align}
  
-\newV{Cette erreur était accrue par le fait que notre algorithme de calcul des métriques est cumulatif seuil après seuil (Sec. \ref{sec:perf_bench}. \ref{alg:calcul_metriques}). La réécriture de ce test en incluant un epsilon permet de résoudre cette inconsistance (Eq. \ref{eq:test_2}).}
+\newV{Cette erreur était accrue par le fait que notre algorithme de calcul des métriques est cumulatif seuil après seuil (Sec. \ref{sec:perf_bench}, Akg. \ref{alg:calcul_metriques}). La réécriture de ce test en incluant un epsilon permet de résoudre cette inconsistance (Eq. \ref{eq:test_2}).}
  
  \begin{align}
     p(x) &=
@@ -90,25 +90,25 @@ Nous n'avons pas assuré la réplicabilité de notre banc de test. Cependant, no
     \label{eq:test_2}
 \end{align}
  
-\newV{avec $\epsilon = \frac{1}{ \text{Nb seuils} } 1.10^{-3}$. Dans notre banc de test, l'utilisateur choisi le nombre de seuils. La valeur de $\epsilon$ est donc définie de manière adaptative afin qu'il soit toujours inférieur au pas entre deux seuils.}
+\newV{avec $\epsilon = \frac{1}{ \text{Nb seuils} } 1.10^{-3}$. Dans notre banc de test, l'utilisateur choisit le nombre de seuils. La valeur de $\epsilon$ est donc définie de manière adaptative afin qu'il soit toujours inférieur au pas entre deux seuils.}
 
-Enfin, il est important de noter qu'il est difficile de réaliser des travaux reproductibles et réplicables de manière solitaire. En effet, tester soit même ses outils a ses limites, en particulier des erreurs peuvent passer inaperçues par effet d'accoutumance lié à la lecture d'un code familier. Il est donc indispensable que des personnes extérieures puissent proposer un retour d'expérience sur ce type de projets. C'est par exemple par l'échange de résultats avec les membres du projet R-Vessel-X que les erreurs précédentes ont été mis en lumières.
+Enfin, il est important de noter qu'il est difficile de réaliser des travaux reproductibles et réplicables de manière solitaire. En effet, tester soit même ses outils a ses limites. En particulier des erreurs peuvent passer inaperçues par effet d'accoutumance lié à la lecture d'un code familier. Il est donc indispensable que des personnes extérieures puissent proposer un retour d'expérience sur ce type de projets. C'est par exemple par l'échange de résultats avec les membres du projet R-Vessel-X que les erreurs précédentes ont été mises en lumière.
 
 \subsection{Temps}
 
-Un autre argument en faveur d'un code ouvert et reproductible est l'aspect lié au temps de calcul et aux ressources disponibles. Bien que notre banc de test n'inclut pas lui-même de statistiques sur le temps de calcul, nous avons pu mesurer ces valeurs grâce au cluster de l'IN2P3 (Institut national de physique nucléaire et de physique des particules) sur lequel nous avons lancé nos expériences pour la deuxième version de nos travaux. 
+Un autre argument en faveur d'un code ouvert et reproductible est l'aspect lié au temps de calcul et aux ressources disponibles. Bien que notre banc de test n'inclue pas lui-même de statistiques sur le temps de calcul, nous avons pu mesurer ces valeurs grâce au cluster de l'IN2P3 (Institut National de Physique Nucléaire et de Physique des Particules) sur lequel nous avons lancé nos expériences pour la deuxième version de nos travaux. 
 
 Sur un cluster, le temps de calcul se différencie entre le temps horloge (\textit{Wallclock time}) et le temps CPU (\textit{CPU time}). Dans le premier cas, le temps horloge correspond au temps passé par l'ensemble du processus. Le temps CPU ne renseigne que le temps d'utilisation du CPU et ne prend donc pas en compte les appels systèmes ou les écritures/lectures sur le disque. Sur un cluster, les temps de calcul sont estimés en unité HS06.h\footnote{\url{https://w3.hepix.org/benchmarking.html}}. La norme HS06 est une norme pour banc de test qui permet de mesurer pour une quantité d'énergie, la quantité de travail réalisé par un système. L'unité HS06.h est donc une unité d'heure définie dans le contexte de ce banc de test. Le temps CPU HS06.h est aussi exprimé de manière linéaire et non de manière parallélisée. \newV{Cela veut dire qu'un calcul parallélisé en 3 processus, équivalent à deux heures réelles de traitement, correspond à six heures de calcul HS06.h}. L'ensemble du temps de calcul nécessaire à la réalisation des résultats présentés dans le chapitre \chapAnalysisN{} est récapitulé dans la Tab. \ref{tab:consumption_in2p3}.
 
 \begin{table}
     \centering
-    \begin{tabular}{lcc}
+    \begin{tabular}{lrr}
         \hline
         Temps         & HS06.h   & Heures réelles \\
         Horloge       &  178 521 &    11 157  \\
         CPU           &  83 348  &     5 209  \\
     \end{tabular}
-    \caption{Consommation en heures de calculs des ressources de l'IN2P3 pour produire les résultats pour la dernière version de nos travaux (essais préliminaires, erreurs de lancement et banc de test compris). Pour l'IN2P3, le temps réel est estimé en divisant par 16 le temps HS06.h. Cette valeur dépend des infrastructures et nous a été donné par le support du centre de calcul.}
+    \caption{Consommation en heures de calculs des ressources de l'IN2P3 pour produire les résultats pour la dernière version de nos travaux (essais préliminaires, erreurs de lancement et banc de test compris). Pour l'IN2P3, le temps réel est estimé en divisant par 16 le temps HS06.h. Cette valeur dépend des infrastructures et nous a été donnée par le support du centre de calcul.}
     \label{tab:consumption_in2p3}
 \end{table}
 
@@ -122,7 +122,7 @@ Ces travaux sont accompagnés d'un dépôt GitHub où l'on peut retrouver l'ense
 
 \subsection{Démonstration en ligne}
 
-Le choix de découpler l'implémentation du banc de test des CLI formés par les filtres de rehaussement nous a permis de mettre en place une démonstration en ligne (Fig. \ref{fig:DemoExample}). Elle permet de tester les 7 filtres de rehaussement utilisés dans nos travaux sans aucune installation préalable. L'utilisateur peut sélectionner un filtre et régler ses paramètres intrinsèques ainsi que l'échelle de détection des vaisseaux afin d'observer le comportement et la stabilité du rehaussement. Dans cette démonstration, l'utilisateur peut choisir d'appliquer les filtres dans des zones d'intérêt particulières selon le même principe utilisé dans le banc de test. Un ensemble de volumes de test issus de l'Ircad et de VascuSynth ainsi qu'un ensemble de masques tels que le foie, le voisinage des vaisseaux et les bifurcations sont sélectionnables. De plus l'interface utilisateur permet de téléverser ses propres volumes sur lesquels il est possible d’appliquer les différents filtres. Là aussi, l'utilisateur peut choisir d'utiliser ses propres zones d'intérêt. Tous les types d'images volumiques supportés par la librairie ITK peuvent être utilisés tel que le \textit{.vol}, \textit{.nii}, \textit{.nii.gz}, \textit{.mhd}, ou \textit{.mha} avec une taille inférieure à 50 Mo.
+Le choix de découpler l'implémentation du banc de test des CLI formés par les filtres de rehaussement nous a permis de mettre en place une démonstration en ligne (Fig. \ref{fig:DemoExample}). Elle permet de tester les 7 filtres de rehaussement utilisés dans nos travaux sans aucune installation préalable. L'utilisateur peut sélectionner un filtre et régler ses paramètres intrinsèques ainsi que l'échelle de détection des vaisseaux afin d'observer le comportement et la stabilité du rehaussement. Dans cette démonstration, l'utilisateur peut choisir d'appliquer les filtres dans des zones d'intérêt particulières selon le même principe utilisé dans le banc de test. Un ensemble de volumes de test issus de l'Ircad et de VascuSynth ainsi qu'un ensemble de masques tels que le foie, le voisinage des vaisseaux et les bifurcations sont sélectionnables. De plus, l'interface utilisateur permet de téléverser ses propres volumes sur lesquels il est possible d’appliquer les différents filtres. Là aussi, l'utilisateur peut choisir d'utiliser ses propres zones d'intérêt. Tous les types d'images volumiques supportés par la librairie ITK peuvent être utilisés tel que le \textit{.vol}, \textit{.nii}, \textit{.nii.gz}, \textit{.mhd}, ou \textit{.mha} avec une taille inférieure à 50 Mo.
 
 \begin{figure}[!ht]
     \begin{subfigure}{0.45\textwidth}
@@ -136,13 +136,13 @@ Le choix de découpler l'implémentation du banc de test des CLI formés par les
         \caption{Historique}
     \end{subfigure}
 
-    \caption{Illustration de l'interface de la démonstration en ligne. (a) Interface principale permettant de choisir les paramètres d'échelles et les paramètres intrinsèques, ainsi que les masques d'images (encadrés en bleu). (b) Section d'historique des images testés par les utilisateurs anonymes.}
+    \caption{Illustration de l'interface de la démonstration en ligne. (a) Interface principale permettant de choisir les paramètres d'échelles et les paramètres intrinsèques, ainsi que les masques d'images (encadrés en bleu). (b) Section d'historique des images testées par les utilisateurs anonymes.}
     \label{fig:DemoExample}
 \end{figure}
 
 La démonstration propose un résultat sous forme de visualisation 3D du rehaussement (Fig. \ref{fig:Illustr3D}). Le visualisateur 3D utilisé pour cette démonstration est \textit{itk-vtk-viewer}~\cite{Mccormick2020_Visu3DDemo}. Il propose la visualisation du volume résultat avec une superposition de la vérité terrain (quand celle-ci est disponible). Le viewer permet aussi d'ajuster la fenêtre d'intensité et le contraste de la visualisation des filtres. Il permet également la vue de coupes 2D.
 
-La démonstration est disponible sur le site du journal IPOL (Image Processing On Line)\footnote{\url{ https://kerautret.github.io/LiverVesselnessIPOLDemo/}}. \newV{Elle compte à l'heure de l'écriture de ce manuscrit 165 utilisations.}
+La démonstration est disponible sur le site du journal IPOL (Image Processing On Line)\footnote{\url{ https://kerautret.github.io/LiverVesselnessIPOLDemo/}}. \newV{Elle compte à l'heure de l'écriture de ce manuscrit 165 utilisations (23/12/2022).}
 
 \begin{figure}[!t]
 \noindent   
@@ -169,13 +169,13 @@ La démonstration est disponible sur le site du journal IPOL (Image Processing O
 
 \subsection{Intégration aux outils Kitware}
 
-Nous avons largement utilisé les outils de Kitware Inc. pour développer notre banc de test. L'ensemble de code repose sur la librairie ITK. Nous nous sommes aussi fortement reposés sur l'outil 3DSlicer pour la visualisation interactive des volumes 3D.
+Nous avons largement utilisé les outils de Kitware Inc. pour développer notre banc de test. L'ensemble de codes repose sur la librairie ITK. Nous nous sommes aussi fortement reposés sur l'outil 3DSlicer pour la visualisation interactive des volumes 3D.
 
 Les filtres de Jerman, Zhang, OOF et Meijering, ont été implémentés en prenant exemple sur des filtres déjà fournis par ITK (Frangi, Sato) et peuvent donc être incorporés à la libraire moyennant une vérification des conventions de nommage. De même, nous avons implémenté une interface entre les CLI (\textit{Command Line Interfaces}) des filtres et 3DSlicer. L'ensemble des filtres peut ainsi être manipulé de manière interactive dans le logiciel (Fig. \ref{fig:slicer_vesselness}).
 
 \begin{figure}[H]
     \includegraphics[height=7cm]{Images/slicer_jerman.png}
-    \caption{Illustration de l'utilisation du filtre de Jerman (dont la zone des  paramètres est encadré en orange à gauche) dans 3DSlicer.}
+    \caption{Illustration de l'utilisation du filtre de Jerman (dont la zone des paramètres est encadrée en orange à gauche) dans 3DSlicer.}
     \label{fig:slicer_vesselness}
 \end{figure}
 
@@ -183,7 +183,7 @@ Les filtres de Jerman, Zhang, OOF et Meijering, ont été implémentés en prena
 
 Nous avons aussi participé à l'élaboration d'un plug-in 3DSlicer permettant de faciliter l'annotation d'images hépatiques en 3D \newV{(\url{https://github.com/R-Vessel-X/SlicerRVXLiverSegmentation})}. L'élaboration de ce plug-in a été motivée par l'absence de jeux de données incluant des vérités terrains des vaisseaux en IRM. Ce plug-in a été développé de manière à faciliter le travail de segmentation par les médecins en fluidifiant le pipeline d'annotations.
 
-Nous avons dans un premier temps mené une analyse des avantages et inconvénients des différents logiciels gratuits en termes de capacité et de modularité. Parmi les logiciels tels que MITK, ITK-Snap, etc. nous avons choisi 3DSlicer qui nous paraissait le logiciel le plus personnalisable, grâce à son système de plug-in et une api python ouverte.
+Nous avons, dans un premier temps, mené une analyse des avantages et inconvénients des différents logiciels gratuits en termes de capacité et de modularité. Parmi les logiciels tels que MITK, ITK-Snap, etc., nous avons choisi 3DSlicer qui nous paraissait le logiciel le plus personnalisable, grâce à son système de plug-in et une API python ouverte.
 
 Le plug-in est composé de 7 onglets qui permettent :
 

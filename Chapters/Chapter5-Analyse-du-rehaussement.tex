@@ -97,7 +97,7 @@ Bien que toutes ces mesures soient informatives pour un aspect particulier de la
 
 \paragraph{Dice}
 
-Le score de Dice \ref{Dice1945_Dice}, aussi connu sous le nom de F1-score est une mesure de recouvrement entre le volume binaire de la vérité terrain et le volume binaire prédit. Il s'exprime comme l'intersection sur l'union de la vérité terrain et du volume binaire prédit.
+Le score de Dice \cite{Dice1945_Dice}, aussi connu sous le nom de F1-score est une mesure de recouvrement entre le volume binaire de la vérité terrain et le volume binaire prédit. Il s'exprime comme l'intersection sur l'union de la vérité terrain et du volume binaire prédit.
 
 \begin{equation}
   \textrm{Dice} = \frac{2 VP}{FP + FN + 2 VP} \\ 
@@ -1132,9 +1132,7 @@ RORPO obtient la première place dans les deux jeux de données réels sur le ma
 \subsection{Influence des paramètres}
 
 Nous avons voulu aller plus loin dans l'analyse des filtres en détaillant l'influence de leurs paramètres. Nous discutons d'abord des paramètres d'échelles puis des paramètres intrinsèques. Pour ces derniers, nous nous sommes intéressés à la variation du MCC pour l'ensemble des jeux de paramètres testés ainsi qu'à la visualisation des types de structures rehaussés pour les paramètres optimaux de chaque filtre. L'ensemble des paramètres optimaux obtenus lors de nos expériences sont résumés dans la table \ref{tab:optimal_parameters}.
-
 \begin{table}[!ht]
- 
   \begin{center}
   \caption{Paramètres optimaux des 7 filtres dans les 3 jeux de données.}
       \begin{tabular}{llrrrrr}
@@ -1158,8 +1156,6 @@ Nous avons voulu aller plus loin dans l'analyse des filtres en détaillant l'inf
   \label{tab:optimal_parameters}
   \end{center}
 \end{table}
-
-
 \subsubsection{Influence des paramètres d'échelles}
 
 Les choix des paramètres d'échelles sont déterminants pour l'ensemble des filtres. Lorsque la technique de rehaussement est efficace, les variations du résultat entre une échelle non optimisée et une échelle optimisée sont très importantes. Entre le moins bon et le meilleur jeu de paramètres (étape 1 de l'optimisation), des variations de MCC entre $0.23$ et $0.30$ ont été observées pour les filtres hessiens. Pour RORPO, dont le paramétrage repose exclusivement sur la taille des éléments structurants, une variation moyenne de $0.18$ du MCC a été observée. OOF présente le delta le plus faible, avec des variations de MCC moyennes de $0.07$. Une hypothèse est que la majeure partie des vaisseaux sont capturés dans une seule échelle, limitant ainsi l'impact de l'optimisation.
@@ -1197,7 +1193,6 @@ Pour Frangi, la différence de MCC entre le meilleur et le moins bon jeu de para
 \end{figure}
 
 \newV{En moyenne, une variation de MCC de $0.2$ a été observée entre les paramètres par défaut proposés par Frangi et les paramètres optimisés. D'un point de vue géométrique, les paramètres par défaut ($\alpha=0.5$, $\beta=0.5$) correspondent à un modèle de tubularité modéré qui autorise des variations planaires et sphériques des structures (Fig. \ref{fig:exemple_geometry_frangi}). Pour Bullitt dont les vaisseaux sont circulaires et fins, les paramètres optimisés correspondent à un modèle de tubularité beaucoup plus strict sans variations de géométrie (Fig. \ref{fig:exemple_geometry_frangi} (a)). Les paramètres optimaux pour vascuSynth $\sigma = 2$ sont similaires aux paramètres par défaut en relâchant encore plus la contrainte de tubularité (Fig. \ref{fig:exemple_geometry_frangi} (d)). L'Ircad est la base qui présente le plus de variations de formes de vaisseaux. Les paramètres optimaux pour l'Ircad sont ceux qui diffèrent le plus des paramètres par défaut. Ils favorisent les structures tubulaires et les structures sphériques aux valeurs propres élevées (Fig. \ref{fig:exemple_geometry_frangi} (c)).}
-
 \begin{figure}[!ht]
   \captionsetup[subfigure]{justification=centering}
   \centering
@@ -1224,10 +1219,8 @@ Pour Frangi, la différence de MCC entre le meilleur et le moins bon jeu de para
   \caption{Visualisation de la réponse théorique du filtre de Frangi pour les paramètres optimaux du banc de test (Tab. \ref{tab:optimal_parameters}). Les paramètres par défaut proposé par Frangi sont présentés à titre indicatif (a). Pour Bullitt (b) et VascuSynth (c), les paramètres optimaux ont une réponse proche des paramètres par défaut. Pour l'Ircad (d), les paramètres optimaux favorisent la détection de structures plus arrondies.}
   \label{fig:exemple_geometry_frangi}
 \end{figure}
-
 \subsubsection{Jerman et Zhang}
 Les filtres de Jerman et Zhang présentent de très faibles variations de MCC autour de $0.04$ entre le moins bon et le meilleur jeu de paramètres. Ceci est probablement causé par le seuillage automatique qui compense l'effet du paramètre $\tau$, dont le rôle est de contrôler l'homogénéité de la réponse du filtre. Les filtres de Jerman et Zhang sont caractérisés par une relaxation importante du modèle tubulaire avec un rehaussement marqué aussi bien pour les structures tubulaires que sphériques et planaires (Fig. \ref{fig:exemple_geometry_jerman}). Une faible valeur de $\tau$ comme pour l'Ircad rehausse aussi les structures dont les valeurs propres sont faibles, et notamment le bruit.
-
 \begin{figure}[!ht]
   \captionsetup[subfigure]{justification=centering}
   \centering
@@ -1250,11 +1243,8 @@ Les filtres de Jerman et Zhang présentent de très faibles variations de MCC au
   \caption{Visualisation de la réponse théorique du filtre de Jerman (couleur) pour les paramètres optimaux de Bullitt, VascuSynth $\sigma=2$ et l'Ircad. Le rehaussement est plus homogène et accepte des structures tubulaires de géométries plus variées qu'un filtre comme Frangi ou Sato.}
   \label{fig:exemple_geometry_jerman}
 \end{figure}
-
 \subsubsection{Sato}
 Le filtre de Sato présente très peu de variations par jeu de paramètres, avec une variation maximale moyenne de MCC de 0.02. Les paramètres par défaut proposés par Sato, sont donc très proches des paramètres optimaux trouvés. D'un point de vue géométrique, Sato propose une mesure assez stricte par rapport à la définition de la tubularité, avec une réponse forte pour les tubes. En particulier, le paramètre $\alpha_1$ contrôle la relaxation du modèle par rapport aux blobs/bifurcations (Fig. \ref{fig:exemple_geometry_Sato}).
-
-
 \begin{figure}[!ht]
   \captionsetup[subfigure]{justification=centering}
   \centering
@@ -1274,7 +1264,6 @@ Le filtre de Sato présente très peu de variations par jeu de paramètres, avec
   \caption{Visualisation de la réponse du filtre de Sato (couleur) pour les paramètres optimaux de Bullitt, l'Ircad et VascuSynth $\sigma=2$. Le rehaussement est plus strict en limitant le rehaussement à des variations plus faibles de la géométrie.}
   \label{fig:exemple_geometry_Sato}
 \end{figure}
-
 Il convient aussi de noter que dans nos expériences, la plupart des paramètres optimaux des filtres ne sont pas choisis en fonction de leur capacité à produire une réponse forte en valeur absolue, mais à différencier les structures en valeurs relatives. On remarque ainsi que dans notre expérience, la plupart des rehaussements ont des valeurs souvent basses. Ces faibles valeurs de rehaussement sont compensées par la sélection du seuil optimal de binarisation. \newV{Pour une utilisation pratique, et donc sans vérité terrain disponible, on peut avoir recours à un seuil de décision fixe plutôt que variable. Dans ce cas, la recherche d'un rehaussement élevé en valeur absolue devient une contrainte supplémentaire d'optimisation des paramètres. Il est donc probable que les paramètres optimaux soient différents dans ces conditions. Dans notre banc de test actuel, vérifier cette hypothèse serait possible en optimisant les paramètres des filtres par rapport au PSNR plutôt qu'au MCC calculé sur la réponse binaire des filtres.}
 
 \subsection{Temps de calcul des filtres}
