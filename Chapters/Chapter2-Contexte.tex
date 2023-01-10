@@ -18,6 +18,7 @@ Le foie est situé au niveau de l'abdomen, au-dessous des poumons. Il est adjace
     \caption[Hello world]{Positionnement du foie chez l'homme. Il se situe sous les poumons. Il est proche du cœur et adjacent à l'estomac.\protect \footnotemark}
     \label{fig:liver}
   \end{figure}
+
 La veine cave est connectée au foie par sa partie supérieure alors que la veine porte entre dans le foie par son centre via le tronc porte (Fig. \ref{fig:liver veins}). Le tronc porte se divise une première fois à l'entrée du foie pour former les veines  porte droite et gauche. Ces deux branches se subdivisent ensuite à plusieurs reprises afin d'alimenter l'ensemble des tissus du foie.
 
 Un intérêt particulier est porté à la veine porte puisque ses ramifications forment six régions du foie indépendamment approvisionnées les unes des autres. Cette cartographie, illustrée en figure \ref{fig:liver veins} est largement adoptée par les médecins sous le nom de segmentation de Couinaud. Cette segmentation est notamment utilisée lors de la planification d'opérations d'extraction de tumeurs pour définir les limites des zones à extraire. \footnotetext{Source : \url{https://www.chuv.ch/fr/transplantation/cto-home/patients-et-familles/foie}}
@@ -28,9 +29,10 @@ Un intérêt particulier est porté à la veine porte puisque ses ramifications 
     \caption{À gauche, le système vasculaire du foie et ses principaux réseaux vasculaires : veine hépatique, veine porte, artère hépatique. À droite, la segmentation de Couinaud dont chaque segment est alimenté par une branche de la veine porte.\protect \footnotemark} 
     \label{fig:liver veins}
   \end{figure}
+  \footnotetext{Système veineux : \setlength\parindent{10pt}\url{https://www.merckmanuals.com/fr-ca/accueil/troubles-du-foie-et-de-la-v\%C3\%A9sicule-biliaire/maladies-vasculaires-du-foie/pr\%C3\%A9sentation-des-maladies-vasculaires-du-foie} }
+  \footnotetext{Schéma de Couinaud : \url{https://basicmedicalkey.com/surgical-anatomy-of-the-liver/}}
+
 La hiérarchie des embranchements des systèmes veineux et artériel est relativement stable dans la population, mais des variations entre les individus peuvent survenir. Une étude, réalisée par Fang et al. \cite{Fang2012_Liver_vein_variations} effectuée sur 200 patients, montre que le schéma "classique" ne représente que 61 \percent{}des cas. Les 39 \percent{}restants se divisent en divers cas particuliers. Le réseau lymphatique est aussi présent au niveau du foie, mais son faible diamètre par rapport à la résolution TDM et IRM rend ce système invisible sur la plupart des imageries hépatiques. 
-\footnotetext{Système veineux : \setlength\parindent{10pt}\url{https://www.merckmanuals.com/fr-ca/accueil/troubles-du-foie-et-de-la-v\%C3\%A9sicule-biliaire/maladies-vasculaires-du-foie/pr\%C3\%A9sentation-des-maladies-vasculaires-du-foie} }
-\footnotetext{Schéma de Couinaud : \url{https://basicmedicalkey.com/surgical-anatomy-of-the-liver/}}
 
 \newV{Outre les systèmes vasculaire et lymphatique, le foie est entièrement composé de petits groupes de cellules nommées hépatocytes qui lui donnent un aspect homogène lorsqu'il est sain. Lorsqu'il est atteint de cirrhose, l'aspect du foie change et devient fibreux. Si la cirrhose évolue en cancer du foie (hépatocarcinome), des tumeurs visibles sous la forme de zones de densités différentes sont observables à l'imagerie. Selon la sévérité de la maladie, le foie peut changer drastiquement d'aspect (Fig. \ref{fig:unhealthy liver}) et se contracter, écrasant ainsi les systèmes vasculaires. Une partie des vaisseaux peut donc changer d'aspect ou disparaitre des images acquises. }
 \begin{figure}
@@ -39,6 +41,7 @@ La hiérarchie des embranchements des systèmes veineux et artériel est relativ
     \caption{Différents stades de maladie du foie. L'hépatite chronique (gauche) peut évoluer en cirrhose (centre) et se transformer en cancer du foie (droite)\protect \footnotemark.}
     \label{fig:unhealthy liver}
 \end{figure}
+
 La plupart des images de foie sont des images de foies malades dans la mesure où les actes médicaux ne sont pas réalisés sans suspicion de maladie.
 \footnotetext{Source : \url{https://www.addictaide.fr/alcool-la-cirrhose-du-foie-est-elle-une-maladie-microbienne/}}
 \section{Contexte d'imagerie}
@@ -51,6 +54,7 @@ Les avancées technologiques dans l'imagerie médicale sont motivées par le bes
     \caption{Exemples d'acquisitions 2D. À gauche, la première image obtenue par rayons X (Roentgen, 1895). À droite, image par ultrason du foie \protect\footnotemark. La veine porte est visible en noir.}
     \label{fig:2D imaging}
 \end{figure}
+
 Ces méthodes, à l'origine limitées à la 2D, ne permettaient pas d'avoir un rendu des organes en trois dimensions. Deux techniques, communément employées aujourd'hui ont donc été développées pour acquérir des images volumiques 3D par empilement successif de coupes 2D.
 \subsection{Tomodensitométrie}
 \label{sec:contexte:images:CT}
@@ -75,6 +79,7 @@ Les artefacts liés à la tomodensitométrie sont multiples. Premièrement, la q
     \caption{Coupe d'une tomographie du foie. Les structures claires aux bords flous  correspondent aux vaisseaux hépatiques.}
     \label{fig:CT_blur}
 \end{figure}
+
 Deuxièmement, les images tomodensitométriques présentent toutes un profil bruité (Fig. \ref{fig:CT_noise}). Ce bruit provient de la source de photons qui les émet de manière aléatoire. En théorie ce phénomène suit une loi de probabilité de Poisson. Cependant, le bruit affectant les images à la fin du processus est un bruit additif blanc gaussien \cite{Lei1992_gaussianNoiseCT}. Ce bruit est défini par la densité de probabilité suivante :
 \begin{equation}
 G(x) = \frac{1}{\pi \sqrt{2\pi} } \exp\big( \frac{ (x-\mu)^2}{2\sigma^2} )    
@@ -86,6 +91,7 @@ Cette densité est paramétrée par la moyenne du bruit $\mu$ et son écart-type
     \caption{Visualisation du bruit gaussien sur une image du foie. Celui-ci produit une texture sablonneuse.}
     \label{fig:CT_noise}
 \end{figure}
+
 Enfin, ce type d'imagerie est sensible à une troisième catégorie d'artefacts liés aux objets métalliques tels que les broches. Ces objets provoquent des phénomènes de saturation sous formes de rayons concentriques observables en Fig. \ref{fig:metallic artefacts}.
 \begin{figure}
     \centering
@@ -94,6 +100,7 @@ Enfin, ce type d'imagerie est sensible à une troisième catégorie d'artefacts 
     \caption{Les broches métalliques, visibles dans la vue 3D (à gauche), provoquent des artefacts de saturation (flèches noires) et de rayonnement (flèches blanches) visibles sur les vues en coupe (à droite).}
     \label{fig:metallic artefacts}
 \end{figure}
+
 \subsection{Imagerie par résonance magnétique}
 \label{sec:contexte:images:irm}
 Les premières images du corps humain obtenues par résonance magnétique (IRM) ont été réalisées par Damadian et al. en 1977 \cite{Damadian1977_NMRI}. Les machines utilisées pour l'imagerie par résonance magnétique sont similaires en apparence à la tomodensitométrie. Le patient est aussi allongé sur une table et est positionné à l'intérieur d'un anneau. Ici, l'anneau contient des aimants qui produisent des champs magnétiques.
@@ -118,6 +125,7 @@ Les images IRM sont affectées par de nombreux artefacts. Nous présentons ici l
     \caption{Artefacts de mouvement visibles sur les bords du foie (flèches bleues). Ceux-ci forment une seconde bordure d'intensité moindre autour du foie. Les mouvements peuvent aussi faire fusionner des organes adjacents (flèches rouges).}
     \label{fig:MRI_movement}
 \end{figure}
+
 Du bruit est aussi présent dans les images IRM. Ce bruit est particulier puisqu'il s'agit d'un bruit ricien \cite{Gudbjartsson1995r_Rician_noise_MRI}. Ce bruit n'est pas additif comme le bruit gaussien, mais est dépendant du signal. Il s'exprime par la densité de probabilité suivante : 
 \begin{equation}
     f(x | \upsilon, \sigma) = \frac{x}{\sigma^2} exp ( \frac{-(x^2 + \upsilon^2)}{2\sigma^2} ) I_0 (\frac{x\upsilon}{\sigma^2})
@@ -128,15 +136,14 @@ la fonction de Bessel de première espèce d'ordre $n$ est une fonction à oscil
 \begin{equation}
 I_n(x) = \frac{1}{\pi}\int_0^{\pi} \cos(nt - x\sin t) dt
 \end{equation}
-\newV{
-Lorsque le rapport signal sur bruit (SNR) est fort, la densité de probabilité de ce type de bruit approxime une distribution gaussienne \cite{Gudbjartsson1995r_Rician_noise_MRI}. Cependant, lorsque le SNR est faible, la distribution du bruit ne suit plus une distribution normale (Fig. \ref{fig:MRI_Rice}).
-}
+\newV{Lorsque le rapport signal sur bruit (SNR) est fort, la densité de probabilité de ce type de bruit approxime une distribution gaussienne \cite{Gudbjartsson1995r_Rician_noise_MRI}. Cependant, lorsque le SNR est faible, la distribution du bruit ne suit plus une distribution normale (Fig. \ref{fig:MRI_Rice}).}
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Images/noise_CT_2.png}
     \caption{Distributions de Rice. \newV{Au fur et à mesure que la distance à l'origine $\upsilon$ augmente la distribution de Rice approxime une distribution gaussienne (à gauche). $\sigma$ contrôle l'étalement de la courbe (à droite).}}
     \label{fig:MRI_Rice}
 \end{figure}
+
 Le positionnement de l'antenne par rapport au corps du patient peut aussi entrainer des variations dans le champ magnétique qui provoquent des variations d'intensité locales dans des zones homogènes. Ainsi, des tissus de même nature peuvent présenter des profils d'intensité variés (Fig. \ref{fig:MRI_variations}). Cet artefact complexifie certaines hypothèses lors du traitement des images IRM.
 \begin{figure}
     \centering
@@ -155,6 +162,7 @@ Une autre méthode consiste à créer un masque de segmentation en annotant tous
     \caption{Annotations d'un vaisseau : ligne centrale (à gauche) vs. masque de segmentation (à droite). L'annotation de la ligne centrale est bien moins coûteuse en temps d'annotations car elle nécessite seulement de poser un nombre limité de points de contrôle. Le masque de segmentation capture quant à lui l'entièreté du vaisseau.}
     \label{fig:annotations}
 \end{figure}
+
 \newV{Face à ces difficultés administratives et techniques, une grande partie des bases des données utilisées dans les résultats de publications sont privées. Les auteurs citent en général les conditions d'acquisition et le nombre de volumes disponibles, mais ne donnent pas d'accès aux données. Certains jeux de données sont tout de même disponibles publiquement.}
 
 \newV{Dans le cadre du projet ANR, une collecte de données a été réalisée. Cependant, le processus administratif a débuté en même temps que cette thèse. Il a donc fallu se tourner vers des données publiques ne nécessitant pas de procédures d'accès. Un aspect positif de cette contrainte est que l'utilisation de données publiques a renforcé la reproductibilité et la  réutilisation de nos travaux.}
@@ -169,6 +177,7 @@ La base de donnée 3DIrcadb1 est proposée par l'Institut de recherche contre le
     \caption{À gauche, coupe du foie issue d'un volume de l'Ircad. À droite, vérité terrain des vaisseaux. La vérité terrain est conçue comme un masque binaire.}
     \label{fig:Ircad_examples}
 \end{figure}
+
 Cette base datant de 2010 est la base la plus complète pour la segmentation des vaisseaux du foie. Cependant, elle n'est pas exempte d'anomalies. 
 
 Premièrement, le nom des vérités terrain n'est pas consistant et indique sans doute que deux médecins différents ont participé à l'annotation des données. Deuxièmement, le volume du masque du foie contient des voxels parasites qui produisent de petites composantes connexes déconnectées du masque. Elles interfèrent avec les traitements sur les masques comme la sélection de la boîte englobante du foie.
@@ -192,6 +201,7 @@ Un second jeu IRM inclut 120 volumes acquis selon des méthodes différentes : 4
     \caption{\newV{Volumes de la base CHAOS en phase T1-in (gauche) et T1-out (droite). On peut observer une différence de contraste provoquée par un temps d'écho différent, i.e. le temps entre l'émission et la réception du signal.}}
     \label{fig:T1_MRI_2}
 \end{figure}
+
 Ce jeu de données est intéressant dans le sens où il propose plusieurs types de modalités IRM. Contrairement à l'Ircad, la résolution dans l'axe Z est plus élevée (Fig. \ref{fig:CHAOS_geometry}), ce qui tend à indiquer que la base a été acquise en vue de traitements coupe par coupe plutôt que volumique. En effet, la représentation 3D des vaisseaux est grandement dégradée par ce type d'acquisition.  De plus, l'objectif de cette base étant la segmentation des organes abdominaux, elle ne propose que le masque du foie comme annotation.
 \begin{figure}
     \centering
@@ -245,6 +255,7 @@ Les travaux de Sanchesa et al. \cite{Sanchez2019_annotations_deep} améliorent c
     \caption{Différence d'annotations entre reconstruction de la ligne centrale par tubeTK (jaune) et corrections d'annotations par Sanchez et al. (rouge). }
     \label{fig:Bullitt_annotation_ameliorations}
 \end{figure}
+
 Cette base de données est particulièrement bien acquise et présente très peu d'artefacts comparativement à des images IRM classiques. \newV{Les seuls artefacts notables sont un faible bruit constant sur l'ensemble de l'image et quelques coupes de contraste discontinues par rapport au reste de l'image. (Fig. \ref{fig:Bullitt_example}).}
 \begin{figure}
     \centering

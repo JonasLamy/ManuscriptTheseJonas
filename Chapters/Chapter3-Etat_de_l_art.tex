@@ -66,7 +66,7 @@ Dans un second temps, nous montrons l'intérêt des filtres de rehaussement de v
       \subsubsection{Contours actifs}
       \newV{Les contours actifs, aussi appelés modèles déformables, cherchent à segmenter un objet en déformant un contour initial fermé afin qu'il s'adapte à la forme de l'objet à segmenter.}
       \paragraph{Contours explicites}
-      La méthode développée par Kass et al. \cite{Kass1988_snakes} (aussi appelés \textit{snakes}) est l'une des méthodes de contours actifs les plus populaires. Cette méthode formule l'énergie contrôlant la propagation du contour comme la somme pondérée d'une énergie interne et d'une énergie externe que l'algorithme cherche à minimiser. L'énergie interne est liée à la modélisation de l'objet que l'on cherche à segmenter et contraint l'expansion du contour (par exemple une énergie liée à un modèle géométrique). À l'inverse, l'énergie externe (basée par exemple sur les gradients de l'image) favorise la propagation du contour. La méthode de Kass et al. a ensuite connu de nombreuses variations comme avec Wang et al. \cite{Wang2012_vessel_level_set} qui proposent un modèle minimisant trois énergies : une énergie basée sur la courbure du contour, une énergie basée sur les gradients d'intensité de l'image et une énergie basée sur la correspondance du contour à un modèle cylindrique. Zeng et al. \cite{Zeng2018_liver_hybrid_active_contour_region_growing} utilisent les contours actifs pour segmenter de gros vaisseaux, sans débordement hors des structures. La paramétrisation du contour actif est basée sur l'estimation de l'intensité des vaisseaux fins détectés par un filtre bi-gaussien.
+      La méthode développée par Kass et al. \cite{kass1988snakes} (aussi appelés \textit{snakes}) est l'une des méthodes de contours actifs les plus populaires. Cette méthode formule l'énergie contrôlant la propagation du contour comme la somme pondérée d'une énergie interne et d'une énergie externe que l'algorithme cherche à minimiser. L'énergie interne est liée à la modélisation de l'objet que l'on cherche à segmenter et contraint l'expansion du contour (par exemple une énergie liée à un modèle géométrique). À l'inverse, l'énergie externe (basée par exemple sur les gradients de l'image) favorise la propagation du contour. La méthode de Kass et al. a ensuite connu de nombreuses variations comme avec Wang et al. \cite{Wang2012_vessel_level_set} qui proposent un modèle minimisant trois énergies : une énergie basée sur la courbure du contour, une énergie basée sur les gradients d'intensité de l'image et une énergie basée sur la correspondance du contour à un modèle cylindrique. Zeng et al. \cite{Zeng2018_liver_hybrid_active_contour_region_growing} utilisent les contours actifs pour segmenter de gros vaisseaux, sans débordement hors des structures. La paramétrisation du contour actif est basée sur l'estimation de l'intensité des vaisseaux fins détectés par un filtre bi-gaussien.
 
       L'utilisation des contours actifs est particulièrement efficace sur des objets convexes. Lorsque la géométrie des structures est plus complexe ou très allongée comme pour les vaisseaux, la propagation du contour est plus difficile. \newV{La méthode est aussi moins performante lorsque l'aspect des vaisseaux est bruité et fragmenté}. De plus, l'implémentation du suivi des contours est complexe lorsque des changements de topologie ont lieu. C'est le cas, par exemple, de la séparation du contour en deux contours distincts.
       \paragraph{Contours implicites} 
@@ -120,7 +120,7 @@ Dans un second temps, nous montrons l'intérêt des filtres de rehaussement de v
 
       Le nombre des données joue un rôle crucial dans la performance des réseaux de neurones. Cependant, nous avons vu dans le chapitre \chapContextN{} les difficultés de trouver des bases de données publiques avec un nombre important de données bien annotées. 
 
-      Plusieurs méthodes permettent de contourner partiellement ce problème. La plus utilisée est l'augmentation de données \cite{Liskowski2016_data_augmentation}. Celle-ci utilise des données existantes pour appliquer des modifications spatiales ou spectrales des échantillons afin de créer artificiellement des données supplémentaires. D'autres méthodes comptent sur l'utilisation de données partielles, ou d'annotations complètes sur seulement une partie des données \cite{Tajbakhsh2020_imperfect_datasets}. Certains auteurs ont aussi exploré le transfert de style afin de générer des images d'une modalité grâce à des images d'une autre modalité. Chartsias et al. \cite{Chartsias2017_heart_adversarial_im} proposent la génération adversaire d'images IRM grâce à des images TDM et un masque d'alignement des structures. Ils montrent qu'en entraînant un réseau à la fois sur des images réelles et générées synthétiquement, on augmente les performances d'un réseau de segmentation. Huo et al. \cite{Huo2018_adversarial} explorent la génération à la fois d'une nouvelle modalité et de sa segmentation.
+      Plusieurs méthodes permettent de contourner partiellement ce problème. La plus utilisée est l'augmentation de données \cite{Liskowski2016_data_augmentation}. Celle-ci utilise des données existantes pour appliquer des modifications spatiales ou spectrales des échantillons afin de créer artificiellement des données supplémentaires. D'autres méthodes comptent sur l'utilisation de données partielles, ou d'annotations complètes sur seulement une partie des données \cite{Tajbakhsh2020_imperfect_datasets}. Certains auteurs ont aussi exploré le transfert de style afin de générer des images d'une modalité grâce à des images d'une autre modalité. Chartsias et al. \cite{chartsias2017adversarial} proposent la génération adversaire d'images IRM grâce à des images TDM et un masque d'alignement des structures. Ils montrent qu'en entraînant un réseau à la fois sur des images réelles et générées synthétiquement, on augmente les performances d'un réseau de segmentation. Huo et al. \cite{Huo2018_adversarial} explorent la génération à la fois d'une nouvelle modalité et de sa segmentation.
 
       Ces méthodes peuvent être intéressantes pour le foie dans la mesure où elles peuvent permettre à un réseau d'apprendre la segmentation des vaisseaux en IRM sans les vérités terrains associées (Fig. \ref{fig:ESSNet}).
       \begin{figure}[!ht]
@@ -225,6 +225,7 @@ Il convient de noter que pour un $\sigma$ donné, le diamètre des structures n'
   \caption{Densité de probablité d'une distribution normale exprimée en pourcentage en fonction de la moyenne $\mu$ et de l'écart type $\sigma$. $99.7$ \percent{}des valeurs sont comprises dans l'intervale $[\mu-3\sigma,\mu+3\sigma]$. Pour un vaisseau, on peut donc prendre hypothèse que la relation entre son diamètre $D$ et la gaussienne de l'espace d'échelles est $D=6\sigma$.\protect\footnotemark}
   \label{fig:normal_distribution_probability_coverage}
 \end{figure}
+
 \newV{En pratique l'espace gaussien se calcule par convolution de l'image $I$ avec un noyau gaussien $G_\sigma$ d'écart-type $\sigma$}. Il se prête particulièrement bien à la modélisation des vaisseaux. En effet, la formulation de la gaussienne correspond bien à l'effet combiné des hypothèses de vaisseaux cylindriques et des observations de la diminution d'intensité des vaisseaux au fur et à mesure que l'on s'éloigne de leur centre. Pour un vaisseau de diamètre $3\sigma$, les maxima locaux se situent le long de sa ligne centrale. La justesse de cette hypothèse varie cependant en fonction des modalités et de l'agent de contraste, le flux sanguin étant parfois laminaire et dans d'autres situations turbulent. La gaussienne se prête aussi très bien à une analyse locale de la géométrie basée sur la dérivation. Elle assure en effet les hypothèses de continuité du support de l'image et permet de combiner lissage et dérivation de l'image en une seule étape par dérivation du noyau gaussien. \newV{Les propriétés d'associativité et de commutativité de la convolution rendent possible cette opération :}
 \begin{align}
   \frac{\partial}{\partial v} \left[ I(v) \ast G(v) \right] &= \frac{\partial}{\partial v} \ast I(v) \ast G(v) \\
@@ -306,12 +307,13 @@ Une image peut-être à la fois vue comme une matrice de pixels et comme un sign
   \label{fig:phase_shift}
 \end{figure}
 La phase est indépendante de l'amplitude et n'est donc pas affectée par des changements d'intensité. Oppenhei et al. \cite{Oppenheim1981_phase_importance} démontrent l'importance de ces caractéristiques de l'image et montrent une correspondance avec le système visuel humain. 
-\begin{figure}[h]
+\begin{figure}[!ht]
   \centering
   \includegraphics[height=5cm]{Images/PC_decomposition.png}
   \caption{Décomposition de Fourier d'un signal. En certains points (rouge) la phase de chaque composante du signal est synchronisée. Ces points correspondent aux éléments saillants des images et sont indépendants des variations d'intensité (amplitude) de l'image. Le contraste de phase correspond à la mesure de la synchronisation des phases des composantes du signal.}
   \label{fig:phase_congruency}
 \end{figure}
+
 Plusieurs constructions de filtres de rehaussement se basent sur cette propriété pour la détection des vaisseaux. Obara et al. \cite{Obara2012_phase} utilisent un tenseur de structure basé sur le contraste de phase (Fig. \ref{fig:phase_congruency}). Les valeurs propres de ce tenseur permettent ensuite d'exprimer une mesure de tubularité.
 
 Ce tenseur est exprimé comme :
@@ -397,24 +399,17 @@ Les $i^{ème}$ ligne et $j^{ème}$ colonne de $Q$ sont définies par:
     q_{r,x}^{i,j} = \int_{\delta S_r} (( v_i(x + r\widehat{n}).\widehat{\rho})\widehat{\rho}).n_j\,dA = \widehat{\rho}^{T}Q_{r,x}\widehat{\rho}  \nonumber	
 \end{equation}
 En pratique, le flux entrant est minimal quand le flux sortant est maximisé, c'est-à-dire lorsque la sphère est positionnée au centre d'un vaisseaux. Dans ce cas, l'orientation optimale de projection correspond à la direction de la ligne centrale du vaisseau. Les valeurs propres de la matrice résultante peuvent être exploitées comme celles de la matrice hessienne. Law et al. \cite{Law2008_OOF} définissent d'ailleurs une relation d'équivalence entre $Q$ et la matrice hessienne.
-
-%\begin{figure}
-%\caption{Représentation du flux orienté. Les vecteurs $v_n$ à la surface de la sphère sont le résultat du produit scalaire entre le vecteur gradient et la normale à la sphère à la position $s$. À gauche, la direction de $\rho$ maximise la somme de la projection des gradients $v_n$, symbolisée par sa norme. À droite, une direction de projection quelconque  }
-%\label{}
-%\end{figure}
-
 \subsubsection{Mesures de tubularité}
 \label{sec:mesure_tubularity}
-
 \newV{Basées sur les espaces d'échelles et les descripteurs matriciels vu précédement, plusieurs mesures de tubularité ont été proposées dans la littérature. Nous n'évoquerons ici que le cas de la hessienne, puisque nous avons vu précédemment que la matrice de flux orienté $Q$ lui était équivalente. Les mesures de tubularité reposent sur une représentation condensée de ces matrices : les vecteurs propres et les valeurs propres.}
 \newV{La matrice hessienne telle que nous l'avons formulée précédement est exprimée par rapport aux axes $x$, $y$ et $z$ de l'image. Les vecteurs propres forment une base vectorielle orthogonale différente de la base utilisée dans la matrice hessienne. Les vecteurs propres sont ainsi orientés dans les directions principales des variations de courbure d'intensité du voisinage d'un voxel. Les valeurs propres sont des facteurs d'homothétie des vecteurs propres et correspondent à la force de la variation de courbure des intensités dans le sens du vecteur propre associé (Fig. \ref{fig:ev}).}
-
 \begin{figure}
 \centering
   \includegraphics[width=0.6\textwidth]{Images/eigen_values.png}
 \caption{À gauche, vecteurs de variation des intensités exprimés en fonction de la base de l'image. À droite, même représentation sous la forme de vecteurs propres et de valeurs propres. La représentation avec les vecteurs propres simplifie la description du voisinage sans perte d'information.}
 \label{fig:ev}
 \end{figure}
+
 \newV{Lorsqu'ils sont calculés sur un voxel appartenant au centre d'une structure tubulaire les vecteurs propres prennnent un alignement spécifique. Le vecteur $v_1$ associé à la valeur propre $\lambda_1$ est orienté dans la direction principale du tube (Fig. \ref{fig:structures_hessienne}). Pour des vaisseaux, cette direction correspond à la direction de circulation du sang. Les deux autres vecteurs propres $v_2$  et $v_3$ sont orthogonaux à $v_1$ et forment les axes majeurs et mineurs de l'ellipse qui compose la coupe transversale de la structure tubulaire. De ce fait, le degré de tubularité d'un objet peut-être directement exprimé grâce aux valeurs propres $\lambda_1$, $\lambda_2$, $\lambda_3$ associées aux vecteurs propres $v_1$, $v_2$, $v_3$.}
 
 Soit les valeurs propres $\lambda_1$, $\lambda_2$, $\lambda_3$ tels que $|\lambda_1| \leq |\lambda_2| \leq |\lambda_3|$.  La tubularité peut s'exprimer de la manière suivante \cite{Lorenz1997_multi} :
@@ -428,7 +423,6 @@ Soit les valeurs propres $\lambda_1$, $\lambda_2$, $\lambda_3$ tels que $|\lambd
 \end{align}
 
 \newV{Dans la direction de $v_1$ qui correspond à la direction du tube, l'intensité reste relativement constante (i.e. $\lambda_1 \approx 0$). Dans le plan de la coupe transversale du tube, l'intensité décroît rapidement au fur et à mesure que l'on s'éloigne du centre du vaisseaux (i.e. $\lambda_1 \ll \lambda_2$). Enfin, la coupe transversale des vaisseaux est assimilée à une ellipse quasi circulaire (i.e. $\lambda_2 \approx \lambda_3$).}
-
 \begin{figure}[!ht]
   \centering
   \includegraphics[height=8cm]{Images/table_structures.png}
@@ -568,7 +562,7 @@ La dilatation d'un ensemble $A$ par l'élément structurant $B_p$ s'exprime par 
 A \oplus B_p = \bigcup_{p \in A}B_{p} \
 \end{equation}
 La dilatation de A par $B_p$ est l'ensemble de tous les déplacements de $B_p$ tels que $p$ soit inclus dans A. Cette opération permet de faire grossir une structure en fonction de la forme de $B_p$ (Fig. \ref{fig:morpho_dilation}).
-\begin{figure}[h]
+\begin{figure}[!ht]
   \centering
   \includegraphics[height=3cm]{Images/morpho_init.png}
   \includegraphics[height=3cm]{Images/morpho_dilate_k5.png}
@@ -577,6 +571,7 @@ La dilatation de A par $B_p$ est l'ensemble de tous les déplacements de $B_p$ t
   \caption{Exemple de dilatation par un élément structurant rectangulaire. La dilatation fait grossir les structures selon la forme de l'élément structurant.}
   \label{fig:morpho_dilation}
 \end{figure}
+
 \paragraph{Érosion}
 L'opération complémentaire à la dilatation est l'érosion (Fig. \ref{fig:morpho_erosion}) :
 \begin{equation}
@@ -600,7 +595,7 @@ La fermeture est définie comme la dilatation de $A$ par $B_p$ suivi de l'érosi
  A \bullet B_p = (A \oplus B_p) \ominus B_p
 \end{equation}  
 Cet opérateur est utilisé pour boucher les trous et les concavités dont la surface est inférieure à la surface de l'élément structurant (Fig. \ref{fig:morpho_femerture}). L'érosion qui suit la dilatation permet d'assurer que la taille reste stable.
-\begin{figure}[h]
+\begin{figure}[!ht]
   \centering
   \includegraphics[height=3cm]{Images/morpho_init.png}
   \includegraphics[height=3cm]{Images/morpho_close_k5.png}
@@ -609,12 +604,13 @@ Cet opérateur est utilisé pour boucher les trous et les concavités dont la su
   \caption{Exemple de fermeture par un élément structurant rectangulaire. La fermeture reconnecte des éléments adjacents en fonction de la géométrie de l'élément structurant.}
   \label{fig:morpho_femerture}
 \end{figure}
+
 \paragraph{Ouverture}
 L'ouverture est définie comme l'érosion de $A$ par $B_p$ suivie de la dilatation du résultat par $B_p$.
 \begin{equation}
  A \circ B_p = (A \ominus B_p) \oplus B_p
 \end{equation}
-\begin{figure}[h]
+\begin{figure}[!ht]
   \centering
   \includegraphics[height=3cm]{Images/morpho_init.png}
   \includegraphics[height=3cm]{Images/morpho_open_k5.png}
@@ -623,6 +619,7 @@ L'ouverture est définie comme l'érosion de $A$ par $B_p$ suivie de la dilatati
   \caption{Exemple d'ouverture. L'augmentation de la taille de l'élément structurant fait disparaitre les structures dont la surface ne peut inclure l'élément structurant. L'espace d'échelles formé par une ouverture se comporte comme un espace d'échelles gaussien en conservant toutes les structures de tailles supérieure à la taille de l'élément structurant. }
   \label{fig:morpho_ouverture}
 \end{figure}
+
 L'opérateur d'érosion est utilisé pour supprimer les structures et convexités de taille inférieure à la surface de l'élément structurant (Fig. \ref{fig:morpho_ouverture}). La dilatation qui suit l'érosion permet d'assurer que la taille des éléments reste stable.
 \newV{En utilisant l'ouverture, on peut définir un espace d'échelles qui se comporte comme un espace d'échelles gaussien. C'est-à-dire que plus la taille de l'élément structurant augmente et plus on élimine des structures de grande taille. Cet espace ne souffre pas d'une fusion parasite des structures adjacentes.}
 \subsubsubsection{Morphologie en niveaux de gris}
@@ -676,25 +673,28 @@ L'ouverture est définie par :
   \caption{Opérateurs morphologiques appliqués aux images en niveaux de gris. L'élément structurant utilisé est un carré de $3\times3$.}
   \label{fig:greyscale_morpho}
 \end{figure}
+
 \subsubsection{Descripteur de géométrie par éléments structurants}
 \label{sec:EA:rehaussement:morpho}
 \newV{Pour le rehaussement des vaisseaux, on utilise une composition d'ouvertures dont les éléments structurants sont des boules et des cylindres. Les cylindres permettent de couvrir les parties curvilignes des vaisseaux, tandis que les boules couvrent les jonctions.} Sazak et al. proposent un schéma de ce type en 2D \cite{Sazak2019_bowler_hat_2D} et en 3D \cite{Sazak2018_bowler_hat_3D} et comparent son efficacité relativement au rehaussement à base de tenseurs de phase et hessien. Cette méthode bien que simple à mettre en pratique, nécessite plusieurs itérations avec des rotations des éléments structurants afin de capturer toutes les orientations des structures tubulaires. Elle peut ainsi rapidement devenir coûteuse en 3D.
-\begin{figure}[h]
+\begin{figure}[!ht]
 \centering
 \includegraphics[height=8cm]{Images/bowlerHat_3D.png}
 \caption{\textit{Bowler hat transform} proposée par Sazak et al. \cite{Sazak2018_bowler_hat_3D} La combinaison d'éléments sphériques et linéaires permet de capturer les structures curvilinéaires. }
 \label{fig:sazak_bowler_hat}
 \end{figure}
+
 L'un des défauts de la méthode que nous venons d'exposer est le caractère fixe des éléments structurants qui ne permettent pas toujours de capturer les variations de formes des vaisseaux. Hejimans et al. \cite{Heijmans2005_path_opening} proposent une famille d'éléments structurants variables dont la forme est définie par une grille d'adjacences. Des améliorations successives de cet algorithme ont été proposés : Cokelaer et al. \cite{Cokelaer2012_efficient_path_opening} proposent une version robuste au bruit en autorisant des discontinuités dans l'élément structurant, Van de Gronde et al. \cite{Gronde2015_fast_path_opening} proposent une implémentation efficace de l'algorithme en $O( N log ( L ))$ avec $N$ le nombre de pixels de l'image et $L$ la taille du chemin. Enfin Merveille et al. \cite{Merveille2018_curvilinear} itèrent sur la méthode en proposant un classement de l'orientation des chemins afin de segmenter les vaisseaux dans des images 2D et 3D (Sec. \ref{sec:sub_rorpo}). 
 \subsubsubsection{RORPO}
 \label{sec:sub_rorpo}
 RORPO \cite{Merveille2018_curvilinear} est construit sur un espace d'échelles granulométrique défini par des ouvertures de chemins. Pour capturer les structures curvilinéaires, les éléments structurants sont définis comme des chemins sur une grille d'adjacence qui fournit un cadre flexible sur la géométrie des éléments à détecter (Fig. \ref{fig:rorpo_adjacency}). 
-\begin{figure}[ht]
+\begin{figure}[!ht]
 \centering
 \includegraphics[height=4cm]{Images/rorpo_path.png}
 \caption{Illustration de relations d'adjacence permettant de définir les éléments structurants de RORPO. Cette relation est définie par rapport à un graphe $G_i$ défini par un ensemble de nœuds $E_i$ et d'arêtes $E_i$. L'ensemble des arêtes est défini selon un ensemble d'orientations spécifiques $\Gamma_i$. Les éléments structurants définis pour ces orientations détectent l'ensemble des structures de même nature orientées de la même manière.}
 \label{fig:rorpo_adjacency}
 \end{figure}
+
 Les ouvertures sont calculées avec des éléments structurants définis dans 7 orientations principales de l'espace 3D de manière à capturer les objets de différentes formes tels que les blobs, les structures linéaires et les plateaux. Une étape finale consiste à classifier les différentes formes en triant les orientations des éléments structurants. En effet, pour des objets tubulaires, tous les éléments structurants sont orientés dans la même direction. RORPO est complétement lié à son espace d'échelles (Sec. \ref{sec:EA:rehaussement:echelle:granulometrie}), contrairement aux mesures de tubularité basées sur des valeurs propres qui peuvent s'adapter à plusieurs espaces (gaussien, flux, phase).
 \subsection{Multi-échelle}
   \label{sec:EA:rehaussement:echelle:multiScale}
@@ -715,6 +715,7 @@ Les ouvertures sont calculées avec des éléments structurants définis dans 7 
     \caption{Représentation de l'espace gaussien dans lequel $\sigma$ est le paramètre d'échelle. Espace d'échelles linéaire vs. espace d'échelles logarithmique : $\sigma_{inf}=1, \sigma_{sup}=10, \textrm{nombre d'échelles}=6$. Avec l'échelle logarithmique, les variations des petits vaisseaux sont mieux capturées.}
     \label{fig:scale_space}
   \end{figure}
+
 \subsection{Amélioration des filtres par diffusion}
 \label{sec:EA:rehaussement:diffusion}
 On ne peut aborder les filtres de rehaussement de vaisseaux sans aborder les cadres de diffusions. Leur objectif est d'améliorer le signal des vaisseaux en homogénéisant leur intensité et en renforçant leurs bords. Pour cela, les filtres de diffusion proposent un schéma de lissage itératif qui prend en compte la géométrie des structures à lisser.
@@ -722,12 +723,13 @@ On ne peut aborder les filtres de rehaussement de vaisseaux sans aborder les cad
 \newV{HDCS \cite{Mendrik2009_HDCS} (Hybrid diffusion with continuous switch), propose un lissage hybride qui permet de choisir un type de lissage spécifique en fonction du voisinage du voxel traité. Un lissage isotrope est appliqué dans les régions d'intensités quasi constantes et un lissage anisotrope est utilisé le long des bordures des structures. La transition entre les types de lissage en fonction des régions est assurée par une combinaison linéaire des deux filtres pondérés par une mesure de la géométrie locale.}
 
 VED \cite{Manniesing2006_VED} (Vessel enhancement diffusion) propose un lissage basé sur les méthodes de rehaussement hessien. Ce cadre permet ainsi d'homogénéiser la réponse de n'importe quel filtre de rehaussement hessien en lissant selon le sens du rehaussement.
-\begin{figure}[ht]
+\begin{figure}[!ht]
   \centering
   \includegraphics[height=8cm]{Images/VED.png}
   \caption{Comparaison de VED+Frangi (centre) contre Frangi (droite). Le rehaussement est lissé et l'homogénéité générale des vaisseaux est renforcée. Les flèches montrent les différences de comportement remarquables.}
   \label{fig:custom_fig}
 \end{figure}
+
 Ces méthodes itératives sont coûteuses en temps de calcul et nécessitent une paramétrisation supplémentaire pour contrôler la force du lissage ainsi que le nombre d'itérations nécessaire.
 \section{Bilan et orientation des travaux}
 \label{sec:EA:bilan}
