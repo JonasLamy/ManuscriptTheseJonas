@@ -45,13 +45,13 @@
 \renewcaptionname{english}{\figurename}{Fig.}
 \renewcaptionname{english}{\tablename}{Tab.}
 
-
 % > rename the title of the LOL, i.e. list of listings (default is "Listings")
 \renewcommand*{\lstlistlistingname}{List of Listings}
 
 % --------------------------
 % Front matter
 % --------------------------
+
 \pagenumbering{roman}			% roman page numbing (invisible for empty page style)
 \pagestyle{empty}				% no header or footers
 \input{AroundThesis/titlepages}		% INCLUDE: all titlepages
@@ -60,9 +60,9 @@
 \pagestyle{plain}				% display just page numbers
 \input{AroundThesis/abstract}		% INCLUDE: the abstracts (english and german)
 \cleardoublepage
-%
-%\input{AroundThesis/acknowledgement} % INCLUDE: acknowledgement
-%\cleardoublepage
+
+\input{AroundThesis/acknowledgement} % INCLUDE: acknowledgement
+\cleardoublepage
 %
 \currentpdfbookmark{\contentsname}{toc}
 \setcounter{tocdepth}{3}		% define depth of toc
@@ -119,9 +119,6 @@
 %\cleardoublepage
 %\input{AroundThesis/declaration}
 \clearpage
-
-\newpage
-\mbox{}
 
 % **************************************************
 % End of Document CONTENT
