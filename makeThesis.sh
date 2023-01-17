@@ -11,7 +11,7 @@ function usage {
     echo "Chap4 : Benchmark"
     echo "Chap5 : Analyse du rehaussement"
     echo "Chap6 : Diffusion et reproductibilité"
-    echo "Chap6 : Perspectives"
+    echo "Chap7 : Perspectives"
     echo "--- All chapters compilation ---"
     echo "All equal to : ./makeThesis Chap1 Chap2 Chap3 Chap4 Chap5 Chap6 Chap7"
 

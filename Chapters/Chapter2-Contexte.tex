@@ -7,9 +7,7 @@
 \newV{Le fil conducteur de cette thèse est délimité par deux contextes : tout d'abord un contexte clinique correspondant aux besoins des médecins en termes de segmentation des vaisseaux du foie ; ensuite un contexte technique dont les problématiques sont dictées par les méthodes d'acquisition d'images et la quantité de données exploitables.} Dans ce chapitre, nous décrivons le foie et ses particularités anatomiques. Nous présentons ensuite les modalités d'imagerie courantes pour cet organe : l'imagerie par résonance magnétique et la tomodensitométrie par rayons X. Nous présentons ensuite les avantages et les contraintes liés à ces modalités avant de présenter un tour d'horizon des principales bases de données publiques disponibles.
 \section{Contexte clinique}
 \label{sec:contexte:clinique}
-Le foie est un organe vital pour le fonctionnement du corps humain. Il est impliqué dans de nombreux systèmes vitaux : contrôle de la glycémie, élimination des toxines du sang, participation à la digestion et au système immunitaire. Le suivi des dysfonctionnements de cet organe est donc crucial pour les médecins.
-
-Le foie est situé au niveau de l'abdomen, au-dessous des poumons. Il est adjacent à l'estomac et au cœur (Fig. \ref{fig:liver}).
+Le foie est un organe vital pour le fonctionnement du corps humain. Il est impliqué dans de nombreux systèmes vitaux : contrôle de la glycémie, élimination des toxines du sang, participation à la digestion et au système immunitaire. Le suivi des dysfonctionnements de cet organe est donc crucial pour les médecins. Le foie est situé au niveau de l'abdomen, au-dessous des poumons. Il est adjacent à l'estomac et au cœur (Fig. \ref{fig:liver}).
 
 \newV{Dans un système vasculaire classique, le sang oxygéné est distribué dans l'organe par les artères. Il passe ensuite à travers un réseau de capillaires, de très fins vaisseaux, au niveau desquels s'effectuent les échanges entre les cellules de l'organe et le sang. Le sang appauvri en oxygène est ensuite renvoyé vers le cœur par le système veineux. Au niveau du foie, ce circuit d'oxygénation est formé par les vaisseaux issus de l'artère hépatique et les veines hépatiques, elles-mêmes connectées à la veine cave inférieure. La particularité du foie est qu'il est alimenté par un second système veineux qui connecte le foie à trois organes : l'estomac, le pancréas et la rate. C'est par la veine porte que ce système veineux alimente le foie en nutriments.}
 \begin{figure}[!ht]
@@ -29,12 +27,12 @@ Un intérêt particulier est porté à la veine porte puisque ses ramifications 
     \caption{À gauche, le système vasculaire du foie et ses principaux réseaux vasculaires : veine hépatique, veine porte, artère hépatique. À droite, la segmentation de Couinaud dont chaque segment est alimenté par une branche de la veine porte.\protect \footnotemark} 
     \label{fig:liver veins}
   \end{figure}
-  \footnotetext{Système veineux : \setlength\parindent{10pt}\url{https://www.merckmanuals.com/fr-ca/accueil/troubles-du-foie-et-de-la-v\%C3\%A9sicule-biliaire/maladies-vasculaires-du-foie/pr\%C3\%A9sentation-des-maladies-vasculaires-du-foie} }
+  \footnotetext{Système veineux : \url{https://www.merckmanuals.com/fr-ca/accueil/troubles-du-foie-et-de-la-v\%C3\%A9sicule-biliaire/maladies-vasculaires-du-foie/pr\%C3\%A9sentation-des-maladies-vasculaires-du-foie} }
   \footnotetext{Schéma de Couinaud : \url{https://basicmedicalkey.com/surgical-anatomy-of-the-liver/}}
 
 La hiérarchie des embranchements des systèmes veineux et artériel est relativement stable dans la population, mais des variations entre les individus peuvent survenir. Une étude, réalisée par Fang et al. \cite{Fang2012_Liver_vein_variations} effectuée sur 200 patients, montre que le schéma "classique" ne représente que 61 \percent{}des cas. Les 39 \percent{}restants se divisent en divers cas particuliers. Le réseau lymphatique est aussi présent au niveau du foie, mais son faible diamètre par rapport à la résolution TDM et IRM rend ce système invisible sur la plupart des imageries hépatiques. 
 
-\newV{Outre les systèmes vasculaire et lymphatique, le foie est entièrement composé de petits groupes de cellules nommées hépatocytes qui lui donnent un aspect homogène lorsqu'il est sain. Lorsqu'il est atteint de cirrhose, l'aspect du foie change et devient fibreux. Si la cirrhose évolue en cancer du foie (hépatocarcinome), des tumeurs visibles sous la forme de zones de densités différentes sont observables à l'imagerie. Selon la sévérité de la maladie, le foie peut changer drastiquement d'aspect (Fig. \ref{fig:unhealthy liver}) et se contracter, écrasant ainsi les systèmes vasculaires. Une partie des vaisseaux peut donc changer d'aspect ou disparaitre des images acquises. }
+\newV{Outre les systèmes vasculaires et lymphatiques, le foie est entièrement composé de petits groupes de cellules nommées hépatocytes qui lui donnent un aspect homogène lorsqu'il est sain. Lorsqu'il est atteint de cirrhose, l'aspect du foie change et devient fibreux. Si la cirrhose évolue en cancer du foie (hépatocarcinome), des tumeurs visibles sous la forme de zones de densités différentes sont observables à l'imagerie. Selon la sévérité de la maladie, le foie peut changer drastiquement d'aspect (Fig. \ref{fig:unhealthy liver}) et se contracter, écrasant ainsi les systèmes vasculaires. Une partie des vaisseaux peut donc changer d'aspect ou disparaitre des images acquises. }
 \begin{figure}
     \centering
     \includegraphics[height=6cm]{Images/Liver_cirrhosis_stages.jpg}
@@ -58,7 +56,7 @@ Les avancées technologiques dans l'imagerie médicale sont motivées par le bes
 Ces méthodes, à l'origine limitées à la 2D, ne permettaient pas d'avoir un rendu des organes en trois dimensions. Deux techniques, communément employées aujourd'hui ont donc été développées pour acquérir des images volumiques 3D par empilement successif de coupes 2D.
 \subsection{Tomodensitométrie}
 \label{sec:contexte:images:CT}
-La tomodensitométrie (TDM) est un système reposant sur l'émission de rayons X développée en 1979 par Hounsfield et al. \cite{Hounsfield1995_CT_machine}.\footnotetext{Source : https://www.rcemlearning.co.uk/reference/ultrasound-in-emergency-medicine-level-1-instruction/\#1571742949461-1d2bb2b5-ad61}
+La tomodensitométrie (TDM) est un système reposant sur l'émission de rayons X développée en 1979 par Hounsfield et al. \cite{Hounsfield1995_CT_machine}.\footnotetext{Source : \url{https://www.rcemlearning.co.uk/reference/ultrasound-in-emergency-medicine-level-1-instruction/\#1571742949461-1d2bb2b5-ad61}}
 
 Le patient est allongé sur une table autour de laquelle est positionné un anneau. La table sur laquelle repose le patient est déplacée dans l'axe des pieds à la tête (axe longitudinal). L'anneau de la machine tomodensitométrique contient un tube émetteur de rayons X ainsi qu'une rangée de détecteurs sur la partie opposée de l'anneau. L'anneau tourne autour du patient afin d'acquérir le plan XY, ou plan axial. Pour les acquisitions avec une table immobile, on parle de mode axial ou séquentiel. Lorsque la table est en mouvement pendant l'acquisition, on parle de mode spiralé ou hélicoïdal. Cette technologie est irradiante, car une image est obtenue grâce à l'absorption du rayonnement par les organes qui atténuent de fait le signal reçu par les capteurs.  Une exposition à un rayonnement important peut être à l'origine de cancer, c'est pourquoi les doses auxquelles sont exposés les patients sont très contrôlées par les radiologues.
 
@@ -76,7 +74,7 @@ Les artefacts liés à la tomodensitométrie sont multiples. Premièrement, la q
 \begin{figure}
     \centering
     \includegraphics[height=8cm]{Images/blury_vessels_arrow.png}
-    \caption{Coupe d'une tomographie du foie. Les structures claires aux bords flous  correspondent aux vaisseaux hépatiques.}
+    \caption{Coupe d'une tomographie du foie. Les structures claires aux bords flous  correspondent aux vaisseaux hépatiques (flèches).}
     \label{fig:CT_blur}
 \end{figure}
 
@@ -136,7 +134,7 @@ la fonction de Bessel de première espèce d'ordre $n$ est une fonction à oscil
 \begin{equation}
 I_n(x) = \frac{1}{\pi}\int_0^{\pi} \cos(nt - x\sin t) dt
 \end{equation}
-\newV{Lorsque le rapport signal sur bruit (SNR) est fort, la densité de probabilité de ce type de bruit approxime une distribution gaussienne \cite{Gudbjartsson1995r_Rician_noise_MRI}. Cependant, lorsque le SNR est faible, la distribution du bruit ne suit plus une distribution normale (Fig. \ref{fig:MRI_Rice}).}
+\newV{Lorsque le rapport signal sur bruit (SNR) est fort, la densité de probabilité de ce type de bruit approxime une distribution gaussienne \cite{Gudbjartsson1995r_Rician_noise_MRI}. Cependant, lorsque le SNR est faible, la distribution du bruit ne suit plus une distribution normale. Comme pour un bruit gaussien, le paramètre $\sigma$ contrôle l'étalement de la distribution du bruit (Fig. \ref{fig:MRI_Rice}).}
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Images/noise_CT_2.png}
@@ -147,7 +145,7 @@ I_n(x) = \frac{1}{\pi}\int_0^{\pi} \cos(nt - x\sin t) dt
 Le positionnement de l'antenne par rapport au corps du patient peut aussi entrainer des variations dans le champ magnétique qui provoquent des variations d'intensité locales dans des zones homogènes. Ainsi, des tissus de même nature peuvent présenter des profils d'intensité variés (Fig. \ref{fig:MRI_variations}). Cet artefact complexifie certaines hypothèses lors du traitement des images IRM.
 \begin{figure}
     \centering
-    \adjincludegraphics[height=6cm,trim={{0.08\width} {0.05\height} {0.05\width} {0.05\height}},clip]{Images/MRI_field_variations.png}
+    \adjincludegraphics[height=8cm,trim={{0.08\width} {0.05\height} {0.05\width} {0.05\height}},clip]{Images/MRI_field_variations.png}
     \caption{IRM du foie, T1-in. On observe une variation d'intensité pour des tissus de même nature. Le centre du foie est relativement plus sombre que les tissus sur ses bords alors qu'ils sont de même nature.}
     \label{fig:MRI_variations}
 \end{figure}
@@ -170,7 +168,7 @@ Une autre méthode consiste à créer un masque de segmentation en annotant tous
 \newV{Afin d'étudier les filtres de rehaussement de vaisseaux dans le contexte de l'imagerie du foie, nous avons recensé les différentes bases de données hépatiques disponibles en ligne. Afin de réaliser une analyse complète du rehaussement pour le foie, nous avons cherché des bases de données de modalité TDM et IRM.}
 \newV{Nous passons ici en revue les jeux de données publics pour l'organe du foie et discutons des avantages et limites de chacun. Nous présentons ensuite deux jeux de données alternatifs qui nous ont permis de compléter notre analyse.}
 \subsection{Ircad}
-La base de donnée 3DIrcadb1 est proposée par l'Institut de recherche contre les cancers de l'appareil digestif (Ircad) de Strasbourg. Cette base contient des images de tomodensitométrie de l'abdomen (Fig. \ref{fig:Ircad_examples}). Elle contient les images de 20 patients répartis en 50 \percent{}homme/femme et 75 \percent{}de foies lésés. Pour chaque patient une image tomographique inclut le foie et mesure entre $512 \times 512 \times 74$ et $512 \times 512 \times 260$ voxels pour une résolution des coupes axiales variant entre 0.56 mm et 0.87 mm et une épaisseur des coupes variant entre 1.00 mm et 4.00 mm. Elle fournit aussi un masque voxélique des organes de l'abdomen. Pour le foie, les masques des deux systèmes veineux porte et hépatique (incluant la veine cave) sont fournis dans des volumes différents. Un masque des tumeurs du foie est également disponible.
+La base de donnée 3DIrcadb1 \cite{Soler20103_ircad} est proposée par l'Institut de recherche contre les cancers de l'appareil digestif (Ircad) de Strasbourg. Cette base contient des images de tomodensitométrie de l'abdomen (Fig. \ref{fig:Ircad_examples}). Elle contient les images de 20 patients répartis en 50 \percent{}homme/femme et 75 \percent{}de foies lésés. Pour chaque patient une image tomographique inclut le foie et mesure entre $512 \times 512 \times 74$ et $512 \times 512 \times 260$ voxels pour une résolution des coupes axiales variant entre 0.56 mm et 0.87 mm et une épaisseur des coupes variant entre 1.00 mm et 4.00 mm. Elle fournit aussi un masque voxélique des organes de l'abdomen. Pour le foie, les masques des deux systèmes veineux porte et hépatique (incluant la veine cave) sont fournis dans des volumes différents. Un masque des tumeurs du foie est également disponible.
 \begin{figure}
     \centering
     \includegraphics[height=6cm]{Images/Ircad_examples.png}
@@ -191,7 +189,7 @@ Ce biais est difficile à quantifier dans la mesure où il faudrait compléter m
     \label{fig:missing_annotations}
 \end{figure}
 \subsection{CHAOS}
-Le jeu de donnée CHAOS est issu du challenge du même nom (CHAOS challenge - Combined (CT-MR) Healthy Abdominal Organ Segmentation). Celui-ci propose deux jeux de données avec deux modalités différentes. Un premier jeu contient 40 images TDM obtenues après injection d'agent de contraste dans la veine porte. L'acquisition est prise 70 à 80 secondes après l'injection et elle permet de mettre en valeur le système veineux porte et une partie de la veine hépatique. Ce jeu de données possède des coupes d'images de résolution $512\times 512$ voxels avec une résolution entre 0.7 mm et 0.8 mm dans le plan XY et 3 mm à 3.2 mm dans l'axe Z.
+Le jeu de donnée CHAOS est issu du challenge \cite{CHAOS2021} du même nom (CHAOS challenge - Combined (CT-MR) Healthy Abdominal Organ Segmentation). Celui-ci propose deux jeux de données avec deux modalités différentes. Un premier jeu contient 40 images TDM obtenues après injection d'agent de contraste dans la veine porte. L'acquisition est prise 70 à 80 secondes après l'injection et elle permet de mettre en valeur le système veineux porte et une partie de la veine hépatique. Ce jeu de données possède des coupes d'images de résolution $512\times 512$ voxels avec une résolution entre 0.7 mm et 0.8 mm dans le plan XY et 3 mm à 3.2 mm dans l'axe Z.
 
 Un second jeu IRM inclut 120 volumes acquis selon des méthodes différentes : 40 volumes acquis en phase T1-in (Fig. \ref{fig:T1_MRI_2}), 40 volumes  en phase T1-out (Fig. \ref{fig:T1_MRI_2}) et 40 séquences en phase T2 spiralée (Fig. \ref{fig:T2_MRI}). La pondération de contraste T2 rend les vaisseaux du foie hyper-intense et l'acquisition spiralée permet de mieux séparer les tissus tout en limitant les artefacts de mouvement.
 \begin{figure}
@@ -216,7 +214,7 @@ Ce jeu de données est intéressant dans le sens où il propose plusieurs types 
     \label{fig:CHAOS_geometry}
 \end{figure}
 \subsection{Medical Decathlon}
-Le challenge Medical Decathlon propose de mesurer les performances d'algorithmes de segmentation sur 10 tâches qui regroupent différents organes (cerveau, cœur, hippocampe, foie, pancréas, prostate, colon, rate). Le challenge regroupe un nombre significatif de volumes par tâche, de 30 volumes pour le cœur jusqu'à 750 volumes pour le cerveau. Une modalité par organe est proposée : IRM pour le cerveau, le cœur, l'hippocampe, la prostate et la tomodensitométrie pour les autres organes. Deux tâches concernent le foie, toutes deux acquises en phase veineuse porte. La première tâche concernant la segmentation du foie et des tumeurs hépatiques contient 210 volumes. La seconde tâche concernant la segmentation des vaisseaux et des tumeurs hépatiques regroupe 443 volumes.
+Le challenge Medical Decathlon \cite{antonelli2022medical} propose de mesurer les performances d'algorithmes de segmentation sur 10 tâches qui regroupent différents organes (cerveau, cœur, hippocampe, foie, pancréas, prostate, colon, rate). Le challenge regroupe un nombre significatif de volumes par tâche, de 30 volumes pour le cœur jusqu'à 750 volumes pour le cerveau. Une modalité par organe est proposée : IRM pour le cerveau, le cœur, l'hippocampe, la prostate et la tomodensitométrie pour les autres organes. Deux tâches concernent le foie, toutes deux acquises en phase veineuse porte. La première tâche concernant la segmentation du foie et des tumeurs hépatiques contient 210 volumes. La seconde tâche concernant la segmentation des vaisseaux et des tumeurs hépatiques regroupe 443 volumes.
 
 Les données hépatiques pour la première tâche ont été sélectionnées pour leur variabilité en termes de taille de labels avec de fortes variations de taille de foie, de nombre de tumeurs, etc. Ces données ont été acquises au centre de l'Ircad de Strasbourg. La résolution des images pour cette tâche est de 0.5 mm à 1.0 mm dans l'axe XY et 0.45 mm à 6.0 mm dans l'axe Z. Les annotations sont réalisées par un expert radiologue.
 
@@ -230,7 +228,7 @@ Cette base de données a l'avantage de proposer un grand nombre de volumes dans 
     \label{fig:MD_examples}
 \end{figure}
 \subsection{Données synthétiques : VascuSynth}
-Lorsque des données cliniques munies d'annotations sont difficiles à obtenir, une autre solution est de générer un volume contenant un réseau vasculaire synthétique. VascuSynth est un programme permettant de créer un réseau vasculaire en fonction d'une carte d'oxygénation et des paramètres de pression sanguine à l'entrée de celui-ci. Le réseau vasculaire est construit de manière itérative de sa racine jusqu'aux extrémités. L'utilisateur peut de plus paramétrer la complexité du réseau en spécifiant le nombre de bifurcations attendu. Il est aussi possible d'ajouter du bruit additif gaussien au volume.
+Lorsque des données cliniques munies d'annotations sont difficiles à obtenir, une autre solution est de générer un volume contenant un réseau vasculaire synthétique. VascuSynth \cite{Hamarneh2010_vascuSynth} est un programme permettant de créer un réseau vasculaire en fonction d'une carte d'oxygénation et des paramètres de pression sanguine à l'entrée de celui-ci. Le réseau vasculaire est construit de manière itérative de sa racine jusqu'aux extrémités. L'utilisateur peut de plus paramétrer la complexité du réseau en spécifiant le nombre de bifurcations attendu. Il est aussi possible d'ajouter du bruit additif gaussien au volume.
 
 La résolution est \newV{isométrique} pour l'ensemble des axes. Les vaisseaux de VascuSynth présentent des profils d'intensité quasi homogènes, avec une intensité des voxels moindre près des parois. Les volumes ont un fond nul. La vérité terrain des vaisseaux, précise au voxel près, peut donc être obtenue par simple seuillage.
 
@@ -246,7 +244,7 @@ Les bases de données synthétiques possèdent les vérités terrain les plus co
 \subsection{Bullitt}
 \newV{Les bases de données IRM du foie sont limitées en termes de vérité terrain des vaisseaux. Lorsque des annotations des vaisseaux sont disponibles, la faible résolution des volumes ne permet pas une bonne analyse géométrique sur laquelle repose les filtres de rehaussement. Nous avons tout de même souhaité nous servir d'un jeu de données d'IRM réelles sans annoter nous-même une quantité importante de vaisseaux. Nous avons donc décidé d'élargir notre recherche de jeux de données à d'autres organes.}
 
-\newV{Nous avons ainsi sélectionné le jeu d'images de cerveaux sains Bullitt, comme jeu d'IRM réelles. Un soin particulier a été apporté à l'acquisition des images pour Bullitt qui présente un contraste remarquable entre les vaisseaux et le reste de l'image. Sur une partie de ces données (une trentaine de volumes), la ligne centrale et le rayon des vaisseaux sont fournis. Une segmentation des vaisseaux peut être reconstruite nativement grâce à l'outil tubeTK ; cependant la reconstruction est faite à partir d'un tube circulaire et a tendance à sous-estimer / omettre des voxels appartenant aux vaisseaux.}
+\newV{Nous avons ainsi sélectionné le jeu d'images de cerveaux sains, Bullitt \cite{bullitt2005vessel}, comme jeu d'IRM réelles. Un soin particulier a été apporté à l'acquisition des images pour Bullitt qui présente un contraste remarquable entre les vaisseaux et le reste de l'image. Sur une partie de ces données (une trentaine de volumes), la ligne centrale et le rayon des vaisseaux sont fournis. Une segmentation des vaisseaux peut être reconstruite nativement grâce à l'outil tubeTK ; cependant la reconstruction est faite à partir d'un tube circulaire et a tendance à sous-estimer / omettre des voxels appartenant aux vaisseaux.}
 
 Les travaux de Sanchesa et al. \cite{Sanchez2019_annotations_deep} améliorent ces vérités terrains de manière significative en augmentant de 70 \percent{} le nombre de voxels appartenant à la segmentation initiale, ce qui permet l'utilisation d'annotations plus précises (Fig.  \ref{fig:Bullitt_annotation_ameliorations}).
 \begin{figure}
@@ -269,7 +267,7 @@ Il était prévu pour le projet ANR une campagne de collecte de données TDM et 
 \label{sec:contexte:bilan}
 Dans un premier temps, nous avons choisi d'utiliser deux jeux de données : la base de l'Ircad et le jeu de données de VascuSynth\_2013. La base de l'Ircad contient des artefacts variés de TDM (bruit, artefacts métalliques, etc.) et des masques de segmentation pour tous les volumes. Cela nous permet d'évaluer plus aisément les performances des algorithmes employés dans nos travaux. De plus, la résolution spatiale des volumes est l'une des meilleures parmi les bases disponibles. On peut ainsi utiliser des traitements 3D plutôt que de considérer un volume comme une séquence de coupes 2D. VascuSynth\_2013 offre une précision des vérités terrains qui n'est pas possible sur les bases réelles. C'est donc une base que nous avons jugée nécessaire pour notre travail. Celle-ci nécessite toutefois un traitement complémentaire afin de rendre les volumes proches d'une acquisition réelle. Ce traitement est décrit dans le chapitre 3 où nous avons choisi d'ajouter des artefacts IRM aux données.
 
-\newV{Afin de compléter nos jeux de données et de diversifier nos expériences, nous avons choisi la base de données IRM, Bullitt, qui présente des vaisseaux fins dont la géométrie est naturelle. La qualité d'image de ce jeu de données, qui rend trivial le filtrage des vaisseaux, n'est cependant pas représentative des images IRM acquises habituellement. Nous avons donc dégradé ces images par un processus expliqué dans le chapitre \chapBenchN{}.}
+\newV{Afin de compléter nos jeux de données et de diversifier nos expériences, nous avons choisi la base de données IRM, Bullitt, qui présente des vaisseaux fins dont la géométrie est naturelle comparée au jeu d'IRM synthétique. La qualité d'image de Bullitt, qui rend trivial le filtrage des vaisseaux, n'est cependant pas représentative des images IRM acquises habituellement. Nous avons donc dégradé ces images par un processus expliqué dans le chapitre \chapBenchN{}.}
 
 Les spécificités des trois bases de données sont récapitulées dans la table \ref{tab:db_for_exp}. Comme nous le verrons dans le chapitre 3, ces bases de données requièrent des traitements complémentaires, avec notamment l'ajout de vérités terrain supplémentaires. Ces modifications sont nécessaires afin de proposer une analyse détaillée du rehaussement de vaisseaux que nous allons présenter dans le chapitre suivant.
 \begin{table}[!ht]
@@ -286,7 +284,6 @@ Les spécificités des trois bases de données sont récapitulées dans la table
                         & IRM simulée   &       &                                    &          \\
         \hline
         Bullitt         & IRM + artefacts ajoutés & Cerveau & $128 \times 448 \times 448$ voxels  & $0.5 \times 0.5 \times 0.8$  mm \\
-        \hline
     \end{tabular}
     }
     \caption{Jeux de données retenus pour la suite de nos travaux. Ces jeux de données sont complémentaires, au niveau des modalités utilisées, de la variété des organes étudiés ou de la précision des vérités terrains.}

@@ -3,7 +3,7 @@
 Dans ce chapitre, nous discutons de la reproduction puis de la diffusion de nos travaux. En effet, un de nos objectifs principaux était la réutilisation de notre travail (filtres, banc de test, etc.) par des tiers souhaitant utiliser ou créer des filtres de rehaussement de vaisseaux. Nos travaux peuvent aussi s'appliquer au rehaussement d'autres structures présentant des propriétés similaires dans des images 3D.
 \section{Reproduction}
 \subsection{Définitions}
-La reproduction des résultats de recherche est une part aussi importante que leur diffusion, qu'elle peut part ailleurs favoriser. Bien que la diffusion soit fermement implantée dans la communauté scientifique par la publication d'articles ou la communication à travers des conférences nationales ou internationales, l'aspect reproductibilité est plus souvent négligé. Pourtant, celle-ci est primordiale pour la recherche. Elle contribue à rendre transparente toutes les étapes d'une expérience et d'en permettre la vérification par des tiers. Elle permet en particulier la validation des résultats par des tiers, qui est la base du consensus scientifique.
+La reproduction des résultats de recherche est une part aussi importante que leur diffusion, qu'elle peut part ailleurs favoriser. Bien que la diffusion soit fermement implantée dans la communauté scientifique par la publication d'articles ou la communication à travers des conférences nationales ou internationales, l'aspect reproductibilité est plus souvent négligé. Pourtant, celle-ci est primordiale pour la recherche car, elle contribue à rendre transparente toutes les étapes d'une expérience. Elle permet aussi la vérification et la validation des résultats par des tiers, qui est la base du consensus scientifique.
 
 Il existe différentes options et concepts liés à la reproduction des résultats. La définition de la reproduction de travaux est en effet variable selon les auteurs. Nous utilisons ainsi les définitions proposées par l'ACM \footnote{\url{https://www.acm.org/publications/policies/artifact-review-and-badging-current}} (\textit{Association of Computing Machinery}) qui présente différents degrés de reproduction. Les auteurs distinguent trois définitions : 
 \paragraph{La répétabilité (même équipe - même équipement)}
@@ -61,7 +61,7 @@ Nous n'avons pas assuré la réplicabilité de notre banc de test. Cependant, no
     \end{cases}
     \label{eq:test_1}
 \end{align}
-\newV{Cette erreur était accrue par le fait que notre algorithme de calcul des métriques est cumulatif seuil après seuil (Sec. \ref{sec:perf_bench}, Akg. \ref{alg:calcul_metriques}). La réécriture de ce test en incluant un epsilon permet de résoudre cette inconsistance (Eq. \ref{eq:test_2}).}
+\newV{Cette erreur était accrue par le fait que notre algorithme de calcul des métriques est cumulatif seuil après seuil (Sec. \ref{sec:perf_bench}, Alg. \ref{alg:calcul_metriques}). La réécriture de ce test en incluant un epsilon permet de résoudre cette inconsistance (Eq. \ref{eq:test_2}).}
  \begin{align}
     p(x) &=
     \begin{cases}
@@ -70,7 +70,7 @@ Nous n'avons pas assuré la réplicabilité de notre banc de test. Cependant, no
     \end{cases}
     \label{eq:test_2}
 \end{align}
-\newV{avec $\epsilon = \frac{1}{ \text{Nb seuils} } 1.10^{-3}$. Dans notre banc de test, l'utilisateur choisit le nombre de seuils. La valeur de $\epsilon$ est donc définie de manière adaptative afin qu'il soit toujours inférieur au pas entre deux seuils.}
+\newV{avec $\epsilon = \frac{1}{ \text{Nb seuils} } 1.10^{-3}$. Dans notre banc de test, l'utilisateur choisit le nombre de seuils. La valeur de $\epsilon$ est donc définie de manière adaptative afin qu'elle soit toujours inférieure au pas entre deux seuils.}
 
 Enfin, il est important de noter qu'il est difficile de réaliser des travaux reproductibles et réplicables de manière solitaire. En effet, tester soit même ses outils a ses limites. En particulier des erreurs peuvent passer inaperçues par effet d'accoutumance lié à la lecture d'un code familier. Il est donc indispensable que des personnes extérieures puissent proposer un retour d'expérience sur ce type de projets. C'est par exemple par l'échange de résultats avec les membres du projet R-Vessel-X que les erreurs précédentes ont été mises en lumière.
 \subsection{Temps}
@@ -145,7 +145,7 @@ Les filtres de Jerman, Zhang, OOF et Meijering, ont été implémentés en prena
 \end{figure}
 
 \subsection{Plug-in d'annotation}
-Nous avons aussi participé à l'élaboration d'un plug-in 3DSlicer permettant de faciliter l'annotation d'images hépatiques en 3D \newV{(\url{https://github.com/R-Vessel-X/SlicerRVXLiverSegmentation})}. L'élaboration de ce plug-in a été motivée par l'absence de jeux de données incluant des vérités terrains des vaisseaux en IRM. Ce plug-in a été développé de manière à faciliter le travail de segmentation par les médecins en fluidifiant le pipeline d'annotations.
+Nous avons aussi participé à l'élaboration d'un plug-in 3DSlicer permettant de faciliter l'annotation d'images hépatiques en 3D\footnote{\url{https://github.com/R-Vessel-X/SlicerRVXLiverSegmentation}}. L'élaboration de ce plug-in a été motivée par l'absence de jeux de données incluant des vérités terrains des vaisseaux en IRM. Ce plug-in a été développé de manière à faciliter le travail de segmentation par les médecins en fluidifiant le pipeline d'annotations.
 
 Nous avons, dans un premier temps, mené une analyse des avantages et inconvénients des différents logiciels gratuits en termes de capacité et de modularité. Parmi les logiciels tels que MITK, ITK-Snap, etc., nous avons choisi 3DSlicer qui nous paraissait le logiciel le plus personnalisable, grâce à son système de plug-in et une API python ouverte.
 

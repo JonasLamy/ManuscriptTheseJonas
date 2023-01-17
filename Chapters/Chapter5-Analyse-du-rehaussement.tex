@@ -209,7 +209,7 @@ Les paramètres intrinsèques fixes sont ceux recommandés par les auteurs des m
 
   \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\textwidth]{Images/optim_v1.png}
+    \includegraphics[width=0.70\textwidth]{Images/optim_v1.png}
     \caption{Exemple de la première version du calcul du jeu de paramètres optimal. Ici, seulement deux jeux de paramètres $P1$ et $P2$ sont appliqués à deux volumes $V1$ et $V2$. Les points correspondent aux valeurs des MCC des volumes filtrés et seuillés par le seuil $s$. Dans cette version, la moyenne s'effectue par niveaux de seuils.}
     \label{fig:optim_v1}
   \end{figure}
@@ -245,7 +245,7 @@ Les paramètres intrinsèques fixes sont ceux recommandés par les auteurs des m
 
   \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\textwidth]{Images/optim_v2.png}
+    \includegraphics[width=0.70\textwidth]{Images/optim_v2.png}
     \caption{Exemple de la seconde version du calcul du jeu de paramètres optimal. Ici, seulement deux jeux de paramètres $P1$ et $P2$ sont appliqués à deux volumes $V1$ et $V2$. Les points correspondent aux valeurs des MCC des volumes filtrés et seuillés par le seuil $s$. Dans cette version, la moyenne est calculée à partir du MCC maximal obtenu par volume.}
     \label{fig:optim_v2}
   \end{figure}
@@ -1214,7 +1214,7 @@ En tant que filtre sans paramètre intrinsèque, Meijering est le plus simple de
 
 Sato et Frangi sont les filtres les plus complexes à paramétrer. Ils possèdent $2$ et $3$ paramètres intrinsèques pour lesquels la correspondance avec la réalité physique des images est difficile à déterminer. Ces paramètres influencent directement la géométrie des structures et le résultat est donc sensible au changement de paramètres. Nous avons pu observer que les paramètres optimaux pour les deux filtres étaient choisis de manière à relaxer la contrainte de tubularité et rehausser les vaisseaux aux formes plus variés. Cependant, le gain de performances n'est pas significatif par rapport aux paramètres par défaut recommandés par les auteurs.
 
-\newV{Pour les bifurcations, nos observations quantitatives ne sont pas toujours en accord avec nos observations qualitatives. Le rehaussement sur les bifurcations est soit similaire, soit d'un ordre de grandeur plus élevé que le rehaussement sur les autres régions. Par exemple le filtre de Frangi montre des performances quantitatives élevées dans l'ensemble des jeux de données. Ces résultats contredisent en partie les observations de perte de signal observées sur le filtre de Frangi ou le filtre de Sato. On peut toutefois remarquer que les mesures obtenues sur les bifurcations s'alignent la plupart du temps sur les résultats obtenus pour le masque du voisinage des vaisseaux. Il est donc possible que les seuils de binarisation choisis pour les paramètres optimaux des filtres compensent les éventuelles pertes de signal.}
+\newV{Pour les bifurcations, nos observations quantitatives ne sont pas toujours en accord avec nos observations qualitatives. Le rehaussement sur les bifurcations est soit similaire, soit d'un ordre de grandeur plus élevé que le rehaussement sur les autres régions. Par exemple le filtre de Frangi montre des performances quantitatives élevées dans l'ensemble des jeux de données. Ces résultats contredisent en partie les observations de perte de signal observées visuellement sur le filtre de Frangi ou le filtre de Sato. On peut toutefois remarquer que les mesures obtenues sur les bifurcations s'alignent la plupart du temps sur les résultats obtenus pour le masque du voisinage des vaisseaux. Il est donc possible que les seuils de binarisation choisis pour les paramètres optimaux des filtres compensent les éventuelles pertes de signal.}
 
 Enfin, il est important que noter que le résultat de ces expériences dépend des jeux de données et des vérités terrain associées. Les jeux de données publics sont rares et donc précieux, même s'ils présentent des limitations. En particulier, les vérités terrain de l'Ircad n'incluent pas certains vaisseaux larges, ce qui influence les métriques calculées. De plus, le diamètre des vaisseaux est souvent surestimé, ce qui ajoute un biais systématique (positif ou négatif en fonction des méthodes) dans les résultats quantitatifs. Le jeu de données VascuSynth étant synthétique, la géométrie des vaisseaux est plus simple que pour les vaisseaux réels, ce qui impacte le résultat des filtres. De plus, l'environnement dans lequel sont les vaisseaux est plus simple que dans la plupart des images médicales, qui contiennent d'autres structures et organes.
 
