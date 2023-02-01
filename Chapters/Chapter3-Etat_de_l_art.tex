@@ -178,6 +178,8 @@ Les filtres de rehaussement de vaisseaux reposent sur quatre principes : une mod
 \newV{Nous avons décrit les quatre principes sur lesquels reposent les filtres de rehaussement de manière indépendante. En pratique, ils sont tributaires les uns des autres à des degrés variables. Par exemple, les descripteurs dérivatifs utilisés avec un espace gaussien peuvent être remplacés par des descripteurs de phase sans difficulté. Ils ne sont cependant pas compatibles avec un espace d'échelles de flux. La morphologie mathématique propose une approche fondamentalement différente, plus proche du \textit{pattern matching}, dans laquelle l'élément structurant est au cœur de l'espace d'échelles et de la description des structures. Dans la suite de ce chapitre, nous présentons les différents composants des filtres de rehaussement tels que présentés dans la table \ref{tab:recap_filters_components} en commençant par les filtres matriciels puis morphologiques.}
 \begin{table}[!ht]
   \centering
+  \caption{Composants des filtres de rehaussement et leurs affinités. Certains composants des méthodes matricielles sont interchangeables, mais ils ne sont pas compatibles avec les méthodes à base de morphologie mathématique.}
+\label{tab:recap_filters_components}
 \begin{tabular}{c|c|c}
     \hline
     \multicolumn{3}{c}{Méthodes matricielles} \\
@@ -199,8 +201,6 @@ Les filtres de rehaussement de vaisseaux reposent sur quatre principes : une mod
                                                         &                                      & Vote sur les orientations \\
   \hline
 \end{tabular}
-\caption{Composants des filtres de rehaussement et leurs affinités. Certains composants des méthodes matricielles sont interchangeables, mais ils ne sont pas compatibles avec les méthodes à base de morphologie mathématique.}
-\label{tab:recap_filters_components}
 \end{table}
 \subsection{Filtres basés descripteurs matriciels}
 \newV{Dans cette section, nous présentons d'abord l'espace d'échelles gaussien puis les descripteurs dérivatifs et de phase qui lui sont associés. Nous présentons ensuite l'espace d'échelles de flux et le descripteur de flux orienté. Nous passons ensuite en revue les différentes mesures de tubularité applicables aux descripteurs matriciels.} 

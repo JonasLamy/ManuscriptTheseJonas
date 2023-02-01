@@ -31,6 +31,8 @@ L'usage de ces fichiers rend la reproduction du calcul des métriques transparen
 
 Ce système de paramétrage a été mis à l'épreuve avec succès lorsque nous n'avions pas de cluster de calcul à disposition et que nous devions déployer le banc de test sur plusieurs machines différentes. Le banc de test a été utilisé sur deux types de systèmes d'exploitation différents, à savoir Linux et Mac OS.
 \begin{table}[!t]
+    \caption{Tableau récapitulant les propriétés de notre banc de test. Bien que reproductibles, certaines étapes nécessitent une modification manuelle en fonction des bases de données. Les * signifient que les résultats sont répétables dans le cas où l'on définit à l'avance les graines des générateurs aléatoires.}
+    \label{ tab:reproductibility }
     \resizebox{\textwidth}{!}{
     \begin{tabular}{lcccc}
         
@@ -43,8 +45,6 @@ Ce système de paramétrage a été mis à l'épreuve avec succès lorsque nous 
     \hline
     \end{tabular}
     }
-    \caption{Tableau récapitulant les propriétés de notre banc de test. Bien que reproductibles, certaines étapes nécessitent une modification manuelle en fonction des bases de données. Les * signifient que les résultats sont répétables dans le cas où l'on définit à l'avance les graines des générateurs aléatoires.}
-    \label{ tab:reproductibility }
 \end{table}
 
 \subsection{Stabilité des calculs} 
@@ -78,6 +78,8 @@ Un autre argument en faveur d'un code ouvert et reproductible est l'aspect lié 
 
 Sur un cluster, le temps de calcul se différencie entre le temps horloge (\textit{Wallclock time}) et le temps CPU (\textit{CPU time}). Dans le premier cas, le temps horloge correspond au temps passé par l'ensemble du processus. Le temps CPU ne renseigne que le temps d'utilisation du CPU et ne prend donc pas en compte les appels systèmes ou les écritures/lectures sur le disque. Sur un cluster, les temps de calcul sont estimés en unité HS06.h\footnote{\url{https://w3.hepix.org/benchmarking.html}}. La norme HS06 est une norme pour banc de test qui permet de mesurer pour une quantité d'énergie, la quantité de travail réalisé par un système. L'unité HS06.h est donc une unité d'heure définie dans le contexte de ce banc de test. Le temps CPU HS06.h est aussi exprimé de manière linéaire et non de manière parallélisée. \newV{Cela veut dire qu'un calcul parallélisé en 3 processus, équivalent à deux heures réelles de traitement, correspond à six heures de calcul HS06.h}. L'ensemble du temps de calcul nécessaire à la réalisation des résultats présentés dans le chapitre \chapAnalysisN{} est récapitulé dans la Tab. \ref{tab:consumption_in2p3}.
 \begin{table}
+    \caption{Consommation en heures de calculs des ressources de l'IN2P3 pour produire les résultats pour la dernière version de nos travaux (essais préliminaires, erreurs de lancement et banc de test compris). Pour l'IN2P3, le temps réel est estimé en divisant par 16 le temps HS06.h. Cette valeur dépend des infrastructures et nous a été donnée par le support du centre de calcul.}
+    \label{tab:consumption_in2p3}
     \centering
     \begin{tabular}{lrr}
         \hline
@@ -85,8 +87,6 @@ Sur un cluster, le temps de calcul se différencie entre le temps horloge (\text
         Horloge       &  178 521 &    11 157  \\
         CPU           &  83 348  &     5 209  \\
     \end{tabular}
-    \caption{Consommation en heures de calculs des ressources de l'IN2P3 pour produire les résultats pour la dernière version de nos travaux (essais préliminaires, erreurs de lancement et banc de test compris). Pour l'IN2P3, le temps réel est estimé en divisant par 16 le temps HS06.h. Cette valeur dépend des infrastructures et nous a été donnée par le support du centre de calcul.}
-    \label{tab:consumption_in2p3}
 \end{table}
 \section{Diffusion}
 \subsection{Communication scientifique}

@@ -40,6 +40,8 @@ Pour cette expérience, nous utilisons plusieurs métriques. La majorité des m�
 On peut classifier les voxels du résultat binaire selon 4 classes différentes : Les vrais positifs ($VP$) lorsqu'il y a une correspondance 1-1 entre le $i^{ème}$ voxel du résultat binaire et le $i^{ème}$ voxel de la vérité terrain, les vrais négatifs ($VN$) pour une correspondance 0-0, les faux positifs ($FP$) lors d'une correspondance 1-0 et les faux négatifs ($FN$) pour une correspondance 0-1. Ces quatre classes sont quelquefois représentées sous la forme d'une matrice de confusion (Tab. \ref{tab:confusion_matrix}).
 
 \begin{table}
+  \caption{Matrice de confusion. $VN$ : vrais négatifs, $FP$ : faux positifs, $FN$ : faux négatifs, $VP$ : vrais positifs.}
+  \label{tab:confusion_matrix}
   \centering
   \begin{tabular}{ cccc }
     \hline
@@ -49,8 +51,6 @@ On peut classifier les voxels du résultat binaire selon 4 classes différentes 
                                       & 1 & $FP$ & $VP$  \\
     \hline
   \end{tabular}
-  \caption{Matrice de confusion. $VN$ : vrais négatifs, $FP$ : faux positifs, $FN$ : faux négatifs, $VP$ : vrais positifs.}
-  \label{tab:confusion_matrix}
 \end{table}
 
 Un certain nombre de métriques rencontrées couramment dans la littérature repose sur un rapport entre ces quantités. Ces métriques sont définies entre $0$ et $1$, avec $1$ le meilleur score possible. 
@@ -209,7 +209,7 @@ Les paramètres intrinsèques fixes sont ceux recommandés par les auteurs des m
 
   \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.70\textwidth]{Images/optim_v1.png}
+    \includegraphics[width=0.80\textwidth]{Images/optim_v1.png}
     \caption{Exemple de la première version du calcul du jeu de paramètres optimal. Ici, seulement deux jeux de paramètres $P1$ et $P2$ sont appliqués à deux volumes $V1$ et $V2$. Les points correspondent aux valeurs des MCC des volumes filtrés et seuillés par le seuil $s$. Dans cette version, la moyenne s'effectue par niveaux de seuils.}
     \label{fig:optim_v1}
   \end{figure}
@@ -245,7 +245,7 @@ Les paramètres intrinsèques fixes sont ceux recommandés par les auteurs des m
 
   \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.70\textwidth]{Images/optim_v2.png}
+    \includegraphics[width=0.80\textwidth]{Images/optim_v2.png}
     \caption{Exemple de la seconde version du calcul du jeu de paramètres optimal. Ici, seulement deux jeux de paramètres $P1$ et $P2$ sont appliqués à deux volumes $V1$ et $V2$. Les points correspondent aux valeurs des MCC des volumes filtrés et seuillés par le seuil $s$. Dans cette version, la moyenne est calculée à partir du MCC maximal obtenu par volume.}
     \label{fig:optim_v2}
   \end{figure}
@@ -438,14 +438,14 @@ Dans la suite, nous commençons par analyser les résultats des filtres dans le 
           \hline
           & MCC & Dice & PSNR \\ 
           \hline
-          Témoin	& $ 0.452 \pm 0.129	$ & $ 0.468 \pm	0.126 $ & $	9.352  \pm  1.247 $ \\
+          Témoin	    & $ 0.452 \pm 0.129	$ & $ \tbf{0.468} \pm	0.126 $ & $	9.352  \pm  1.247 $ \\
           Frangi	    & $ 0.355 \pm 0.075	$ & $ 0.392 \pm	0.074 $ & $	19.899 \pm 	1.624 $ \\
           Jerman	    & $ 0.382 \pm 0.060	$ & $ 0.415 \pm	0.059 $ & $	18.926 \pm 	1.186 $ \\
           Meijering   & $ 0.232 \pm 0.036	$ & $ 0.241 \pm	0.050 $ & $	19.079 \pm 	1.392 $ \\
           OOF	        & $ 0.277 \pm 0.049	$ & $ 0.316 \pm	0.055 $ & $	19.728 \pm 	1.575 $ \\
-          RORPO	    & $ 0.475 \pm 0.073	$ & $ 0.477 \pm	0.076 $ & $	20.349 \pm 	1.687 $ \\
-          Sato	    & $ 0.340 \pm 0.056	$ & $ 0.380 \pm	0.057 $ & $	19.915 \pm 	1.633 $ \\
-          Zhang	    & $ 0.434 \pm 0.085	$ & $ 0.462 \pm	0.079 $ & $	20.274 \pm 	1.648 $ \\
+          RORPO	      & $ \tbf{0.475} \pm 0.073	$ & $ 0.477 \pm	0.076 $ & $	\tbf{20.349} \pm 	1.687 $ \\
+          Sato	      & $ 0.340 \pm 0.056	$ & $ 0.380 \pm	0.057 $ & $	19.915 \pm 	1.633 $ \\
+          Zhang	      & $ 0.434 \pm 0.085	$ & $ 0.462 \pm	0.079 $ & $	20.274 \pm 	1.648 $ \\
     
           \hline
       \end{tabular}  
@@ -586,7 +586,7 @@ Quantitativement, RORPO offre de meilleurs résultats par rapport aux autres fil
           & \multicolumn{3}{c|}{MCC} & \multicolumn{3}{c|}{Dice} & \multicolumn{3}{c}{PSNR} \\
           & $\sigma = 2$ & $\sigma = 4$ & $\sigma = 6$ & $\sigma = 2$ & $\sigma = 4$ & $\sigma = 6$ & $\sigma = 2$ & $\sigma = 4$ & $\sigma = 6$\\
          \hline
-         Baseline	  & $ 0.184 \pm 0.136 $  & $ 0.143 \pm 0.116 $ & $ 0.106 \pm	0.089 $ & $	0.162 \pm 0.134 $ & $ 0.122 \pm 0.114 $ & $	0.089 \pm  0.087 $ & $  9.411 \pm   0.231 $ & $  9.397  \pm 0.230 $ & $  9.374  \pm	0.229 $ \\
+         Témoin	    & $ 0.184 \pm 0.136 $  & $ 0.143 \pm 0.116 $ & $ 0.106 \pm	0.089 $ & $	0.162 \pm 0.134 $ & $ 0.122 \pm 0.114 $ & $	0.089 \pm  0.087 $ & $  9.411 \pm   0.231 $ & $  9.397  \pm 0.230 $ & $  9.374  \pm	0.229 $ \\
          Frangi	    & $ \tbf{0.634} \pm 0.051 $  & $ 0.577 \pm 0.070 $ & $ 0.500 \pm	0.081 $ & $	\tbf{0.621} \pm 0.049 $ & $ 0.572 \pm 0.074 $ & $	0.485 \pm  0.091 $ & $ 26.274 \pm 	2.813 $ & $\tbf{26.496}	\pm 2.872 $	& $ \tbf{26.692}	\pm 2.856 $ \\
          Jerman	    & $ 0.611 \pm 0.064 $  & $ 0.565 \pm 0.049 $ & $ 0.501 \pm	0.048 $ & $	0.603 \pm 0.065 $ & $ 0.549 \pm 0.046 $ & $	0.464 \pm  0.048 $ & $ \tbf{26.774} \pm 	1.296 $ & $	21.758	\pm 0.399 $	& $ 21.831	\pm 0.489 $ \\
          OOF	      & $ 0.627 \pm 0.061 $  & $ 0.496 \pm 0.065 $ & $ 0.449 \pm	0.069 $ & $	0.530 \pm 0.060 $ & $ 0.476 \pm 0.063 $ & $	0.419 \pm  0.067 $ & $ 26.324 \pm 	1.802 $ & $	24.594	\pm 1.329 $	& $ 22.983	\pm 1.072 $ \\
@@ -708,7 +708,7 @@ Tous les filtres hessiens et OOF ont des performances qui augmentent significati
             & \multicolumn{3}{c}{Voisinage (\maskvascular)}                  \\
             \hline
             & MCC & Dice & PSNR  \\
-            Baseline	    & $ 0.371 \pm 0.038 $ & $ 0.341 \pm 0.062 $ & $ \tbf{22.291} \pm	0.513 $ \\
+            Témoin	    & $ 0.371 \pm 0.038 $ & $ 0.341 \pm 0.062 $ & $ \tbf{22.291} \pm	0.513 $ \\
             Frangi	      & $ 0.415 \pm 0.028 $ & $ 0.506 \pm 0.026 $ & $ 21.641 \pm	0.517 $ \\
             Jerman	      & $ 0.377 \pm 0.037 $ & $ 0.466 \pm 0.029 $ & $ 21.990 \pm	0.687 $ \\
             Meijering	    & $ 0.288 \pm 0.041 $ & $ 0.412 \pm 0.045 $ & $ 22.076 \pm	0.509 $ \\ 
@@ -721,7 +721,7 @@ Tous les filtres hessiens et OOF ont des performances qui augmentent significati
             & \multicolumn{3}{c}{Moyens (\maskvesselMedium)}                         \\
             \hline    
             & MCC & Dice & PSNR  \\
-            Baseline	& $ 0.542 \pm 0.129 $ & $ 0.555 \pm 0.163 $ & $ 33.836 \pm	2.891 $ \\
+            Témoin	& $ 0.542 \pm 0.129 $ & $ 0.555 \pm 0.163 $ & $ 33.836 \pm	2.891 $ \\
             Frangi	  & $ 0.605 \pm 0.034 $ & $ 0.684 \pm 0.034 $ & $ 33.262 \pm	2.827 $ \\
             Jerman	  & $ 0.580 \pm 0.048 $ & $ 0.660 \pm 0.055 $ & $ \tbf{34.066} \pm	3.226 $ \\
             Meijering	& $ 0.402 \pm 0.054 $ & $ 0.521 \pm 0.067 $ & $ 34.034 \pm	2.820 $ \\
@@ -733,7 +733,7 @@ Tous les filtres hessiens et OOF ont des performances qui augmentent significati
             & \multicolumn{3}{c}{Petits (\maskvesselSmall)}                          \\
             \hline
             & MCC & Dice & PSNR  \\
-            Baseline	    & $ 0.358 \pm 0.038 $ & $ 0.315 \pm 0.057 $ & $ \tbf{22.771} \pm	0.591 $ \\
+            Témoin	    & $ 0.358 \pm 0.038 $ & $ 0.315 \pm 0.057 $ & $ \tbf{22.771} \pm	0.591 $ \\
             Frangi	      & $ 0.419 \pm 0.024 $ & $ 0.491 \pm 0.026 $ & $ 22.153 \pm	0.609 $ \\
             Jerman  	    & $ 0.376 \pm 0.031 $ & $ 0.445 \pm 0.030 $ & $ 22.352 \pm	0.863 $ \\
             Meijering	    & $ 0.287 \pm 0.040 $ & $ 0.382 \pm 0.044 $ & $ 22.549 \pm	0.593 $ \\
@@ -757,7 +757,7 @@ Localement, les résultats pour \maskglobal et \maskvessel sont similaires puisq
             & \multicolumn{3}{c}{Voisinage (\maskvascular)}  & \multicolumn{3}{c}{Larges (\maskvesselLarge)}                           \\
             \hline
             & MCC   & Dice & PSNR & MCC & Dice & PSNR  \\
-            Baseline	    & $ 0.392 \pm 0.145 $ & $ 0.340 \pm	0.172 $ & $	25.198 \pm	3.109 $ & $ 0.515 \pm 0.293 $ & $ 0.491 \pm 0.307 $ & $ 30.738 \pm 1.278 $ \\
+            Témoin	    & $ 0.392 \pm 0.145 $ & $ 0.340 \pm	0.172 $ & $	25.198 \pm	3.109 $ & $ 0.515 \pm 0.293 $ & $ 0.491 \pm 0.307 $ & $ 30.738 \pm 1.278 $ \\
             Frangi	      & $ 0.700 \pm 0.037 $ & $ 0.688 \pm	0.044 $ & $	26.275 \pm	2.814 $ & $ 0.757 \pm 0.022 $ & $ 0.747 \pm 0.025 $ & $ 32.939 \pm 0.934 $ \\
             Jerman	      & $ 0.710 \pm 0.055 $ & $ 0.702 \pm	0.067 $ & $	\tbf{29.880} \pm	3.007 $ & $ 0.735 \pm 0.027 $ & $ 0.722 \pm 0.031 $ & $ 36.312 \pm 0.973 $ \\
             Meijering	    & $ \tbf{0.725} \pm 0.034 $ & $ \tbf{0.753} \pm	0.035 $ & $	27.305 \pm	2.969 $ & $ \tbf{0.818} \pm 0.028 $ & $ \tbf{0.834} \pm 0.028 $ & $ 34.217 \pm 0.978 $ \\
@@ -770,7 +770,7 @@ Localement, les résultats pour \maskglobal et \maskvessel sont similaires puisq
             & \multicolumn{3}{c}{Moyens (\maskvesselMedium)}                         & \multicolumn{3}{c}{Petits (\maskvesselSmall)}                           \\
             \hline
             & MCC  & Dice & PSNR & MCC & Dice & PSNR  \\
-            Baseline	    & $ 0.415 \pm 0.176 $ & $ 0.355 \pm 0.202 $ & $	26.699 \pm 1.974 $ & $	0.284 \pm 0.125 $ & $ 0.218 \pm 0.129 $ & $ 27.954 \pm 3.858 $ \\
+            Témoin	    & $ 0.415 \pm 0.176 $ & $ 0.355 \pm 0.202 $ & $	26.699 \pm 1.974 $ & $	0.284 \pm 0.125 $ & $ 0.218 \pm 0.129 $ & $ 27.954 \pm 3.858 $ \\
             Frangi	      & $ 0.715 \pm 0.035 $ & $ 0.698 \pm 0.041 $ & $	28.986 \pm 2.026 $ & $	0.683 \pm 0.056 $ & $ 0.657 \pm 0.069 $ & $ 30.328 \pm 3.627 $ \\
             Jerman	      & $ 0.708 \pm 0.047 $ & $ 0.691 \pm 0.057 $ & $	\tbf{32.360} \pm 2.236 $ & $	\tbf{0.730} \pm 0.073 $ & $ \tbf{0.719} \pm 0.090 $ & $ \tbf{34.315} \pm 4.028 $ \\
             OOF	          & $ \tbf{0.768} \pm 0.031 $ & $ \tbf{0.785} \pm 0.031 $ & $	30.159 \pm 2.141 $ & $	0.660 \pm 0.072 $ & $ 0.652 \pm 0.086 $ & $ 31.054 \pm 3.723 $ \\

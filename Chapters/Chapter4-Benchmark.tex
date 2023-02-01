@@ -108,6 +108,8 @@ Dans nos travaux, nous avons sélectionné, adapté et implémenté sept filtres
 
 Cette librairie s'appuie sur une communauté active et connait des mises à jour régulières. C'est à la fois un avantage, pour la correction de bugs et l'introduction de nouveaux algorithmes mais aussi un inconvénient, car la dette technologique s'accumule plus rapidement à cause de cycles plus courts entre deux versions.
 \begin{table}
+  \caption{Méthodes disponibles et idées principales guidant leur conception.}
+  \label{Tab:available_vesselness}
     \begin{center}
       \resizebox{\textwidth}{!}{
   \begin{tabular}{l|l|l}
@@ -122,12 +124,11 @@ Cette librairie s'appuie sur une communauté active et connait des mises à jour
   \end{tabular}
   }
   \end{center}
-  \caption{Méthodes disponibles et idées principales guidant leur conception.}
-  \label{Tab:available_vesselness}
-
   \end{table}
 
   \begin{table}
+    \caption{Origine des méthodes. La diversité des provenances et l'ancienneté des codes complique la mise en œuvre d'une comparaison des filtres.}
+    \label{Tab:origins_vesselness}
     \begin{center}
       \resizebox{\textwidth}{!}{
         \begin{tabular}{l|l|l}
@@ -142,8 +143,6 @@ Cette librairie s'appuie sur une communauté active et connait des mises à jour
         \end{tabular}
       }
     \end{center}
-    \caption{Origine des méthodes. La diversité des provenances et l'ancienneté des codes complique la mise en œuvre d'une comparaison des filtres.}
-    \label{Tab:origins_vesselness}
   \end{table}
 \newV{Une fois ces filtres collectés, il a été nécessaire de les standardiser afin de pouvoir former une base commune de comparaison. Cette standardisation englobe la redéfinition du domaine de sortie des filtres ainsi que la manière d'incorporer des masques de filtrage.}
 \subsection{Redéfinition du domaine de sortie des filtres}
@@ -301,8 +300,8 @@ La génération des artefacts IRM pour VascuSynth a connu plusieurs versions que
 \newV{Premièrement, l'intensité initiale des vaisseaux était trop élevée. Elle était proche de la limite maximale définie par l'encodage des images de VascuSynth (8 bits, 256 niveaux de gris). L'ajout de bruit et d'artefacts additifs n'est donc pas possible sans créer un effet de plateau d'intensités par saturation des voxels, faisant ainsi disparaître les structures. Dans l'imagerie du foie avec agent de contraste, les vaisseaux sont en principe d'intensité supérieure ou égale à l'intensité des tissus. Nous avons donc réalisé une simple mise à l'échelle des intensités avec l'intensité du fond fixée à 50 et l'intensité maximale des vaisseaux à 100 (Fig. \ref{fig:VB}).}
 \begin{figure}[!ht]
   \centering
-  \includegraphics[height=4cm]{Images/2D_VB.png}
-  \includegraphics[height=4cm]{Images/3D_VB.png}
+  \includegraphics[height=5cm]{Images/2D_VB.png}
+  \includegraphics[height=5cm]{Images/3D_VB.png}
   \caption{Vue 2D (à gauche) et 3D (à droite) d'un volume original de VascuSynth auquel est rajouté un fond constant. Le fond est d'intensité égale à l'intensité minimale des vaisseaux.}
   \label{fig:VB}
 \end{figure}
@@ -313,8 +312,8 @@ Nous avons ensuite voulu simuler les variations d'intensité locales provoquées
 Cet opérateur avait été choisi dans cette première version pour simuler des vaisseaux se fondant avec l'intensité des tissus environnants (Fig. \ref{fig:VBI}). Nous sommes revenus sur ce choix dans la seconde version décrite ci-après.
 \begin{figure}[!ht]
   \centering
-  \includegraphics[height=4cm]{Images/2D_VBI.png}
-  \includegraphics[height=4cm]{Images/3D_VBI.png}
+  \includegraphics[height=6cm]{Images/2D_VBI.png}
+  \includegraphics[height=6cm]{Images/3D_VBI.png}
   \caption{Vaisseaux avec illumination. Certains vaisseaux disparaissent dans les tissus.}
   \label{fig:VBI}
 \end{figure}
@@ -322,8 +321,8 @@ Cet opérateur avait été choisi dans cette première version pour simuler des 
 Nous avons ensuite ajouté du bruit ricien spécifique à l'IRM dont nous avons fait varier l'écart-type des gaussiennes qui composent la densité de probabilité. Nous avons choisi empiriquement les valeurs $\sigma=5$, $\sigma=10$ et $\sigma=20$ (Fig. \ref{fig:VBIR}). En comparaison, la plupart des expériences sur des bases de données synthétiques appliquent un mélange de bruit de Poisson et gaussien caractéristique du bruit présent en tomodensitométrie.
 \begin{figure}[!ht]
   \centering
-  \includegraphics[height=4cm]{Images/2D_VBIR10.png}
-  \includegraphics[height=4cm]{Images/3D_VBIR10.png}
+  \includegraphics[height=5cm]{Images/2D_VBIR10.png}
+  \includegraphics[height=5cm]{Images/3D_VBIR10.png}
   \caption{Résultat de l'étape 4 : ajout de bruit ricien sur l'image obtenue à l'étape 3 (Fig. \ref{fig:VBI}).}
   \label{fig:VBIR}
 \end{figure}
@@ -644,6 +643,8 @@ En particulier, nous avons $\maskbif \subseteq \maskvascular \subseteq \maskglob
 Le masque \maskbif est construit à partir des positions des bifurcations extraites du squelette. Ces points sont ensuite dilatés par un facteur $kp$ où $p$ est le rayon des vaisseaux et $k=3$ si $p\leq 1$ voxel et 2 sinon. L'intersection avec la vérité terrain est ensuite réalisée de manière à assurer que \maskbif est inclus dans les vaisseaux.
 % Finir sur la gestion et la taille des voisinages
 \begin{table}
+  \caption{Récapitulatif des paramètres des bases de données utilisés pour chaque version de nos expériences. Chaque version a donné lieu à une publication dont le contexte est fourni dans le chapitre \chapReproN{}.}
+  \label{Tab:recap_versions}
   \begin{center}
     \resizebox{\textwidth}{!}{
       \begin{tabular}{l|l|l}
@@ -659,8 +660,6 @@ Le masque \maskbif est construit à partir des positions des bifurcations extrai
       \end{tabular}
     }
   \end{center}
-  \caption{Récapitulatif des paramètres des bases de données utilisés pour chaque version de nos expériences. Chaque version a donné lieu à une publication dont le contexte est fourni dans le chapitre \chapReproN{}.}
-  \label{Tab:recap_versions}
 \end{table}
 \section{Description du banc de test}
 \subsection{Fonctionnement global}
